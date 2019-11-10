@@ -1,0 +1,105 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+
+  <!--Section: Content-->
+  <section class="">
+
+    <!-- Section heading -->
+    <h3 class="text-center font-weight-bold mb-5">Categories</h3>
+
+  	<!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+
+        <!-- Card -->
+        <div class="card hoverable">
+
+          <!-- Card image -->
+          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/58.jpg" alt="Card image cap">
+
+          <!-- Card content -->
+          <div class="card-body">
+
+            <!-- Title -->
+            <a href="{% url 'main:inventory'%}" class="text-decoration-none">Irrigation</a>
+            <!-- Text -->
+            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<br>			
+            <a href="{% url 'main:inventory'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            
+          </div>
+
+        </div>
+        <!-- Card -->
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+
+        <!-- Card -->
+        <div class="card hoverable">
+
+          <!-- Card image -->
+          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/project4.jpg" alt="Card image cap">
+
+          <!-- Card content -->
+          <div class="card-body">
+
+            <!-- Title -->
+            <a href="{% url 'main:inventory'%}" class="text-decoration-none">Plantation</a>
+            <!-- Text -->
+            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<br>			
+            <a href="{% url 'main:inventory'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            
+          </div>
+
+        </div>
+        <!-- Card -->
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-lg-4 col-md-6 mb-0">
+
+        <!-- Card -->
+        <div class="card hoverable">
+
+          <!-- Card image -->
+          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/88.jpg" alt="Card image cap">
+
+          <!-- Card content -->
+          <div class="card-body">
+
+            <!-- Title -->
+            <a href="{% url 'main:inventory'%}" class="text-decoration-none">Vehicles</a>
+            <!-- Text -->
+            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<br>			
+            <a href="{% url 'main:inventory'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            
+          </div>
+
+        </div>
+        <!-- Card -->
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </section>
+  <!--Section: Content-->
+
+
+</div>
+{% endblock content %}

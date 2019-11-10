@@ -1,0 +1,54 @@
+{% load bootstrap4 %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Durian Garden</title>
+
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='full' %}
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+
+  	<!-- mobile responsiveness related -->
+  	<button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span></button>
+
+    <!-- links -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        	<a class="nav-link" href="{% url 'main:index'%}">Home</a></li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+        	<a class="nav-link" href="{% url 'main:register'%}">Register</a></li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        	<a class="nav-link" href="{% url 'main:login'%}">Log in</a></li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <!-- children content -->
+  <main role="main" class="container">
+    <!--<div class="pb-2 mb-2 border-bottom">
+      {% block page_header %}{% endblock page_header %}
+    </div>-->
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
+
+</body>
+
+</html>
