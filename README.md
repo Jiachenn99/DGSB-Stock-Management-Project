@@ -12,12 +12,6 @@ This repository can be cloned using the command below:
 $ git clone https://github.com/Jiachenn99/DGSB-Stock-Management-Project.git
 ```
 
-### Creating a virtual environment
------
-We are using `virtualenv` to create our virtual environment, if you do not have it installed, run
-```
-$ pip install virtualenv
-```
-
-### Running the virtual environment
-
+### Installing required packages
+The packages required by this repository can be installed by running `setup.bat` by double clicking on it.
+A virtual environment will be activated and all required dependencies will be installed.
