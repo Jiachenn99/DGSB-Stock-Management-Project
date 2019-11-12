@@ -5,7 +5,6 @@ SEGP Group 3A Project
 A web-based application to keep track of stock records, and provide reminders on low stock counts.
 
 # Setup
------
 ### Cloning
 This repository can be cloned using the command below:
 ```
