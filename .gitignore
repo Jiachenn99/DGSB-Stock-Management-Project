@@ -1,5 +1,6 @@
 .vscode/
 another_virtualenv/
+virtual_environment/
 durianGarden/__pycache__/
 main/__pycache__/
 main/migrations/__pycache__
@@ -18,9 +19,6 @@ media
 # Byte-compiled / optimized / DLL files
 *.py[cod]
 *$py.class
-
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
