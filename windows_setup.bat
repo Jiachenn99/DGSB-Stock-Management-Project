@@ -4,7 +4,7 @@
 REM should check whether Python is installed.
 
 REM checking whether pip is installed
-pip -v 
+pip --version
 
 REM install pip if doesnt exist else install virtualenv
 IF ERRORLEVEL 0 (python -m pip install --upgrade pip & pip install virtualenv & echo Installed virtualenv)
