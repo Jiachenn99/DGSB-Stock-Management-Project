@@ -2,6 +2,7 @@
 virtual_environment/
 */__pycache__/
 */migrations/__pycache__/
+db.*
 
 
 ### Django ###
