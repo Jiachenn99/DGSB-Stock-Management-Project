@@ -32,12 +32,13 @@ https://www.python.org/downloads/source/
 
 #### On Windows
 1. Navigate to the cloned repository (`DGSB-Stock-Management-Project`)
-2. Double click `windows_setup.bat`
-3. Sit back and relax.
+2. Navigate to the `Setup` folder.
+3. Double click `windows_setup.bat`
+4. Sit back and relax.
 
 #### On Linux / Unix / MacOS
 1. Open the terminal (Bash)
-2. Navigate to the cloned repository (`/DGSB-Stock-Management-Project`)
+2. Navigate to the cloned repository (`/DGSB-Stock-Management-Project/Setup`)
 3. Type in `./linux_mac_setup.sh` and press ENTER
 4. Sit back and relax.
 
