@@ -11,7 +11,7 @@ IF ERRORLEVEL 0 (python -m pip install --upgrade pip & pip install virtualenv & 
 IF ERRORLEVEL 1 (python get-pip.py && python -m pip install --upgrade pip & echo Installed pip)
 
 REM Creating the virtual environment
-virtualenv virtual_environment && .\virtual_environment\Scripts\activate && pip install -r requirements.txt && IF ERRORLEVEL 0 (echo VIRTUAL ENVIRONMENT SUCCESSFULLY CREATED & echo REQUIREMENTS INSTALLED)
+virtualenv ../virtual_environment && ..\virtual_environment\Scripts\activate && pip install -r requirements.txt && IF ERRORLEVEL 0 (echo VIRTUAL ENVIRONMENT SUCCESSFULLY CREATED & echo REQUIREMENTS INSTALLED)
 
 
 
