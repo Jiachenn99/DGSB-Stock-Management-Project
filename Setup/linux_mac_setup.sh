@@ -26,7 +26,7 @@ else
     fi
 fi
 
-virtualenv virtual_environment && source virtual_environment/bin/activate && pip install -r requirements.txt
+virtualenv ../virtual_environment && source ../virtual_environment/bin/activate && pip install -r requirements.txt
 if [ $? -eq 1 ]
 then
    echo "Exiting with error code $?"
