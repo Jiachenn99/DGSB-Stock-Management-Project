@@ -2,19 +2,19 @@ from django.db import models
 
 # Create your models here.
 class Supplier(models.Model):
-    Supplier_ID = models.AutoField(primary_key=True)
-    Supplier_Name = models.CharField(max_length = 50)
-    Description = models.CharField(max_length = 80)
+    supplier_id = models.AutoField(primary_key=True)
+    supplier_name = models.CharField(max_length = 50)
+    description = models.CharField(max_length = 80)
     class Meta:
         db_table = "supplier"
 
 
 class Purchasing(models.Model):
-    Purchasing_ID = models.AutoField(primary_key=True)
-    PV_No = models.CharField(max_length = 20)
-    Invoice_No = models.CharField(max_length = 20)
-    Purchasing_Date = models.CharField(max_length = 20)
-    Supplier_ID = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    Description = models.CharField(max_length = 100)
+    purchasing_id = models.AutoField(primary_key=True)
+    pv_no = models.CharField(max_length = 20)
+    invoice_no = models.CharField(max_length = 20)
+    purchasing_date = models.CharField(max_length = 20)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    description = models.CharField(max_length = 100)
     class Meta:
         db_table = "purchasing"
