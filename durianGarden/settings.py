@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # my apps
     'main',
+    # 'accounts',
+    'register',
 
     # third party apps
     'bootstrap4',
@@ -139,5 +141,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
 
 LOGIN_REDIRECT_URL = "/"
-
+LOGOUT_REDIRECT_URL = "/"
 CRISPY_TEMPLATE_PACK =  'bootstrap4'
