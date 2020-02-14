@@ -36,7 +36,8 @@ INSTALLED_APPS = [
 
     # third party apps
     'bootstrap4',
-    
+    'crispy_forms',
+
     # default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'durianGarden.urls'
@@ -135,3 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
+
+LOGIN_REDIRECT_URL = "/"
+
+CRISPY_TEMPLATE_PACK =  'bootstrap4'

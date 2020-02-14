@@ -1,13 +1,21 @@
 from django.shortcuts import render
 
+def dashboard(request):
+    context = {"dashboard": "active"}
+    return render(request, 'main/dashboard.html',context)
+
 def index(request):
-    return render(request, 'main/index.html')
+    context = {"index": "active"}
+    return render(request, 'main/index.html',context)
 
 def login(request):
-    return render(request, 'main/login.html')
+    context = {"login": "active"}
+    return render(request, 'main/login.html',context)
 
 def register(request):
-    return render(request, 'main/register.html')
+    context = {"register": "active"}
+    return render(request, 'main/register.html',context)
 
 def inventory(request):
-    return render(request, 'main/inventory.html')
+    context = {"inventory": "active"}
+    return render(request, 'main/inventory.html',context)
