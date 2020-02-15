@@ -1,15 +1,32 @@
-{% extends "main/base.html "%}
+{% include "login_base.html "%}
 
-{%block tile %} Create an account {% endblock%}
+{% block tile %} <title> Add User </title> {% endblock %}
 {% load crispy_forms_tags %}
 
-{%block content%}
-    <form method="POST" class="form-group">
-    <h1> Registration </h1>
-    <p></p>
-    <p></p>
-    {% csrf_token %}
-    {{form|crispy}}
-    <button type="submit" class="btn btn-success">Register</button>
-    </form>
+{%block content %}
+
+<div class="container my-5 py-5 z-depth-1">
+
+
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+ 
+
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+
+            <!--Grid column-->
+            <div class="col-md-6">
+                <form method="POST" class="form-group">
+                <h1> Add User </h1>
+                <p></p>
+                <p></p>
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-success">Register</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

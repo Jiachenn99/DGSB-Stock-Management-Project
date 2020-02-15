@@ -1,18 +1,36 @@
-{% extends "main/base.html" %}
+{% include "login_base.html" %}
 {% load crispy_forms_tags %}
 
 {%block title %}
+<title>
 Login Here
+</title>
 {% endblock %}
 
 {% block content %}
-<form method="POST" class="form-group">
-    <h1> Login </h1>
-    <p></p>
-    <p></p>
-    {% csrf_token %}
-    {{form|crispy}}
-    <p>Don't have an account? Create one <a href="/register">here</a></p>
-    <button type="submit" class="btn btn-success">Login</button>
-    </form>
+<div class="container my-5 py-5 z-depth-1">
+
+
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+ 
+
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+
+            <!--Grid column-->
+            <div class="col-md-6">
+                <form method="POST" class="form-group">
+                    <h1> Login </h1>
+                    <p></p>
+                    <p></p>
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <p>Don't have an account? Create one <a href="/register">here</a></p>
+                    <button type="submit" class="btn btn-success">Login</button>
+                    </form>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}
