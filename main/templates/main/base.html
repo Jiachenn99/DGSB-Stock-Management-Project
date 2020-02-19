@@ -1,54 +1,125 @@
 {% load bootstrap4 %}
-
+{% load staticfiles %} 
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Durian Garden</title>
+  
+   <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/app.js' %}"></script> 
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-  {% bootstrap_css %}
-  {% bootstrap_javascript jquery='full' %}
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+<div class="wrapper">
+     
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+        <a href="{% url 'main:dashboard'%}" >
+            <h3>DurianGarden</h3>
+            <strong>DG</strong>
+        </a>
+        </div>
 
-  	<!-- mobile responsiveness related -->
-  	<button class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span></button>
+        <ul class="list-unstyled components">
+            <li class="{{dashboard}}">
+                <a href="{% url 'main:dashboard'%}" >
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
 
-    <!-- links -->
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-        	<a class="nav-link" href="{% url 'main:index'%}">Home</a></li>
-      </ul>
+            <li>
+                <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-users"></i>
+                    User
+                </a>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-        	<a class="nav-link" href="{% url 'main:register'%}">Register</a></li>
-      
-        <li class="nav-item">
-        	<a class="nav-link" href="{% url 'main:login'%}">Log in</a></li>
-      </ul>
-    </div>
+                <ul class="collapse list-unstyled" id="userSubmenu">
+                        <li>
+                            <a href="#">Manage User</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main:register'%}">Add User</a>
+                        </li>
+                </ul>
+            </li>
+            
+            <li class="{{index}}">
+                <a href="{% url 'main:index'%}" >
+                    <i class="fas fa-copy"></i>
+                    Catagory 
+                </a>
+            </li>
+            <li class="{{ inventory}} ">
+                <a href="{% url 'main:inventory'%}" >
+                    <i class="fas fa-warehouse"></i>
+                    Inventory
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url 'main:dashboard'%}" >
+                    <i class="fas fa-shopping-cart"></i>
+                    Order
+                </a>
+            </li>
+        
+            <li>
+                <a href="/logout" >
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </a>
+            </li>
+        </ul>
 
-  </nav>
+    </nav>
+     <!-- children content -->
+    <!-- Page Content  -->
+    <main role="main" class="main_container" id = "content">
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                </button>
 
-  <!-- children content -->
-  <main role="main" class="container">
-    <!--<div class="pb-2 mb-2 border-bottom">
-      {% block page_header %}{% endblock page_header %}
-    </div>-->
-    <div>
-      {% block content %}{% endblock content %}
-    </div>
-  </main>
-
+                {% comment %} <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item {{ login }}">
+                                <a class="nav-link" href="{% url 'main:login'%}">Login</a>
+                            </li>
+                            <li class="nav-item {{register}}">
+                                <a class="nav-link" href="{% url 'main:register'%}">Register</a>
+                            </li>   
+                        </ul>
+                    </div>
+            </div> {% endcomment %}
+        </nav> 
+            
+            {% block content %}
+            {% endblock content %} 
+            
+    </main>
+</div>
+   
 </body>
 
 </html>
