@@ -12,6 +12,14 @@ def register(request):
     context = {"register": "active"}
     return render(request, 'register/register.html',context)
 
-def inventory(request):
-    context = {"inventory": "active"}
-    return render(request, 'main/inventory.html',context)
+def irrigation(request):
+    context = {"irrigation": "active"}
+    return render(request, 'main/irrigation.html',context)
+
+def plantation(request):
+    context = {"plantation": "active"}
+    return render(request, 'main/plantation.html',context)
+
+def vehicles(request):
+    context = {"vehicles": "active"}
+    return render(request, 'main/vehicles.html',context)
