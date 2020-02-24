@@ -4,6 +4,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    position: relative;
 }
 
 p {
@@ -139,6 +140,10 @@ table.table td i {
     margin-top: 10px;
     font-size: 13px;
 }
+
+
+
+
 a,
 a:hover,
 a:focus{
@@ -390,3 +395,4 @@ a.article:hover {
         display: none;
     }
 }
+
