@@ -15,3 +15,11 @@ def register(request):
 def inventory(request):
     context = {"inventory": "active"}
     return render(request, 'main/inventory.html',context)
+
+def purchases(request):
+    context = {"purchases": "active"}
+    return render(request, 'main/purchases.html',context)
+
+def order(request):
+    context = {"order": "active"}
+    return render(request, 'main/order.html',context)
