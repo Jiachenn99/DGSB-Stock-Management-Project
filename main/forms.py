@@ -1,6 +1,7 @@
 from django import forms
 from main.models import Supplier
 from main.models import Purchasing
+from main.models import DropdowmnCategory
 
 class SupplierForm(forms.ModelForm):
     class Meta:
@@ -13,3 +14,6 @@ class PurchasingForm(forms.ModelForm):
         model = Purchasing
         fields = "__all__"
         #fields = ("Purchasing_ID", "PV_No", "Invoice_No", "Purchasing_Date", "Supplier_ID", "Description")
+
+
+

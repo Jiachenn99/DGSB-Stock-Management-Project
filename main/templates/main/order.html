@@ -1,14 +1,147 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-<div class="col-sm-4">
-            <h2 class="text-center">Select Catagory</h2>
 
-    <a href='supplier'><button class="btn btn-info my-4 btn-block" type="submit">Fertilizer</button></a>
-    <a href='supplier'><button class="btn btn-info my-4 btn-block" type="submit">Fungicide</button></a>
-    <a href='supplier'><button class="btn btn-info my-4 btn-block" type="submit">Pesticide</button></a>
-    <a href='supplier'><button class="btn btn-info my-4 btn-block" type="submit">Surfacetant</button></a>
-    <a href='supplier'><button class="btn btn-info my-4 btn-block" type="submit">Herbicide</button></a>
+<h1 class="text-center">Select your Order</h1>
+
+<select id="opts" onchange="showForm()">
+  <option value="0">Select Option</option>
+  <option value="1">Plantation</option>
+  <option value="2">Spare parts</option>
+  <option value="3">Stationary</option>
+  <option value="4">Irrigation</option>
+  <option value="5">Tools</option>
+  <option value="6">Consumables</option>
+</select>
+
+<div id="f1" style="display:none">
+    <form name="form1">
+        <select id="opts" onchange="showForm()">
+            <option value="0">Select Option</option>
+            <option value="1">Fungicide</option>
+            <option value="3">Ferilizer</option>
+            <option value="4">Surfacetant</option>
+            <option value="5">Herbicide</option>
+            <option value="6">Pesticide</option>
+        </select>
+    </form>
+</div>
+
+<div id="f2" style="display:none">
+    <form name="form2">
+        <select id="opts" onchange="showForm()">
+            <option value="0">Select Option</option>
+            <option value="1">Spare parts A</option>
+            <option value="2">Spare parts B</option>
+        </select>
+    </form>
+</div>
+
+<div id="f3" style="display:none">
+    <form name="form3">
+        <select id="opts" onchange="showForm()">
+          <option value="0">Select Option</option>
+          <option value="1">Pen</option>
+        </select>
+    </form>
+</div>
+
+<div id="f4" style="display:none">
+    <form name="form4">
+        <select id="opts" onchange="showForm()">
+          <option value="0">Select Option</option>
+          <option value="1">Spray Jet</option>
+          <option value="2">Pressure Chemical Hose</option>
+          <option value="3">Poly MTA 20MM 1/2"</option>
+          <option value="4">Poly FB 32MM x 1"</option>
+          <option value="5">63x32MM Poly R/Tee</option>
+        </select>
+    </form>
+</div>
+
+<div id="f5" style="display:none">
+    <form name="form5">
+        <select id="opts" onchange="showForm()">
+          <option value="0">Select Option</option>
+          <option value="1">Saw</option>
+          <option value="2">Machete</option>
+        </select>
+    </form>
+</div>
+
+<div id="f6" style="display:none">
+    <form name="form6">
+        <select id="opts" onchange="showForm()">
+          <option value="0">Select Option</option>
+          <option value="1">Consumable A</option>
+          <option value="2">Consumable B</option>
+        </select>
+    </form>
+</div>
+
+<button type="button" class="btn btn-primary">Submit</button>
+
+<script type="text/javascript">
+    function showForm() {
+        var selopt = document.getElementById("opts").value;
+        if (selopt == 1) {
+            document.getElementById("f1").style.display = "block";
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "none";
+        }
+        if (selopt == 2) {
+            document.getElementById("f2").style.display = "block";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "none";
+        }
+        if (selopt == 3) {
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "block";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "none";
+        }
+        if (selopt == 4) {
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "block";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "none";
+            }
+        if (selopt == 5) {
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "block";
+            document.getElementById("f6").style.display = "none";
+            }
+        if (selopt == 6) {
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "block";
+            }
+        if (selopt == 0) {
+            document.getElementById("f2").style.display = "none";
+            document.getElementById("f1").style.display = "none";
+            document.getElementById("f3").style.display = "none";
+            document.getElementById("f4").style.display = "none";
+            document.getElementById("f5").style.display = "none";
+            document.getElementById("f6").style.display = "none";
+        }
+    }
+</script>
 
 
 

@@ -129,5 +129,3 @@ class Pesticide(models.Model):
 
 
 
-
-
