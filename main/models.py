@@ -7,7 +7,7 @@ class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 80)
     class Meta:
-        db_table = "supplier"
+        db_table = "Supplier"
 
 
 class Purchasing(models.Model):
