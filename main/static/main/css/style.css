@@ -393,3 +393,20 @@ a.article:hover {
         display: none;
     }
 }
+
+.dropdown_menu{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.drop_item1{
+    flex: 1;
+}
+
+.drop_item2{
+    flex: 1;
+}
+
+.drop_submit{
+    flex: 2;
+}
