@@ -14,11 +14,11 @@ class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
     pv_no = models.CharField(max_length = 20)
     invoice_no = models.CharField(max_length = 20)
-    purchasing_date = models.CharField(max_length = 20)
+    purchasing_date = models.DateField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     description = models.CharField(max_length = 100)
     class Meta:
-        db_table = "purchasing"
+        db_table = "Purchasing"
 
 class Irrigation(models.Model):
     irrigation_id = models.AutoField(primary_key = True)
@@ -122,12 +122,4 @@ class Pesticide(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "pesticide"
-
-
-
-
-
-
-
-
-
+        
