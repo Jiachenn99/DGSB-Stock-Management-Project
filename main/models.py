@@ -9,6 +9,8 @@ class Supplier(models.Model):
     class Meta:
         db_table = "Supplier"
 
+    def __str__(self):
+        return self.supplier_name
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
@@ -19,6 +21,9 @@ class Purchasing(models.Model):
     description = models.CharField(max_length = 100)
     class Meta:
         db_table = "Purchasing"
+
+    def __str__(self):
+        return self.pv_no
 
 class Irrigation(models.Model):
     irrigation_id = models.AutoField(primary_key = True)
@@ -68,6 +73,9 @@ class Stationery(models.Model):
     class Meta:
         db_table = "stationery"
 
+    def __str__(self):
+        return self.stationery_name
+
 class Consumables(models.Model):
     consumables_id = models.AutoField(primary_key=True)
     consumables_name = models.CharField(max_length = 50)
@@ -78,6 +86,9 @@ class Consumables(models.Model):
     class Meta:
         db_table = "consumables"
 
+    def __str__(self):
+        return self.consumables_name
+
 class Fungicide(models.Model):
     fungicide_id = models.AutoField(primary_key=True)
     fungicide_name = models.CharField(max_length = 50)
@@ -87,6 +98,9 @@ class Fungicide(models.Model):
     class Meta:
         db_table = "fungicide"
 
+    def __str__(self):
+        return self.fungicide_name
+
 class Fertilizer(models.Model):
     fertilizer_id = models.AutoField(primary_key=True)
     fertilizer_name = models.CharField(max_length = 50)
@@ -95,6 +109,9 @@ class Fertilizer(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "fertilizer"
+    
+    def __str__(self):
+        return self.fertilizer_name
 
 class Surfacetant(models.Model):
     surfacetant_id = models.AutoField(primary_key=True)
@@ -105,6 +122,9 @@ class Surfacetant(models.Model):
     class Meta:
         db_table = "surfacetant"
 
+    def __str__(self):
+        return self.surfacetant_name
+
 class Herbicide(models.Model):
     herbicide_id = models.AutoField(primary_key=True)
     herbicide_name = models.CharField(max_length = 50)
@@ -114,6 +134,9 @@ class Herbicide(models.Model):
     class Meta:
         db_table = "herbicide"
 
+    def __str__(self):
+        return self.herbicide_name
+
 class Pesticide(models.Model):
     pesticide_id = models.AutoField(primary_key=True)
     pesticide_name = models.CharField(max_length = 50)
@@ -122,4 +145,7 @@ class Pesticide(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "pesticide"
+
+    def __str__(self):
+        return self.pesticide_name
         
