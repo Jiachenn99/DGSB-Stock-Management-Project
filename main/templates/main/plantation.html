@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between">
+  <!-- selection of subcategories -->
+  <div class="p-2">
+    <form>
+      <div class="form-group">
+        <select class="form-control" id="sel1">
+          <option>Tools</option>
+          <option>Consumables</option>
+          <option>Fungicide</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <!--display current subcategory-->
+  <div class="p-2">
+    <h2>Tools</h2>
+  </div>
+
+  <!-- add item button -->
+  <div class="p-2">
+    <button type="button" class="btn btn-primary">Add item</button>
+  </div>
+
+</div>
+
+<!-- table -->
+<table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Age</th>
+      <th>City</th>
+      <th>Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Anna</td>
+      <td>Pitt</td>
+      <td>35</td>
+      <td>New York</td>
+      <td>USA</td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock content %}
