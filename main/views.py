@@ -18,6 +18,14 @@ def register(request):
     context = {"register": "active"}
     return render(request, 'register/register.html',context)
 
+def purchases(request):
+    context = {"purchases": "active"}
+    return render(request, 'main/purchases.html',context)
+
+def order(request):
+    context = {"order": "active"}
+    return render(request, 'main/order.html',context)
+  
 def irrigation(request):
     context = {"irrigation": "active"}
     return render(request, 'main/irrigation.html',context)
