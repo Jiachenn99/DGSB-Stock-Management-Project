@@ -12,10 +12,6 @@ def register(request):
     context = {"register": "active"}
     return render(request, 'register/register.html',context)
 
-def inventory(request):
-    context = {"inventory": "active"}
-    return render(request, 'main/inventory.html',context)
-
 def purchases(request):
     context = {"purchases": "active"}
     return render(request, 'main/purchases.html',context)

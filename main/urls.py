@@ -6,9 +6,10 @@ app_name = 'main'
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('index/', views.index,name='index'),
-    path('register/', views.register, name='register'),
-    path('inventory/', views.inventory, name='inventory'),
     path('purchases/', views.purchases, name='purchases'),
-    path('order/', views.order, name='order')
-
+    path('order/', views.order, name='order'),
+    path('irrigation/', views.irrigation, name='irrigation'),
+    path('plantation/', views.plantation, name='plantation'),
+    path('vehicles/', views.vehicles, name='vehicles'),
+    path('testing/', views.get_name, name='get_name')
 ]

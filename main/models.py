@@ -7,18 +7,23 @@ class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 80)
     class Meta:
-        db_table = "supplier"
-
+        db_table = "Supplier"
+    
+    def __str__(self):
+        return self.supplier_name
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
     pv_no = models.CharField(max_length = 20)
     invoice_no = models.CharField(max_length = 20)
-    purchasing_date = models.CharField(max_length = 20)
+    purchasing_date = models.DateField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     description = models.CharField(max_length = 100)
     class Meta:
-        db_table = "purchasing"
+        db_table = "Purchasing"
+    def __str__(self):
+        return self.pv_no
+
 
 class Irrigation(models.Model):
     irrigation_id = models.AutoField(primary_key = True)
