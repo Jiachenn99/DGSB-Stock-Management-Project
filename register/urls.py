@@ -5,4 +5,5 @@ app_name = 'register'
 
 urlpatterns = [
     path('register/', views.register, name = 'register_main')
+
 ]
