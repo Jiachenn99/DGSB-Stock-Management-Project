@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from main.forms import NameForm, PurchasingForm
+from main.forms import NameForm, PurchasingForm, OrderForm
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
@@ -37,6 +37,12 @@ def plantation(request):
 def vehicles(request):
     context = {"vehicles": "active"}
     return render(request, 'main/vehicles.html',context)
+    
+def order(request):
+    context = {"order": "active"}
+    form = OrderForm()
+   
+    return render(request, 'main/order.html',{'form': form})
 
 def get_name(request):
 
@@ -60,3 +66,4 @@ def get_name(request):
     some_dict = {'result': r2,'form':form2}
 
     return render(request,'main/testing.html',some_dict)
+
