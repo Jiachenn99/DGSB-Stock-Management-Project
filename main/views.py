@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from main.forms import NameForm, PurchasingForm
+from main.forms import *
+from main.models import *
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
@@ -29,6 +30,21 @@ def plantation(request):
 def vehicles(request):
     context = {"vehicles": "active"}
     return render(request, 'main/vehicles.html',context)
+
+def addItem(request):
+    if request.method != 'POST':
+        # No data submitted; create a blank form
+        form = ToolsForm()
+    else:
+        # POST data submitted; process data
+        form = ToolsForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main:index')
+    
+    context = {'form': form}
+    return render(request, 'main/addItem.html', context)
+
 
 def get_name(request):
 

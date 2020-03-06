@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <p>table name here</p>
+
+    <form action="{% url 'main:addItem' %}" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label> {{ field.name }}</label>
+                {{ field }}
+                <br>
+            </div>  
+        {% endfor %}
+        <button name="submit">Add item</button>
+    </form> 
+
+{% endblock content %}

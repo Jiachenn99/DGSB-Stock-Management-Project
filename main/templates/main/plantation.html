@@ -1,12 +1,22 @@
 {% extends "main/base.html" %}
 
 {% block content %}
+<!-- to display selected subcategory-->
+<script>
+$(document).ready(function(){
+  $("select.form-control").change(function(){
+    var selected_subcategory = $("select.form-control").children("option:selected").val();
+    $("#current-table").text(selected_subcategory);
+  });
+});
+</script>
+
 <div class="d-flex justify-content-between">
   <!-- selection of subcategories -->
   <div class="p-2">
     <form>
       <div class="form-group">
-        <select class="form-control" id="sel1">
+        <select class="form-control" id="table-sel">
           <option>Tools</option>
           <option>Consumables</option>
           <option>Fungicide</option>
@@ -17,17 +27,17 @@
 
   <!--display current subcategory-->
   <div class="p-2">
-    <h2>Tools</h2>
+    <h2 id="current-table">Tools</h2>
   </div>
 
   <!-- add item button -->
   <div class="p-2">
-    <button type="button" class="btn btn-primary">Add item</button>
+    <a href="{% url 'main:addItem'%}" class="btn btn-primary" role="button">Add Item</a>
   </div>
 
 </div>
 
-<!-- table -->
+<!-- dummy table to be modified -->
 <table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
   <thead>
     <tr>
