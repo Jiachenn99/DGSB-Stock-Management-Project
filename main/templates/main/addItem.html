@@ -3,22 +3,16 @@
 {% block content %}
 <script>
     $(document).ready(function(){
-      var new_action_value = "{% url 'main:addItem' form_name='" + $("#header1").text() + "' %}";
+      var new_action_value = "/addItem/" + $("#header1").text();
       $("#form1").attr("action", new_action_value);
     });
 </script>
 
 <p id="header1">{{form_name}}</p>
 
-<form action="" method="POST" id="form1"></form>
+<form action="" method="post">
     {% csrf_token %}
-    {% for field in form %}
-        <div>
-            <label> {{ field.name }}</label>
-            {{ field }}
-            <br>
-        </div>  
-    {% endfor %}
+    {{ form.as_p }}
     <button name="submit">Add item</button>
 </form> 
 

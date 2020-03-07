@@ -32,12 +32,16 @@ def vehicles(request):
     return render(request, 'main/vehicles.html',context)
 
 def addItem(request, form_name):
+    
+    print(form_name)
 
     if request.method != 'POST':
         form_object = findForm(form_name)  # find the specific form according to the string value passed
         # No data submitted; create a blank form
         form = form_object()
     else:
+        print("i have been POST here " + form_name)
+        form_object = findForm(form_name)  # find the specific form according to the string value passed
         # POST data submitted; process data
         form = form_object(data=request.POST)
         if form.is_valid():
