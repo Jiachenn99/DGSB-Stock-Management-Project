@@ -4,9 +4,13 @@
 <!-- to display selected subcategory-->
 <script>
 $(document).ready(function(){
-  $("select.form-control").change(function(){
-    var selected_subcategory = $("select.form-control").children("option:selected").val();
-    $("#current-table").text(selected_subcategory);
+  var selected_subcategory = 'Tools';
+  $("select.form-control").change(function(){  // event handler for dropdown onchange
+    selected_subcategory = $("select.form-control").children("option:selected").val();  //store selected dropdown value
+    $("#current-table").text(selected_subcategory);  //display selected dropdown value
+  });
+  $("#add1").hover(function(){  // event handler for hovering over add button
+    $(this).attr("href", "/addItem/" + selected_subcategory);  // this reads selected dropdown value and passes it to view function
   });
 });
 </script>
@@ -17,7 +21,7 @@ $(document).ready(function(){
     <form>
       <div class="form-group">
         <select class="form-control" id="table-sel">
-          <option>Tools</option>
+          <option selected>Tools</option>
           <option>Consumables</option>
           <option>Fungicide</option>
         </select>
@@ -32,7 +36,7 @@ $(document).ready(function(){
 
   <!-- add item button -->
   <div class="p-2">
-    <a href="{% url 'main:addItem'%}" class="btn btn-primary" role="button">Add Item</a>
+    <a href="/addItem/'Tools'" class="btn btn-primary" role="button" id="add1">Add Item</a>
   </div>
 
 </div>

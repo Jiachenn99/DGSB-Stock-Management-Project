@@ -31,19 +31,40 @@ def vehicles(request):
     context = {"vehicles": "active"}
     return render(request, 'main/vehicles.html',context)
 
-def addItem(request):
+def addItem(request, form_name):
+
     if request.method != 'POST':
+        form_object = findForm(form_name)  # find the specific form according to the string value passed
         # No data submitted; create a blank form
-        form = ToolsForm()
+        form = form_object()
     else:
         # POST data submitted; process data
-        form = ToolsForm(data=request.POST)
+        form = form_object(data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('main:index')
     
-    context = {'form': form}
+    context = {'form': form, 'form_name': form_name}
     return render(request, 'main/addItem.html', context)
+
+def findForm(form_type):
+    switch={
+        'Supplier' : SupplierForm,
+        'Purchasing' : PurchasingForm,
+        'Name' : NameForm,
+        'Tools' : ToolsForm,
+        'Irrigation' : IrrigationForm,
+        'Spareparts' : SparepartsForm,
+        'Vehicles' : VehicleForm,
+        'Stationery' : StationeryForm,
+        'Consumables' : ConsumablesForm,
+        'Fungicide' : FungicideForm,
+        'Fertilizer' : FertilizerForm,
+        'Surfacetant' : SurfacetantForm,
+        'Herbicide' : HerbicideForm,
+        'Pesticide' : PesticideForm,
+    }
+    return switch.get(form_type)
 
 
 def get_name(request):

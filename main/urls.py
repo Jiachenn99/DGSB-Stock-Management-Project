@@ -10,5 +10,5 @@ urlpatterns = [
     path('plantation/', views.plantation, name='plantation'),
     path('vehicles/', views.vehicles, name='vehicles'),
     path('testing/', views.get_name, name='get_name'),
-    path('addItem/', views.addItem, name='addItem')
+    path('addItem/<str:form_name>', views.addItem, name='addItem'),
 ]

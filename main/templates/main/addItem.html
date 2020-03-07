@@ -1,18 +1,25 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-    <p>table name here</p>
+<script>
+    $(document).ready(function(){
+      var new_action_value = "{% url 'main:addItem' form_name='" + $("#header1").text() + "' %}";
+      $("#form1").attr("action", new_action_value);
+    });
+</script>
 
-    <form action="{% url 'main:addItem' %}" method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-            <div>
-                <label> {{ field.name }}</label>
-                {{ field }}
-                <br>
-            </div>  
-        {% endfor %}
-        <button name="submit">Add item</button>
-    </form> 
+<p id="header1">{{form_name}}</p>
+
+<form action="" method="POST" id="form1"></form>
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            <label> {{ field.name }}</label>
+            {{ field }}
+            <br>
+        </div>  
+    {% endfor %}
+    <button name="submit">Add item</button>
+</form> 
 
 {% endblock content %}
