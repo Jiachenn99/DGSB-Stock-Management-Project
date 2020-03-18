@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from main.forms import NameForm, PurchasingForm, OrderForm
 from main.models import Purchasing
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.db.models import Q
+from main.forms import *
+from main.models import *
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
@@ -75,6 +78,46 @@ def order(request):
     form = OrderForm()
    
     return render(request, 'main/order.html',{'form': form})
+
+def addItem(request, form_name):
+    
+    print(form_name)
+
+    if request.method != 'POST':
+        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        # No data submitted; create a blank form
+        form = form_object()
+    else:
+        print("i have been POST here " + form_name)
+        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        # POST data submitted; process data
+        form = form_object(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main:index')
+    
+    context = {'form': form, 'form_name': form_name}
+    return render(request, 'main/addItem.html', context)
+
+def findForm(form_type):
+    switch={
+        'Supplier' : SupplierForm,
+        'Purchasing' : PurchasingForm,
+        'Name' : NameForm,
+        'Tools' : ToolsForm,
+        'Irrigation' : IrrigationForm,
+        'Spareparts' : SparepartsForm,
+        'Vehicles' : VehicleForm,
+        'Stationery' : StationeryForm,
+        'Consumables' : ConsumablesForm,
+        'Fungicide' : FungicideForm,
+        'Fertilizer' : FertilizerForm,
+        'Surfacetant' : SurfacetantForm,
+        'Herbicide' : HerbicideForm,
+        'Pesticide' : PesticideForm,
+    }
+    return switch.get(form_type)
+
 
 def get_name(request):
 

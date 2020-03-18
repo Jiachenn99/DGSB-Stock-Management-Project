@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<script>
+    $(document).ready(function(){
+      var new_action_value = "/addItem/" + $("#header1").text();
+      $("#form1").attr("action", new_action_value);
+    });
+</script>
+
+<p id="header1">{{form_name}}</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Add item</button>
+</form> 
+
+{% endblock content %}
