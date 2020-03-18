@@ -1,0 +1,93 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+{% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> {% endcomment %}
+<!-- <link rel="stylesheet" type="text/css" href="../css/style.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+  // Animate select box length
+  var searchInput = $(".search-box input");
+  var inputGroup = $(".search-box .input-group");
+  var boxWidth = inputGroup.width();
+  searchInput.focus(function(){
+    inputGroup.animate({
+      width: "300"
+    });
+  }).blur(function(){
+    inputGroup.animate({
+      width: boxWidth
+    });
+  });
+});
+</script>
+
+<body>
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-4">
+            <div class="show-entries">
+              <span>Show</span>
+              <select>
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+              </select>
+              <span>entries</span>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h2 class="text-center">Purchases</h2>
+          </div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                <input type="text" class="form-control" placeholder="Search&hellip;">
+              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Purchasing ID</th>
+                        <th>PV No.<i class="fa fa-sort"></i></th>
+                        <th>Invoice No.</th>
+                        <th>Purchasing Date<i class="fa fa-sort"></i></th>
+                        <th>Description</th>
+                        <th>Supplier ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <!-- Need to import MyMQL data here -->
+
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

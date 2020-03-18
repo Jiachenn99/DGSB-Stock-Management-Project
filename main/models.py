@@ -8,9 +8,8 @@ class Supplier(models.Model):
     description = models.CharField(max_length = 80)
     class Meta:
         db_table = "Supplier"
-
     def __str__(self):
-        return self.supplier_name
+      return self.supplier_name
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
@@ -21,9 +20,9 @@ class Purchasing(models.Model):
     description = models.CharField(max_length = 100)
     class Meta:
         db_table = "Purchasing"
-
     def __str__(self):
         return self.pv_no
+
 
 class Irrigation(models.Model):
     irrigation_id = models.AutoField(primary_key = True)
@@ -157,7 +156,6 @@ class Pesticide(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "pesticide"
-
     def __str__(self):
         return self.pesticide_name
         

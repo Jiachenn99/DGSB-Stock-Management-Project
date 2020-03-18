@@ -6,6 +6,7 @@ class SupplierForm(forms.ModelForm):
         model = Supplier 
         fields = "__all__"
 
+
 class PurchasingForm(forms.ModelForm):
     class Meta:
         model = Purchasing
@@ -68,3 +69,4 @@ class PesticideForm(forms.ModelForm):
     class Meta:
         model = Pesticide
         fields = "__all__"
+    your_name = forms.CharField(label='Your name', max_length=100)

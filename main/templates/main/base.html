@@ -70,6 +70,7 @@
                         <li>
                             <a href="{% url 'register:register_main'%}">Add User</a>
                         </li>
+
                     </ul>
                 </li>
 
@@ -79,12 +80,19 @@
                         Catagory
                     </a>
                 </li>
-                <li class="">
-                    <a href="{% url 'main:dashboard'%}">
-                        <i class="fas fa-shopping-cart"></i>
-                        Order
-                    </a>
-                </li>
+                <li>
+                <a href="#purchasesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    Order/Purchases
+                </a>
+                <ul class="collapse list-unstyled" id="purchasesSubmenu">
+                        <li>
+                            <a href="{% url 'main:order'%}">Order</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'main:purchases'%}">Purchases</a>
+                        </li>
+                </ul>
 
                 <li>
                     <a href="/logout">
