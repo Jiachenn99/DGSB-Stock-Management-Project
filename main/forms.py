@@ -28,3 +28,4 @@ class OrderForm(forms.Form):
     # Item_Name_Irrigation = forms.ModelChoiceField(queryset=Irrigation.objects.order_by('irrigation_item_name').values_list('irrigation_item_name', flat=True).distinct());
     Quantity = forms.IntegerField(min_value=1)
     Description = forms.CharField()
+

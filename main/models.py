@@ -24,12 +24,10 @@ class Purchasing(models.Model):
     pv_no = models.CharField(max_length = 20)
     invoice_no = models.CharField(max_length = 20)
     purchasing_date = models.DateField(auto_now=True)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE)
     description = models.CharField(max_length = 100)
     class Meta:
         db_table = "Purchasing"
-    def __str__(self):
-        return self.pv_no
 
 
 class Irrigation(models.Model):

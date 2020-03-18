@@ -25,7 +25,7 @@ font-size: 15px;
     margin: 0 0 10px;
 min-height: 45px;
 }
-.table-title h2 {
+.table-title h1 {
     margin: 5px 0 0;
     font-size: 24px;
 }
@@ -107,7 +107,6 @@ table.table td i {
     margin: 0 0 5px;
 }
 .pagination li a {
-    border: none;
     font-size: 13px;
     min-width: 30px;
     min-height: 30px;
@@ -134,6 +133,7 @@ table.table td i {
     font-size: 16px;
     padding-top: 6px
 }
+
 .hint-text {
     float: left;
     margin-top: 10px;
