@@ -34,6 +34,9 @@ class Irrigation(models.Model):
     class Meta:
         db_table = "irrigation"
 
+    def __str__(self):
+        return self.irrigation_item_name
+
 class Tools(models.Model):
     tool_id = models.AutoField(primary_key=True)
     tool_name = models.CharField(max_length = 50)
@@ -42,6 +45,9 @@ class Tools(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "tools"
+
+    def __str__(self):
+        return self.tool_name
 
 class Spareparts(models.Model):
     spare_parts_id = models.AutoField(primary_key = True)
@@ -53,6 +59,9 @@ class Spareparts(models.Model):
     class Meta:
         db_table = "spare_parts"
 
+    def __str__(self):
+        return self.spare_parts_name
+
 class Vehicle(models.Model):
     vehicle_id = models.AutoField(primary_key=True);   
     vehicle_type = models.CharField(max_length = 30)
@@ -62,6 +71,9 @@ class Vehicle(models.Model):
     spare_parts_assigned = models.ForeignKey(Spareparts, on_delete=models.CASCADE)
     class Meta:
         db_table = "vehicle"
+
+    def __str__(self):
+        return self.vehicle_name
 
 class Stationery(models.Model):
     stationery_id = models.AutoField(primary_key=True)
