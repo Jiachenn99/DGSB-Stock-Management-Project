@@ -101,10 +101,10 @@ $(document).ready(function(){
             </table>
             
             {% comment %} {% include "main/pagination.html" %} {% endcomment %}
-            
+            {% if items.has_other_pages %}
             <div class="clearfix">
             <div class = "hint-text">Showing <b> {{ items }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
-            {% if items.has_other_pages %}
+            
               <ul class="pagination">
                 {% if items.has_previous %}
                   <li class = "page-item"><a class="page-link" href="?page={{ items.previous_page_number }}">&laquo;</a></li>
@@ -124,8 +124,8 @@ $(document).ready(function(){
                   <li class="page-item disabled"><span>&raquo;</span></li>
                 {% endif %}
               </ul>
-            {% endif %}
             </div>    
+            {% endif %}
       </div> 
     </div>
 </body>

@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from main.forms import NameForm, PurchasingForm, OrderForm
 from main.models import Purchasing
@@ -31,7 +30,9 @@ def purchases(request):
     query_count = Purchasing.objects.all().count()
 
     a = 5
-    
+    if request.method == 'POST':
+       a = request.POST['drop1']
+
     #paginator
     page = request.GET.get('page', 1)
     paginator = Paginator(query_results, a)
