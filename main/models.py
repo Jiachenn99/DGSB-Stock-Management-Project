@@ -7,18 +7,22 @@ class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 80)
     class Meta:
-        db_table = "supplier"
-
+        db_table = "Supplier"
+    def __str__(self):
+      return self.supplier_name
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
     pv_no = models.CharField(max_length = 20)
     invoice_no = models.CharField(max_length = 20)
-    purchasing_date = models.CharField(max_length = 20)
+    purchasing_date = models.DateField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     description = models.CharField(max_length = 100)
     class Meta:
-        db_table = "purchasing"
+        db_table = "Purchasing"
+    def __str__(self):
+        return self.pv_no
+
 
 class Irrigation(models.Model):
     irrigation_id = models.AutoField(primary_key = True)
@@ -30,6 +34,9 @@ class Irrigation(models.Model):
     class Meta:
         db_table = "irrigation"
 
+    def __str__(self):
+        return self.irrigation_item_name
+
 class Tools(models.Model):
     tool_id = models.AutoField(primary_key=True)
     tool_name = models.CharField(max_length = 50)
@@ -38,6 +45,9 @@ class Tools(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "tools"
+
+    def __str__(self):
+        return self.tool_name
 
 class Spareparts(models.Model):
     spare_parts_id = models.AutoField(primary_key = True)
@@ -49,6 +59,9 @@ class Spareparts(models.Model):
     class Meta:
         db_table = "spare_parts"
 
+    def __str__(self):
+        return self.spare_parts_name
+
 class Vehicle(models.Model):
     vehicle_id = models.AutoField(primary_key=True);   
     vehicle_type = models.CharField(max_length = 30)
@@ -59,6 +72,9 @@ class Vehicle(models.Model):
     class Meta:
         db_table = "vehicle"
 
+    def __str__(self):
+        return self.vehicle_name
+
 class Stationery(models.Model):
     stationery_id = models.AutoField(primary_key=True)
     stationery_name = models.CharField(max_length = 50)
@@ -67,6 +83,9 @@ class Stationery(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "stationery"
+
+    def __str__(self):
+        return self.stationery_name
 
 class Consumables(models.Model):
     consumables_id = models.AutoField(primary_key=True)
@@ -78,6 +97,9 @@ class Consumables(models.Model):
     class Meta:
         db_table = "consumables"
 
+    def __str__(self):
+        return self.consumables_name
+
 class Fungicide(models.Model):
     fungicide_id = models.AutoField(primary_key=True)
     fungicide_name = models.CharField(max_length = 50)
@@ -87,6 +109,9 @@ class Fungicide(models.Model):
     class Meta:
         db_table = "fungicide"
 
+    def __str__(self):
+        return self.fungicide_name
+
 class Fertilizer(models.Model):
     fertilizer_id = models.AutoField(primary_key=True)
     fertilizer_name = models.CharField(max_length = 50)
@@ -95,6 +120,9 @@ class Fertilizer(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "fertilizer"
+    
+    def __str__(self):
+        return self.fertilizer_name
 
 class Surfacetant(models.Model):
     surfacetant_id = models.AutoField(primary_key=True)
@@ -105,6 +133,9 @@ class Surfacetant(models.Model):
     class Meta:
         db_table = "surfacetant"
 
+    def __str__(self):
+        return self.surfacetant_name
+
 class Herbicide(models.Model):
     herbicide_id = models.AutoField(primary_key=True)
     herbicide_name = models.CharField(max_length = 50)
@@ -114,6 +145,9 @@ class Herbicide(models.Model):
     class Meta:
         db_table = "herbicide"
 
+    def __str__(self):
+        return self.herbicide_name
+
 class Pesticide(models.Model):
     pesticide_id = models.AutoField(primary_key=True)
     pesticide_name = models.CharField(max_length = 50)
@@ -122,12 +156,6 @@ class Pesticide(models.Model):
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "pesticide"
-
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.pesticide_name
+        
