@@ -40,27 +40,24 @@
 
 </div>
 
-<!-- table -->
 <table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
     <thead>
         <tr>
-            <th>#</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Age</th>
-            <th>City</th>
-            <th>Country</th>
+            {% for headers in headers_list %}
+                <th> {{ headers }}</th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>
+        {% for dicts in result %}
         <tr>
-            <td>1</td>
-            <td>Anna</td>
-            <td>Pitt</td>
-            <td>35</td>
-            <td>New York</td>
-            <td>USA</td>
+            {% for value in dicts.values %}
+                <td>
+                    {{ value }}
+                </td>
+            {% endfor %}    
         </tr>
+    {% endfor %}
     </tbody>
 </table>
 
