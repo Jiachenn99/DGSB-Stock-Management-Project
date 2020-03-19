@@ -44,7 +44,7 @@ $(document).ready(function(){
                           <option value = "15"{% if a == "15" %}selected{%endif%}>15</option>
                           <option value = "20"{% if a == "20" %}selected{%endif%}>20</option>
                         </select>
-                        <input type="submit" value="Submit">
+                        <input type="submit" class="btn btn-outline-dark" value="Submit">
                         </form>
                         
                         
@@ -57,11 +57,16 @@ $(document).ready(function(){
                     <div class="col-sm-4">
                       <div class="search-box">
                         <div class="input-group">
+                            
                             <form method="get" action="{% url 'main:purchases' %}">
                             {% csrf_token %}
                             {% comment %} <button type="submit" ><i class="fas fa-search"></i></button>  {% endcomment %}
-                            <input type="text" name="q" class="form-control" placeholder="Search&hellip;">  
+                            <div class="input-group-addon">
+                            <i class="fas fa-search"></i>
+                            </div>
+                            <input type="text" name="q" class="form-control" placeholder="Search . . .">                 
                             </form>
+                            
                         </div>
                       </div>
                   </div>
