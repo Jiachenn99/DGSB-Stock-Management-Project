@@ -19,7 +19,7 @@ class Purchasing(models.Model):
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
-        return self.pv_no
+        return str(self.pk) # Have to change this to something else
 
 class Spareparts(models.Model):
     spare_parts_name = models.CharField(max_length = 30)
