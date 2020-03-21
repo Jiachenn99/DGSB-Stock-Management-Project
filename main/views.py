@@ -91,6 +91,7 @@ def get_name(request):
             return HttpResponseRedirect('/thanks/')
 
     c = db.cursor()
+    # addItem(request, Herbicide)
 
     c.execute("""SELECT * FROM herbicide""")
 
