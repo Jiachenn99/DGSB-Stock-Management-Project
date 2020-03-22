@@ -13,6 +13,5 @@ urlpatterns = [
     path(r'vehicles/', views.vehicles, name='vehicles'),
     path(r'testing/', views.get_name, name='get_name'),
     path(r'addItem/<str:form_name>', views.addItem, name='addItem'),
-    
     path(r'userprofile/', views.userprofile, name='userprofile'),
 ]
