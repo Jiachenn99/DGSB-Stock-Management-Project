@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from main.forms import *
 from main.models import *
+from main.query_functions import *
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
-
+results_list = []
+header_list = []
 
 def dashboard(request):
     context = {"dashboard": "active"}
@@ -28,7 +30,9 @@ def order(request):
     return render(request, 'main/order.html',context)
   
 def irrigation(request):
-    context = {"irrigation": "active"}
+    results_list, header_list = get_all_results(Irrigation)
+
+    context = {"irrigation": "active", 'result': results_list, 'headers_list': header_list}
     return render(request, 'main/irrigation.html',context)
 
 def plantation(request):
