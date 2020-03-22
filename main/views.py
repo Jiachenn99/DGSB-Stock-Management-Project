@@ -19,7 +19,6 @@ def register(request):
     context = {"register": "active"}
     return render(request, 'register/register.html',context)
 
-<<<<<<< Updated upstream
 def purchases(request):
     context = {"purchases": "active"}
     return render(request, 'main/purchases.html',context)
@@ -102,12 +101,7 @@ def get_name(request):
     some_dict = {'result': r2,'form':form2}
 
     return render(request,'main/testing.html',some_dict)
-=======
-def inventory(request):
-    context = {"inventory": "active"}
-    return render(request, 'main/inventory.html',context)
 
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
->>>>>>> Stashed changes
