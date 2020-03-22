@@ -109,12 +109,14 @@ table.table td i {
 }    
 
 /* ------------------------------ PAGINTION BEGIN ------------------------------ */
+
 .pagination {
     float: right;
     margin: 0 0 5px;
     
 }
-.pagination li  {
+.pagination li a {
+    border:none;
     font-size: 13px;
     min-width: 30px;
     min-height: 30px;
@@ -122,7 +124,7 @@ table.table td i {
     color: #999;
     margin: 0 2px;
     line-height: 30px;
-    border-radius: 30px !important;
+    border-radius: 30px!important;
     text-align: center;
 }
 .pagination li a:hover {
@@ -146,9 +148,9 @@ table.table td i {
     margin-top: 10px;
     font-size: 13px;
 }
-  
-/* ------------------------------ PAGINTION END ------------------------------ */
 
+
+/* ------------------------------ PAGINTION END ------------------------------ */
 
 a,
 a:hover,

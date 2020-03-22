@@ -104,7 +104,7 @@ $(document).ready(function(){
 
                 </tbody>
             </table>
-            
+        
             {% comment %} {% include "main/pagination.html" %} {% endcomment %}
             {% if items.has_other_pages %}
             <div class="clearfix">
@@ -112,21 +112,21 @@ $(document).ready(function(){
             
               <ul class="pagination">
                 {% if items.has_previous %}
-                  <li class = "page-item"><a class="page-link" href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+                  <li class = "page-item "><a class="page-link" href="?page={{ items.previous_page_number }}">Previous</a></li>
                 {% else %}
-                  <li class="page-item disabled"><span>&laquo;</span></li>
+                  <li class="page-item disabled "><a class="page-link" href=""><span>Previous</span></a></li>
                 {% endif %}
                 {% for i in items.paginator.page_range %}
                   {% if items.number == i %}
-                    <li class="page-item active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    <li class="page-item active "><a class="page-link" href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
                   {% else %}
-                    <li class = "page-item" ><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    <li class = "page-item " ><a class="" href="?page={{ i }}">{{ i }}</a></li>
                   {% endif %}
                 {% endfor %}
                 {% if items.has_next %}
-                  <li class = "page-item"><a class="page-link" href="?page={{ items.next_page_number }}">&raquo;</a></li>
+                  <li class = "page-item "><a class="page-link" href="?page={{ items.next_page_number }}">Next</a></li>
                 {% else %}
-                  <li class="page-item disabled"><span>&raquo;</span></li>
+                  <li class="page-item disabled "><a class="page-link" href=""><span>Next</span></a></li>
                 {% endif %}
               </ul>
             </div>    
