@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect
 from main.forms import *
 from main.models import *
 from main.query_functions import *
+from main.get_data import *
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
-results_list = []
-header_list = []
 
 def dashboard(request):
     context = {"dashboard": "active"}
@@ -30,18 +29,16 @@ def order(request):
     return render(request, 'main/order.html',context)
   
 def irrigation(request):
-    results_list, header_list = get_all_results(Irrigation)
-
-    context = {"irrigation": "active", 'result': results_list, 'headers_list': header_list}
-    return render(request, 'main/irrigation.html',context)
+    context = get_irrigation()
+    return render(request, 'main/irrigation.html', context)
 
 def plantation(request):
-    context = {"plantation": "active"}
+    context = get_plantation()
     return render(request, 'main/plantation.html',context)
 
-def vehicles(request):
-    context = {"vehicles": "active"}
-    return render(request, 'main/vehicles.html',context)
+def vehicle(request):
+    context = get_vehicle()
+    return render(request, 'main/vehicle.html',context)
 
 def addItem(request, form_name):
     
@@ -52,7 +49,6 @@ def addItem(request, form_name):
         # No data submitted; create a blank form
         form = form_object()
     else:
-        print("i have been POST here " + form_name)
         form_object = findForm(form_name)  # find the specific form according to the string value passed
         # POST data submitted; process data
         form = form_object(data=request.POST)
@@ -71,7 +67,7 @@ def findForm(form_type):
         'Tools' : ToolsForm,
         'Irrigation' : IrrigationForm,
         'Spareparts' : SparepartsForm,
-        'Vehicles' : VehicleForm,
+        'Vehicle' : VehicleForm,
         'Stationery' : StationeryForm,
         'Consumables' : ConsumablesForm,
         'Fungicide' : FungicideForm,

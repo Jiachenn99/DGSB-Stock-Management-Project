@@ -29,13 +29,13 @@
 <table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
     <thead>
         <tr>
-            {% for headers in headers_list %}
+            {% for headers in headers_Irrigation %}
                 <th> {{ headers }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-        {% for dicts in result %}
+        {% for dicts in results_Irrigation %}
         <tr>
             {% for value in dicts.values %}
                 <td>
