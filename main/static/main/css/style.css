@@ -57,12 +57,12 @@ border-radius: 0;
 }
 .search-box .input-group-addon {
 border: none;
-border: none;
 background: transparent;
 position: absolute;
 z-index: 9;
 top: 5px;
 }
+
 .search-box input {
     height: 34px;
     padding-left: 28px;   

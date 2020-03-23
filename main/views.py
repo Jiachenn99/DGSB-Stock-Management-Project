@@ -26,14 +26,28 @@ def register(request):
 
 
 def purchases(request):
+    #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
-
+    
+    #No of Queries
     a = 5
     if request.method == 'POST':
        a = request.POST['drop1']
 
-    #paginator
+    #Search query
+    query = request.GET.get("q")
+    if query:
+        query_results = query_results.filter(
+            Q(purchasing_id__icontains=query) |
+            Q(pv_no__icontains=query) |
+            Q(invoice_no__icontains=query) |
+            Q(purchasing_date__icontains=query) |
+            Q(description__icontains=query) |
+            Q(supplier__supplier_name__icontains=query) 
+            ).distinct()
+
+    #Paginator
     page = request.GET.get('page', 1)
     paginator = Paginator(query_results, a)
     try:
@@ -56,11 +70,6 @@ def purchases(request):
          
         }
     return render(request, 'main/purchases.html',context)
-
-
-def order(request):
-    context = {"order": "active"}
-    return render(request, 'main/order.html',context)
   
 def irrigation(request):
     context = {"irrigation": "active"}
