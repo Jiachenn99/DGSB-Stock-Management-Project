@@ -14,7 +14,7 @@ def add():
     return 0 
 
 # Retrieve
-def get_all_results(table, condition = None):
+def get_all_results(table, **field_with_value):
     header_list = []
     # List of dictionaries of key:value pairs of column: value
     results_list = table.objects.values()
