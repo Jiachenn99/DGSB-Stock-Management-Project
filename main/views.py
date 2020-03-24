@@ -104,7 +104,12 @@ def get_name(request):
     header_list = []
     results_list = []
 
-    addItem(request, Herbicide)
+    if request.method == "POST":
+        if form2.is_valid:
+            return HttpResponseRedirect('/thanks/')
+
+    c = db.cursor()
+    # addItem(request, Herbicide)
 
     results_list, header_list = get_all_results(Herbicide)
 
