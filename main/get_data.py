@@ -8,13 +8,13 @@ def get_irrigation():
     return context
 
 def get_plantation():
-    results_Tools, headers_Tools = get_all_results(Tools)
-    results_Consumables, headers_Consumables = get_all_results(Consumables)
-    results_Fungicide, headers_Fungicide = get_all_results(Fungicide)
+    results_Tools = get_all_results(Tools)
+    results_Consumables = get_all_results(Consumables)
+    results_Fungicide = get_all_results(Fungicide)
     context = {"plantation": "active", 
-    'results_Tools': results_Tools, 'headers_Tools': headers_Tools,
-    'results_Consumables': results_Consumables, 'headers_Consumables': headers_Consumables,
-    'results_Fungicide': results_Fungicide, 'headers_Fungicide': headers_Fungicide,
+    'results_Tools': results_Tools, 
+    'results_Consumables': results_Consumables, 
+    'results_Fungicide': results_Fungicide,
     }
 
     return context
