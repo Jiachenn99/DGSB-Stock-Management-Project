@@ -1,5 +1,8 @@
 from main.models import *
 from main.forms import *
+from django.db.models import Q
+from functools import reduce
+import operator
 
 # Focusing on CRUD
 # C - Create
@@ -7,29 +10,44 @@ from main.forms import *
 # U - Update
 # D - Delete
 
-# Create
-def add():
-
-
-    return 0 
-
 # Retrieve
-def get_all_results(table, **field_with_value):
-    header_list = []
-    # List of dictionaries of key:value pairs of column: value
-    results_list = table.objects.values()
+def get_all_results(table):
+    '''
+    Retrieves all rows of a particular table
 
-    # Get table headers
-    for dicts in results_list:
-        for keys in dicts.keys():
-            header_list.append(keys)
-            continue
-        break
+    Args:
+    table: name of database table
 
-    return results_list, header_list
+    Returns: 
+    return_list: QuerySet object of dicts of object, with dict being {'field_name': value...}
+    '''
 
+    return_list = table.objects.all().values()
 
-def delete_from_table(table, **condition):
+    return return_list
 
+# Delete
+def delete_from_table(table, condition, count=None):
+    '''
+    Deletes a single object matching the filter
 
+    Args:
+    table = name of database table
+    condition = dictionary of items user wants to delete. eg. {'id': 4...}
+
+    Returns:
+    None
+    '''
+    query = table.objects.filter(reduce(operator.and_, (Q(**d) for d in [dict([i]) for i in condition.items()])))
+
+    table.objects.delete(query)
+
+    return query
+
+def delete_multiple_from_table(table, condition):
+    '''
+    Args:
+    condition: list of dicts
+
+    '''
     return 0
