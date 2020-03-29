@@ -39,7 +39,7 @@ def irrigation(request):
     results = get_all_results(Irrigation)
     cat_list = ['Irrigation']
     context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation"}
-    return render(request, 'main/irrigation_2.html', context)
+    return render(request, 'main/irrigation.html', context)
 
 def plantation(request):
     
