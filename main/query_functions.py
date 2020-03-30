@@ -51,3 +51,15 @@ def delete_multiple_from_table(table, condition):
 
     '''
     return 0
+
+def purchasing_query(query_results, query):
+    if query:
+        query_results = query_results.filter(
+            Q(purchasing_id__icontains=query) |
+            Q(pv_no__icontains=query) |
+            Q(invoice_no__icontains=query) |
+            Q(purchasing_date__icontains=query) |
+            Q(description__icontains=query) |
+            Q(supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return query_results

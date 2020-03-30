@@ -41,15 +41,8 @@ def purchases(request):
 
     #Search query
     query = request.GET.get("q")
-    if query:
-        query_results = query_results.filter(
-            Q(purchasing_id__icontains=query) |
-            Q(pv_no__icontains=query) |
-            Q(invoice_no__icontains=query) |
-            Q(purchasing_date__icontains=query) |
-            Q(description__icontains=query) |
-            Q(supplier__supplier_name__icontains=query) 
-            ).distinct()
+    if request.method == 'GET':
+        query_results = purchasing_query(query_results, query)
 
     #Paginator
     page = request.GET.get('page', 1)
@@ -101,7 +94,7 @@ def order(request):
     return render(request, 'main/order.html',{'form': form})
 
 def supplier(request):
-
+    
     results = get_supplier()
     cat_list = ['Supplier']
 
@@ -145,7 +138,6 @@ def findForm(form_type):
         'Pesticide' : PesticideForm,
     }
     return switch.get(form_type)
-
 
 def userprofile(request):
     context = {"userprofile": "active"}
