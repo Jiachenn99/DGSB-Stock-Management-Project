@@ -40,28 +40,17 @@
 
 </div>
 
-<<<<<<< HEAD:main/templates/main/vehicles.html
-<table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
-    <thead>
-        <tr>
-            {% for headers in headers_list %}
-=======
 <!-- table -->
 <table id="table1" class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
     <thead>
         <tr>
             {% for headers in headers_Vehicle %}
->>>>>>> dynamic_tables:main/templates/main/vehicle.html
                 <th> {{ headers }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-<<<<<<< HEAD:main/templates/main/vehicles.html
-        {% for dicts in result %}
-=======
         {% for dicts in results_Vehicle %}
->>>>>>> dynamic_tables:main/templates/main/vehicle.html
         <tr>
             {% for value in dicts.values %}
                 <td>

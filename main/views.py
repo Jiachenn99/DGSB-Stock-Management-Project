@@ -80,7 +80,7 @@ def irrigation(request):
     results = get_all_results(Irrigation)
     cat_list = ['Irrigation']
     context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation"}
-    return render(request, 'main/irrigation_2.html', context)
+    return render(request, 'main/irrigation.html', context)
 
 def plantation(request):
     
@@ -90,9 +90,9 @@ def plantation(request):
     context = {'results': results,'cat_list': cat_list, 'label':"Plantation"}
     return render(request, 'main/plantation.html',context)
 
-def vehicles(request):
-    context = {"vehicles": "active"}
-    return render(request, 'main/vehicles.html',context)
+def vehicle(request):
+    context = {"vehicle": "active"}
+    return render(request, 'main/vehicle.html',context)
     
 def order(request):
     context = {"order": "active"}
@@ -140,27 +140,19 @@ def findForm(form_type):
 
 
 def get_name(request):
-
     # Initializing the form
     form2 = PurchasingForm
     # form_class = NameForm
     # form = form_class(request.POST or None)
-
     if request.method == "POST":
         if form2.is_valid:
             return HttpResponseRedirect('/thanks/')
-
     c = db.cursor()
     # addItem(request, Herbicide)
-
     c.execute("""SELECT * FROM herbicide""")
-
     r2 = c.fetchall()
-
     # r3 = isinstance(r2, tuple)
-
     some_dict = {'result': r2,'form':form2}
-
     return render(request,'main/testing.html',some_dict)
 
 def userprofile(request):
