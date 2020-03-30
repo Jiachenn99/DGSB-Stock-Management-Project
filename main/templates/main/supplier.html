@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between">
+    <!-- selection of subcategories -->
+    <div class="p-2">
+        <form>
+            <div class="form-group">
+                <select class="form-control" id="sel1">
+                    <option>Supplier</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!--display current subcategory-->
+    <div class="p-2">
+        <h2>Supplier</h2>
+    </div>
+
+    <!-- add item button -->
+    <div class="p-2">
+        <a href="{% url 'main:addItem' form_name='Supplier' %}" class="btn btn-primary" role="button">Add Item</a>
+    </div>
+
+</div>
+
+<!-- table -->
+<table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+    <thead>
+        <tr>
+            <th>Supplier ID</th>
+            <th>Supplier Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dicts in results.results_Supplier %}
+        <tr>
+            {% for value in dicts.values %}
+                <td>
+                    {{ value }}
+                </td>
+            {% endfor %}    
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

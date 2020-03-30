@@ -100,6 +100,14 @@ def order(request):
    
     return render(request, 'main/order.html',{'form': form})
 
+def supplier(request):
+
+    results = get_supplier()
+    cat_list = ['Supplier']
+
+    context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}
+    return render(request, 'main/supplier.html', context)
+
 def addItem(request, form_name):
     # Create and update database
     print(form_name)
@@ -138,22 +146,6 @@ def findForm(form_type):
     }
     return switch.get(form_type)
 
-
-def get_name(request):
-    # Initializing the form
-    form2 = PurchasingForm
-    # form_class = NameForm
-    # form = form_class(request.POST or None)
-    if request.method == "POST":
-        if form2.is_valid:
-            return HttpResponseRedirect('/thanks/')
-    c = db.cursor()
-    # addItem(request, Herbicide)
-    c.execute("""SELECT * FROM herbicide""")
-    r2 = c.fetchall()
-    # r3 = isinstance(r2, tuple)
-    some_dict = {'result': r2,'form':form2}
-    return render(request,'main/testing.html',some_dict)
 
 def userprofile(request):
     context = {"userprofile": "active"}
