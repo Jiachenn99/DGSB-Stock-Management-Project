@@ -70,6 +70,9 @@
                             <a href="#">Manage User</a>
                         </li>
                         <li>
+                            <a href="{% url 'main:userprofile'%}">User Profile</a>
+                        </li>
+                        <li>
                             <a href="{% url 'register:register_main'%}">Add User</a>
                         </li>
 
@@ -134,11 +137,11 @@
             </nav>
 
             {% block content %}
-            {% endblock content %}
 
-        </main>
-    </div>
-
+            {% endblock content %} 
+            
+    </main>
+</div>
 </body>
 
 </html>

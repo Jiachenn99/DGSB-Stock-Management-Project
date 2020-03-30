@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<head>
+    <title> User Profile </title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+
+<body>
+    <div id="Profilecontent" class="container-fluid"><!-- Container Begins-->
+        <p style="text-align:justify;"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp User Profile</p> 
+        <!--Header-->
+        <!--  cp Content Begins-->
+        <div title="Change Password">
+            <img src= "https://www.jing.fm/clipimg/full/115-1153324_computer-icons-user-profile-clip-art-avatar-font.png" alt="This is a test image" height="200" width="200"> <br/>
+            <br/><b>Username</b><br/> {{request.User.username}} <br/>    
+            <b>E-mail</b><br/> {{request.User.email}} <br/>
+
+            <form method="POST" class="form-group">
+                <div><b>Change Password</b></div>
+                <div>
+                    <b>Old Password</b>
+                    <input id="password1" name="password1" type="password" />
+                </div>
+
+                <div>
+                    <b>New Password</b>
+                    <input id="password2" name="password2" type="password" />
+                </div>
+
+                <div>
+                    <b>Confirm Password</b>
+                    <input id="cfrmPass" name="cfrmPass" type="password" />
+                </div>
+
+                <div class="clear">&nbsp;</div>
+                <div class="clear">&nbsp;</div>
+
+                <div>
+                    <input class="btn btn-info" type="button" name="submit" value="Submit" onclick="location.href=''"/>           
+                </div>
+            </form>
+        </div>
+    </div>
+        
+<!--Subcontent Ends-->
+    
+<!--Main Content Ends-->
+
+</body>
+
+{% endblock content%}
