@@ -7,8 +7,11 @@ from django.views.generic import ListView
 from django.db.models import Q
 from main.forms import *
 from main.models import *
+from main.query_functions import *
+from main.get_data import *
 import MySQLdb
 
+results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
     
 
@@ -21,6 +24,7 @@ def index(request):
     return render(request, 'main/index.html',context)
  
 def register(request):
+    
     context = {"register": "active"}
     return render(request, 'register/register.html',context)
 
@@ -72,11 +76,18 @@ def purchases(request):
     return render(request, 'main/purchases.html',context)
   
 def irrigation(request):
-    context = {"irrigation": "active"}
-    return render(request, 'main/irrigation.html',context)
+
+    results = get_all_results(Irrigation)
+    cat_list = ['Irrigation']
+    context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation"}
+    return render(request, 'main/irrigation_2.html', context)
 
 def plantation(request):
-    context = {"plantation": "active"}
+    
+    results = get_plantation()
+    cat_list = ['Tools','Fungicide','Consumables']
+
+    context = {'results': results,'cat_list': cat_list, 'label':"Plantation"}
     return render(request, 'main/plantation.html',context)
 
 def vehicles(request):
@@ -90,7 +101,7 @@ def order(request):
     return render(request, 'main/order.html',{'form': form})
 
 def addItem(request, form_name):
-    
+    # Create and update database
     print(form_name)
 
     if request.method != 'POST':
@@ -98,13 +109,12 @@ def addItem(request, form_name):
         # No data submitted; create a blank form
         form = form_object()
     else:
-        print("i have been POST here " + form_name)
         form_object = findForm(form_name)  # find the specific form according to the string value passed
         # POST data submitted; process data
         form = form_object(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('main:index')
+            return redirect('main:{}'.format(form_name.lower()))
     
     context = {'form': form, 'form_name': form_name}
     return render(request, 'main/addItem.html', context)
@@ -117,7 +127,7 @@ def findForm(form_type):
         'Tools' : ToolsForm,
         'Irrigation' : IrrigationForm,
         'Spareparts' : SparepartsForm,
-        'Vehicles' : VehicleForm,
+        'Vehicle' : VehicleForm,
         'Stationery' : StationeryForm,
         'Consumables' : ConsumablesForm,
         'Fungicide' : FungicideForm,
