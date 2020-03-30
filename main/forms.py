@@ -81,7 +81,7 @@ class OrderForm(forms.Form):
         fields = "__all__"
     Category = forms.ModelChoiceField(queryset=Category.objects.values_list('category_name',flat = True).distinct());
     Supplier = forms.ModelChoiceField(queryset=Supplier.objects.order_by('supplier_name').values_list('supplier_name', flat=True).distinct());
-    Item_Name = forms.ModelChoiceField(queryset=Tools.objects.order_by('tool_name').values_list('tool_name', flat=True).distinct());
+    # Item_Name = forms.ModelChoiceField(queryset=Tools.objects.order_by('tool_name').values_list('tool_name', flat=True).distinct());
     # Item_Name_Irrigation = forms.ModelChoiceField(queryset=Irrigation.objects.order_by('irrigation_item_name').values_list('irrigation_item_name', flat=True).distinct());
     Quantity = forms.IntegerField(min_value=1)
     Description = forms.CharField()
