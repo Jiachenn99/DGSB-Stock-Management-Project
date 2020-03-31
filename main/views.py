@@ -38,8 +38,9 @@ def irrigation(request):
 
     results = get_all_results(Irrigation)
     cat_list = ['Irrigation']
-    context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation"}
-    return render(request, 'main/irrigation_2.html', context)
+    context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation", 'object': Irrigation}
+
+    return render(request, 'main/irrigation.html', context)
 
 def plantation(request):
     
@@ -91,3 +92,35 @@ def findForm(form_type):
     }
     return switch.get(form_type)
 
+def delete_entry(request, pk=None, object=None, label=None):
+    switch={
+        'Supplier' : Supplier,
+        'Purchasing' : Purchasing,
+        'Tools' : Tools,
+        'Irrigation' : Irrigation,
+        'Spareparts' : Spareparts,
+        'Vehicle' : Vehicle,
+        'Stationery' : Stationery,
+        'Consumables' : Consumables,
+        'Fungicide' : Fungicide,
+        'Fertilizer' : Fertilizer,
+        'Surfacetant' : Surfacetant,
+        'Herbicide' : Herbicide,
+        'Pesticide' : Pesticide,
+    }
+
+    if request.method=="POST" and "delete_this" in request.POST:
+        for key in switch: 
+            if label == key:
+                table_to_del = switch[key]
+            else:
+                redirect('/index/')
+                # Should redirect with an error message back to the page specified by label
+
+        objects = table_to_del.objects.get(pk=pk)
+        print(f'The soon to be deleted object is: {objects.pk}\n')
+        objects.delete()
+        return redirect('/irrigation/')
+    else:
+        print("Big sad")
+    

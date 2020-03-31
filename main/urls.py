@@ -12,4 +12,5 @@ urlpatterns = [
     path('plantation/', views.plantation, name='plantation'),
     path('vehicle/', views.vehicle, name='vehicle'),
     path('addItem/<str:form_name>', views.addItem, name='addItem'),
+    path('delete/<label>/item_<pk>', views.delete_entry, name='deletion'),
 ]
