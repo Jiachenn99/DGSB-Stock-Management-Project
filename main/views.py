@@ -53,7 +53,7 @@ def plantation(request, table):
 def vehicle(request, table):
 
     results, headers = get_all_results(findTable(table))
-    cat_list = ['Vehicles', 'Spareparts']
+    cat_list = ['Vehicle', 'Spareparts']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
 
     return render(request, 'main/vehicle.html',context)

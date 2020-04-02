@@ -24,7 +24,7 @@ def get_all_results(table):
     '''
 
     results_list = table.objects.all().values()
-    headers_list = table.objects.all().values()[0].keys()
+    headers_list = [field.name for field in table._meta.get_fields()] 
 
     return results_list, headers_list
 
