@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <div id="Profilecontent" class="container-fluid"><!-- Container Begins-->
+<div class="content-wrapper ">
+    <div class="container-fluid justify-content-center"><!-- Container Begins-->
         <p style="text-align:justify;"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp User Profile</p> 
         <!--Header-->
         <!--  cp Content Begins-->
@@ -17,7 +18,7 @@
             <img src= "https://www.jing.fm/clipimg/full/115-1153324_computer-icons-user-profile-clip-art-avatar-font.png" alt="This is a test image" height="200" width="200"> <br/>
             <br/><b>Username</b><br/> {{request.User.username}} <br/>    
             <b>E-mail</b><br/> {{request.User.email}} <br/>
-
+            
             <form method="POST" class="form-group">
                 <div><b>Change Password</b></div>
                 <div>
@@ -44,7 +45,7 @@
             </form>
         </div>
     </div>
-        
+</div>    
 <!--Subcontent Ends-->
     
 <!--Main Content Ends-->

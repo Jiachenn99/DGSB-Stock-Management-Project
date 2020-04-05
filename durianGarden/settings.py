@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'main',
     # 'accounts',
     'register',
+    'accounts',
 
     # third party apps
     'bootstrap4',
@@ -101,7 +102,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -23,11 +23,9 @@ def index(request):
     context = {"index": "active"}
     return render(request, 'main/index.html',context)
  
-def register(request):
-    
-    context = {"register": "active"}
-    return render(request, 'register/register.html',context)
-
+# def register(request):
+#     context = {"register": "active"}
+#     return render(request, 'registration/register.html',context)
 
 def purchases(request):
     #Query variables
@@ -64,6 +62,7 @@ def purchases(request):
         'query_count': query_count,
          'items': items,
          'a': a,
+         'pag_template': "main/pagination.html"
          
         }
     return render(request, 'main/purchases.html',context)
@@ -142,3 +141,4 @@ def findForm(form_type):
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
+

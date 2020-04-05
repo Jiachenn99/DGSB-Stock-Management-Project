@@ -75,7 +75,7 @@ $(document).ready(function(){
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        {% comment %} <th><i class="fas fa-cog"></i></th> {% endcomment %}
+                        <th><i class="fas fa-cog justify-content-center"></i></th> 
                         <th>Purchasing ID</th>
                         <th>PV No.</th>
                         <th>Invoice No.</th>
@@ -88,10 +88,10 @@ $(document).ready(function(){
                 
                   {% for item in items %}
                   <tr> 
-                      {% comment %} <td>
+                      <td>
                                 <a class="btn btn-primary"><em class="fas fa-edit"></em></a>
                                 <a class="btn btn-danger"><em class="fas fa-trash-alt"></em></a>
-                      </td> {% endcomment %}
+                      </td> 
                       <td>{{ item.purchasing_id }}</td>
                       <td>{{ item.pv_no }}</td>
                       <td>{{ item.invoice_no }}</td>
@@ -104,10 +104,10 @@ $(document).ready(function(){
                 </tbody>
             </table>
         
-            {% comment %} {% include "main/pagination.html" %} {% endcomment %}
-            {% if items.has_other_pages %}
+            {% include pag_template %}
+            {% comment %} {% if items.has_other_pages %}
             <div class="clearfix">
-            <div class = "hint-text">Showing <b> {{ items }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
+              <div class = "hint-text">Showing <b> {{ items }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
             
               <ul class="pagination">
                 {% if items.has_previous %}
@@ -129,7 +129,7 @@ $(document).ready(function(){
                 {% endif %}
               </ul>
             </div>    
-            {% endif %}
+            {% endif %} {% endcomment %}
       </div> 
     </div>
 </body>

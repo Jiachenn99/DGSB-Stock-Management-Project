@@ -14,4 +14,5 @@ urlpatterns = [
     path(r'vehicle/', views.vehicle, name='vehicle'),
     path(r'addItem/<str:form_name>', views.addItem, name='addItem'),
     path(r'userprofile/', views.userprofile, name='userprofile'),
+    
 ]
