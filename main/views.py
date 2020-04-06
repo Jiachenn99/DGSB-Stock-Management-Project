@@ -40,7 +40,7 @@ def irrigation(request, table):
     cat_list = ['Irrigation']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
 
-    return render(request, 'main/irrigation.html', context)
+    return render(request, 'main/tables_base.html', context)
 
 def plantation(request, table):
     
@@ -48,7 +48,7 @@ def plantation(request, table):
     cat_list = ['Tools', 'Consumables', 'Fungicide']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
 
-    return render(request, 'main/plantation.html',context)
+    return render(request, 'main/tables_base.html',context)
 
 def vehicle(request, table):
 
@@ -56,7 +56,7 @@ def vehicle(request, table):
     cat_list = ['Vehicle', 'Spareparts']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
 
-    return render(request, 'main/vehicle.html',context)
+    return render(request, 'main/tables_base.html',context)
 
 def addItem(request, form_name):
     # Create and update database
