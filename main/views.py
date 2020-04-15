@@ -38,7 +38,7 @@ def irrigation(request, table):
 
     results, headers = get_all_results(findTable(table))
     cat_list = ['Irrigation']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "irrigation", 'table' : table}
 
     return render(request, 'main/tables_base.html', context)
 
@@ -46,7 +46,7 @@ def plantation(request, table):
     
     results, headers = get_all_results(findTable(table))
     cat_list = ['Tools', 'Consumables', 'Fungicide']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
 
     return render(request, 'main/tables_base.html',context)
 
@@ -54,7 +54,7 @@ def vehicle(request, table):
 
     results, headers = get_all_results(findTable(table))
     cat_list = ['Vehicle', 'Spareparts']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'table': table}
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
 
     return render(request, 'main/tables_base.html',context)
 

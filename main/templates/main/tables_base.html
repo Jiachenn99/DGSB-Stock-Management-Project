@@ -17,15 +17,15 @@
     <div class="d-flex justify-content-between">
         
         <!-- selection of subcategories -->
-        <div class="p-2">
+        <!-- <div class="p-2">
             <form>
                 <div class="form-group">
-                    <select class="form-control">
+                    <select class="form-control"> -->
                         <!-- Iterates through list of categories from views.py to display -->
-                        {% for category in cat_list %}
-                            {% if cat_list.0 %}
+                        <!-- {% for category in cat_list %}
+                            {% if cat_list.0 %} -->
                             <!-- First item of the list is the active unit -->
-                                <option id ="active_unit"> {{ category }}</option>
+                                <!-- <option id ="active_unit"> {{ category }}</option>
                             {% else %}
                                 <option>{{ category }}</option>
                             {% endif %}
@@ -33,11 +33,28 @@
                     </select>
                 </div>
             </form>
-        </div>
+        </div> -->
+
+        <!-- new drop down menu with refresh to call view function-->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <ul class="navbar-nav">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                      Subcategory
+                    </a>
+                    <div class="dropdown-menu">
+                        {% for category in cat_list %}
+                            <a class="dropdown-item" href="/{{label}}/{{category}}">{{category}}</a>
+                        {% endfor %}
+                    </div>
+                  </li>
+            </ul>
+        </nav>
 
         <!--display current subcategory-->
         <div class="p-2">
-            <h2 id ="current-table">{{ table }}</h2>
+            <h2 id ="current-table"> {{ table }} </h2>
         </div>
 
         <!-- add item button -->
