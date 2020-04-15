@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'main',
     # 'accounts',
     'register',
-    'accounts',
+    'account',
 
     # third party apps
     'bootstrap4',

@@ -67,29 +67,32 @@ def purchases(request):
         }
     return render(request, 'main/purchases.html',context)
   
-def irrigation(request):
+def irrigation(request, table):
 
-    results = get_all_results(Irrigation)
+    results, headers = get_all_results(findTable(table))
     cat_list = ['Irrigation']
-    context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation"}
-    return render(request, 'main/irrigation.html', context)
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "irrigation", 'table' : table}
 
-def plantation(request):
+    return render(request, 'main/tables_base.html', context)
+
+def plantation(request, table):
     
-    results = get_plantation()
-    cat_list = ['Tools','Fungicide','Consumables']
+    results, headers = get_all_results(findTable(table))
+    cat_list = ['Tools', 'Consumables', 'Fungicide']
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Plantation"}
-    return render(request, 'main/plantation.html',context)
+    return render(request, 'main/tables_base.html',context)
 
-def vehicle(request):
-    context = {"vehicle": "active"}
-    return render(request, 'main/vehicle.html',context)
-    
+def vehicle(request, table):
+    results, headers = get_all_results(findTable(table))
+    cat_list = ['Vehicle', 'Spareparts']
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
+
+    return render(request, 'main/tables_base.html',context)
+
 def order(request):
     context = {"order": "active"}
     form = OrderForm()
-   
     return render(request, 'main/order.html',{'form': form})
 
 def supplier(request):
@@ -123,7 +126,6 @@ def findForm(form_type):
     switch={
         'Supplier' : SupplierForm,
         'Purchasing' : PurchasingForm,
-        'Name' : NameForm,
         'Tools' : ToolsForm,
         'Irrigation' : IrrigationForm,
         'Spareparts' : SparepartsForm,
@@ -141,4 +143,53 @@ def findForm(form_type):
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
+def findTable(table):
+    switch={
+        'Supplier' : Supplier,
+        'Purchasing' : Purchasing,
+        'Tools' : Tools,
+        'Irrigation' : Irrigation,
+        'Spareparts' : Spareparts,
+        'Vehicle' : Vehicle,
+        'Stationery' : Stationery,
+        'Consumables' : Consumables,
+        'Fungicide' : Fungicide,
+        'Fertilizer' : Fertilizer,
+        'Surfacetant' : Surfacetant,
+        'Herbicide' : Herbicide,
+        'Pesticide' : Pesticide,
+    }
+    return switch.get(table)
 
+def delete_entry(request, pk=None, object=None, label=None):
+    switch={
+        'Supplier' : Supplier,
+        'Purchasing' : Purchasing,
+        'Tools' : Tools,
+        'Irrigation' : Irrigation,
+        'Spareparts' : Spareparts,
+        'Vehicle' : Vehicle,
+        'Stationery' : Stationery,
+        'Consumables' : Consumables,
+        'Fungicide' : Fungicide,
+        'Fertilizer' : Fertilizer,
+        'Surfacetant' : Surfacetant,
+        'Herbicide' : Herbicide,
+        'Pesticide' : Pesticide,
+    }
+
+    if request.method=="POST" and "delete_this" in request.POST:
+        for key in switch: 
+            if label == key:
+                table_to_del = switch[key]
+            else:
+                redirect('/index/')
+                # Should redirect with an error message back to the page specified by label
+
+        objects = table_to_del.objects.get(pk=pk)
+        print(f'The soon to be deleted object is: {objects.pk}\n')
+        objects.delete()
+        return redirect('/irrigation/')
+    else:
+        print("Big sad")
+    
