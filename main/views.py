@@ -87,7 +87,6 @@ def vehicle(request, table):
     results, headers = get_all_results(findTable(table))
     cat_list = ['Vehicle', 'Spareparts']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
-
     return render(request, 'main/tables_base.html',context)
 
 def order(request):
@@ -143,6 +142,7 @@ def findForm(form_type):
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
+    
 def findTable(table):
     switch={
         'Supplier' : Supplier,
