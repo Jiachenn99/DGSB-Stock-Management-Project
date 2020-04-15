@@ -29,4 +29,9 @@ def get_vehicle():
 
     return context
 
+def get_supplier():
+    results_Supplier = get_all_results(Supplier)
+    context = {"supplier": "active", 'results_Supplier': results_Supplier}
+
+    return context
 

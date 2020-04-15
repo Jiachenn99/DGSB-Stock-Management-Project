@@ -54,6 +54,14 @@ def vehicle(request):
     context = get_vehicle()
     return render(request, 'main/vehicle.html',context)
 
+def supplier(request):
+
+    results = get_supplier()
+    cat_list = ['Supplier']
+
+    context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}
+    return render(request, 'main/supplier.html', context)
+
 def addItem(request, form_name):
     # Create and update database
     print(form_name)

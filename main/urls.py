@@ -13,4 +13,5 @@ urlpatterns = [
     path('vehicle/', views.vehicle, name='vehicle'),
     path('addItem/<str:form_name>', views.addItem, name='addItem'),
     path('delete/<label>/item_<pk>', views.delete_entry, name='deletion'),
+    path('supplier/', views.supplier, name='supplier'),
 ]
