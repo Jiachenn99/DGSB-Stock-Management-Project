@@ -1,10 +1,16 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
+$accent: #ffb74d
+$text_color: #2f3640
+@function rem($px)
+	@return $px / 16px + 0rem
+	@return $px
 
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    position: relative;
 }
+
 
 p {
   font-family: 'Poppins', sans-serif;
@@ -25,7 +31,7 @@ font-size: 15px;
     margin: 0 0 10px;
 min-height: 45px;
 }
-.table-title h2 {
+.table-title h1 {
     margin: 5px 0 0;
     font-size: 24px;
 }
@@ -53,11 +59,12 @@ border-radius: 0;
 }
 .search-box .input-group-addon {
 border: none;
-border: none;
 background: transparent;
 position: absolute;
 z-index: 9;
+top: 5px;
 }
+
 .search-box input {
     height: 34px;
     padding-left: 28px;   
@@ -102,12 +109,16 @@ table.table td a.delete {
 table.table td i {
     font-size: 19px;
 }    
+
+/* ------------------------------ PAGINTION BEGIN ------------------------------ */
+
 .pagination {
     float: right;
     margin: 0 0 5px;
+    
 }
 .pagination li a {
-    border: none;
+    border:none;
     font-size: 13px;
     min-width: 30px;
     min-height: 30px;
@@ -115,7 +126,7 @@ table.table td i {
     color: #999;
     margin: 0 2px;
     line-height: 30px;
-    border-radius: 30px !important;
+    border-radius: 30px!important;
     text-align: center;
 }
 .pagination li a:hover {
@@ -139,6 +150,10 @@ table.table td i {
     margin-top: 10px;
     font-size: 13px;
 }
+
+
+/* ------------------------------ PAGINTION END ------------------------------ */
+
 a,
 a:hover,
 a:focus{
@@ -393,3 +408,19 @@ a.article:hover {
         display: none;
     }
 }
+#Profilecontent {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 15;
+    top: 30%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color:#999;
+    
+}
+

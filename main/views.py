@@ -1,5 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
+from main.forms import NameForm, PurchasingForm, OrderForm
+from main.models import Purchasing
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView
+from django.db.models import Q
 from main.forms import *
 from main.models import *
 from main.query_functions import *
@@ -8,6 +13,7 @@ import MySQLdb
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
+    
 
 def dashboard(request):
     context = {"dashboard": "active"}
@@ -16,23 +22,50 @@ def dashboard(request):
 def index(request):
     context = {"index": "active"}
     return render(request, 'main/index.html',context)
-
-def register(request):
-    
-    context = {"register": "active"}
-    return render(request, 'register/register.html',context)
+ 
+# def register(request):
+#     context = {"register": "active"}
+#     return render(request, 'registration/register.html',context)
 
 def purchases(request):
+    #Query variables
+    query_results = Purchasing.objects.all()
+    query_count = Purchasing.objects.all().count()
+    
+    #No of Queries
+    a = 5
+    if request.method == 'POST':
+       a = request.POST['drop1']
 
-    results_list = get_all_results(Purchasing)
+    #Search query
+    query = request.GET.get("q")
+    if request.method == 'GET':
+        query_results = purchasing_query(query_results, query)
 
-    context = {"purchases": "active",'result': results_list}
+    #Paginator
+    page = request.GET.get('page', 1)
+    paginator = Paginator(query_results, a)
+    try:
+        items = paginator.page(page)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+    except EmptyPage:
+        items = paginator.page(paginator.num_pages)
+    index = items.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 5 if index >= 5 else 0
+    end_index = index + 5 if index <= max_index -5 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+     
+    context = {
+        'query_results': query_results,
+        'query_count': query_count,
+         'items': items,
+         'a': a,
+         'pag_template': "main/pagination.html"
+         
+        }
     return render(request, 'main/purchases.html',context)
-
-def order(request):
-
-    context = {"order": "active"}
-    return render(request, 'main/order.html',context)
   
 def irrigation(request, table):
 
@@ -51,15 +84,18 @@ def plantation(request, table):
     return render(request, 'main/tables_base.html',context)
 
 def vehicle(request, table):
-
     results, headers = get_all_results(findTable(table))
     cat_list = ['Vehicle', 'Spareparts']
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
-
     return render(request, 'main/tables_base.html',context)
 
-def supplier(request):
+def order(request):
+    context = {"order": "active"}
+    form = OrderForm()
+    return render(request, 'main/order.html',{'form': form})
 
+def supplier(request):
+    
     results = get_supplier()
     cat_list = ['Supplier']
 
@@ -103,6 +139,10 @@ def findForm(form_type):
     }
     return switch.get(form_type)
 
+def userprofile(request):
+    context = {"userprofile": "active"}
+    return render(request, 'main/userprofile.html',context)
+    
 def findTable(table):
     switch={
         'Supplier' : Supplier,
