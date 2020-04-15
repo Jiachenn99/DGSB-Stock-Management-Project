@@ -72,6 +72,7 @@
                 {% for header in headers %}
                     <th> {{ header }} </th>
                 {% endfor %}
+                <th>Delete</th>
             </tr>
         </thead>
 
@@ -84,6 +85,14 @@
                         {{ value }}
                     </td>
                 {% endfor %}    
+                <td>
+                    <form action="{% url 'main:deletion' label dicts.id %}" method="POST">
+                        {% csrf_token %}
+                        <input name='pk' value="{{ dicts.id }}" hidden>
+                        <input name='object' value="{{ object }}" hidden>
+                        <button id="Deletion" class="btn btn-danger active" type='submit' name='delete_this'>Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
