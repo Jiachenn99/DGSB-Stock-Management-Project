@@ -1,6 +1,7 @@
 from main.models import *
 from main.forms import *
-from django.db.models import Q
+from django.db.models import Q, Subquery
+from django.apps import apps
 from functools import reduce
 import operator
 
@@ -51,3 +52,7 @@ def delete_multiple_from_table(table, condition):
 
     '''
     return 0
+
+def model_subclasses(mclass):
+
+    return [m for m in apps.get_models() if issubclass(m, mclass)]
