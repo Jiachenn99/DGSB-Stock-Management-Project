@@ -14,18 +14,20 @@ import operator
 # Retrieve
 def get_all_results(table):
     '''
-    Retrieves all rows of a particular table
+    Retrieves all rows and headers of a particular table
 
     Args:
     table: name of database table
 
     Returns: 
-    return_list: QuerySet object of dicts of object, with dict being {'field_name': value...}
+    results_list: QuerySet object of dicts of object, with dict being {'field_name': value...}
+    headers_list: A dictionary containing all keys (headers) of current table
     '''
 
-    return_list = table.objects.all().values()
+    results_list = table.objects.all().values()
+    headers_list = [field.name for field in table._meta.get_fields()] 
 
-    return return_list
+    return results_list, headers_list
 
 # Delete
 def delete_from_table(table, condition, count=None):

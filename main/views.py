@@ -34,25 +34,29 @@ def order(request):
     context = {"order": "active"}
     return render(request, 'main/order.html',context)
   
-def irrigation(request):
+def irrigation(request, table):
 
-    results = get_all_results(Irrigation)
+    results, headers = get_all_results(findTable(table))
     cat_list = ['Irrigation']
-    context = {'results': results, 'cat_list': cat_list, 'label':"Irrigation", 'object': Irrigation}
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "irrigation", 'table' : table}
 
-    return render(request, 'main/irrigation.html', context)
+    return render(request, 'main/tables_base.html', context)
 
-def plantation(request):
+def plantation(request, table):
     
-    results = get_plantation()
-    cat_list = ['Tools','Fungicide','Consumables']
+    results, headers = get_all_results(findTable(table))
+    cat_list = ['Tools', 'Consumables', 'Fungicide']
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Plantation"}
-    return render(request, 'main/plantation.html',context)
+    return render(request, 'main/tables_base.html',context)
 
-def vehicle(request):
-    context = get_vehicle()
-    return render(request, 'main/vehicle.html',context)
+def vehicle(request, table):
+
+    results, headers = get_all_results(findTable(table))
+    cat_list = ['Vehicle', 'Spareparts']
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
+
+    return render(request, 'main/tables_base.html',context)
 
 def supplier(request):
 
@@ -85,7 +89,6 @@ def findForm(form_type):
     switch={
         'Supplier' : SupplierForm,
         'Purchasing' : PurchasingForm,
-        'Name' : NameForm,
         'Tools' : ToolsForm,
         'Irrigation' : IrrigationForm,
         'Spareparts' : SparepartsForm,
@@ -99,6 +102,24 @@ def findForm(form_type):
         'Pesticide' : PesticideForm,
     }
     return switch.get(form_type)
+
+def findTable(table):
+    switch={
+        'Supplier' : Supplier,
+        'Purchasing' : Purchasing,
+        'Tools' : Tools,
+        'Irrigation' : Irrigation,
+        'Spareparts' : Spareparts,
+        'Vehicle' : Vehicle,
+        'Stationery' : Stationery,
+        'Consumables' : Consumables,
+        'Fungicide' : Fungicide,
+        'Fertilizer' : Fertilizer,
+        'Surfacetant' : Surfacetant,
+        'Herbicide' : Herbicide,
+        'Pesticide' : Pesticide,
+    }
+    return switch.get(table)
 
 def delete_entry(request, pk=None, object=None, label=None):
     switch={

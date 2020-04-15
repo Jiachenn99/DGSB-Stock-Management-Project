@@ -5,10 +5,10 @@
 
 
   <!--Section: Content-->
-  <section class="content">
+  <section class="">
 
     <!-- Section heading -->
-    <h3 class="text-center font-weight-bold mb-5">Dashboard</h3>
+    <h3 class="text-center font-weight-bold mb-5">Categories</h3>
 
     <!-- Grid row -->
     <div class="row">
@@ -26,12 +26,12 @@
           <div class="card-body">
 
             <!-- Title -->
-            <a href="{% url 'main:irrigation'%}" class="text-decoration-none">Irrigation</a>
+            <a href="{% url 'main:irrigation' table='Irrigation' %}" class="text-decoration-none">Irrigation</a>
             <!-- Text -->
             <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
               make up the bulk of the card's content.</p>
             <br>
-            <a href="{% url 'main:irrigation'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            <a href="{% url 'main:irrigation' table='Irrigation' %}" class="btn btn-outline-secondary" role="button">Enter</a>
 
           </div>
 
@@ -54,12 +54,12 @@
           <div class="card-body">
 
             <!-- Title -->
-            <a href="{% url 'main:plantation'%}" class="text-decoration-none">Plantation</a>
+            <a href="{% url 'main:plantation' table='Tools' %}" class="text-decoration-none">Plantation</a>
             <!-- Text -->
             <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
               make up the bulk of the card's content.</p>
             <br>
-            <a href="{% url 'main:plantation'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            <a href="{% url 'main:plantation' table='Tools' %}" class="btn btn-outline-secondary" role="button">Enter</a>
 
           </div>
 
@@ -82,12 +82,12 @@
           <div class="card-body">
 
             <!-- Title -->
-            <a href="{% url 'main:vehicle'%}" class="text-decoration-none">Vehicle</a>
+            <a href="{% url 'main:vehicle' table='Vehicle' %}" class="text-decoration-none">Vehicle</a>
             <!-- Text -->
             <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
               make up the bulk of the card's content.</p>
             <br>
-            <a href="{% url 'main:vehicle'%}" class="btn btn-outline-secondary" role="button">Enter</a>
+            <a href="{% url 'main:vehicle' table='Vehicle' %}" class="btn btn-outline-secondary" role="button">Enter</a>
 
           </div>
 
