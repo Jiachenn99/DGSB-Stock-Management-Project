@@ -26,34 +26,23 @@
 
 <div class = "container">
     <table class = 'table'>
-        {% for i in result %}
         <tr>
-            <td>
-                {{ i.0 }}
-            </td>
+            {% for headers in header_list %}
+                    <th> {{ headers }}</th>
+            {% endfor %}
 
-            <td>
-                {{ i.1 }}
-            </td>
-
-            <td>
-                {{ i.2 }}
-            </td>
-
-            <td>
-                {{ i.3 }}
-            </td>
-
-            <td>
-                {{ i.4 }}
-            </td>
         </tr>
+        {% for dicts in result %}
+            <tr>
+                {% for value in dicts.values %}
+                    <td>
+                        {{ value }}
+                    </td>
+                {% endfor %}    
+            </tr>
         {% endfor %}
-
-
     </table>
     
 </div>
-
 
 {% endblock content %}

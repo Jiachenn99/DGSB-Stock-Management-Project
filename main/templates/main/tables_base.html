@@ -1,0 +1,103 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <script>
+    $(document).ready(function(){
+      var selected_subcategory = $("#current-table").text();
+      $("select.form-control").change(function(){  // event handler for dropdown onchange
+        selected_subcategory = $("select.form-control").children("option:selected").val();  //store selected dropdown value
+        $("#current-table").text(selected_subcategory);  //display selected dropdown value
+      });
+      $("#add1").hover(function(){  // event handler for hovering over add button
+        $(this).attr("href", "/addItem/" + selected_subcategory);  // this reads selected dropdown value and passes it to view function
+      });
+    });
+    </script>
+
+    <div class="d-flex justify-content-between">
+        
+        <!-- selection of subcategories -->
+        <!-- <div class="p-2">
+            <form>
+                <div class="form-group">
+                    <select class="form-control"> -->
+                        <!-- Iterates through list of categories from views.py to display -->
+                        <!-- {% for category in cat_list %}
+                            {% if cat_list.0 %} -->
+                            <!-- First item of the list is the active unit -->
+                                <!-- <option id ="active_unit"> {{ category }}</option>
+                            {% else %}
+                                <option>{{ category }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div> -->
+
+        <!-- new drop down menu with refresh to call view function-->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <ul class="navbar-nav">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                      Subcategory
+                    </a>
+                    <div class="dropdown-menu">
+                        {% for category in cat_list %}
+                            <a class="dropdown-item" href="/{{label}}/{{category}}">{{category}}</a>
+                        {% endfor %}
+                    </div>
+                  </li>
+            </ul>
+        </nav>
+
+        <!--display current subcategory-->
+        <div class="p-2">
+            <h2 id ="current-table"> {{ table }} </h2>
+        </div>
+
+        <!-- add item button -->
+        <div class="p-2">
+            <a href="" class="btn btn-primary" role="button" id="add1">Add Item</a>
+        </div>
+
+    </div>
+
+    <!-- table -->
+    <table id="table1" class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+        <!-- headers -->
+        <thead>
+            <tr>
+                {% for header in headers %}
+                    <th> {{ header }} </th>
+                {% endfor %}
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <!-- results -->
+        <tbody>
+            {% for dicts in results %}
+            <tr>
+                {% for value in dicts.values %}
+                    <td>
+                        {{ value }}
+                    </td>
+                {% endfor %}    
+                <td>
+                    <form action="{% url 'main:deletion' label dicts.id %}" method="POST">
+                        {% csrf_token %}
+                        <input name='pk' value="{{ dicts.id }}" hidden>
+                        <input name='object' value="{{ object }}" hidden>
+                        <button id="Deletion" class="btn btn-danger active" type='submit' name='delete_this'>Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock content %}
+
