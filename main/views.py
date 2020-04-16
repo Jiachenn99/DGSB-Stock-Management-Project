@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from main.forms import NameForm, PurchasingForm, OrderForm
-from main.models import Purchasing
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.db.models import Q
@@ -14,7 +12,6 @@ import MySQLdb
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
     
-
 def dashboard(request):
     context = {"dashboard": "active"}
     return render(request, 'main/dashboard.html',context)
@@ -91,8 +88,8 @@ def vehicle(request, table):
 
 def order(request):
     context = {"order": "active"}
-    form = OrderForm()
-    return render(request, 'main/order.html',{'form': form})
+    # form = OrderForm(),{'form': form}
+    return render(request, 'main/order.html')
 
 def supplier(request):
     
