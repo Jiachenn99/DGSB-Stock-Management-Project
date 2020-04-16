@@ -54,7 +54,7 @@
 
         <!--display current subcategory-->
         <div class="p-2">
-            <h2 id ="current-table"> {{ table }} </h2>
+            <h2 id ="current-table">{{ table }}</h2>
         </div>
 
         <!-- add item button -->
@@ -69,9 +69,12 @@
         <!-- headers -->
         <thead>
             <tr>
-                {% for header in headers %}
-                    <th> {{ header }} </th>
-                {% endfor %}
+                <th> ID </th>
+                <th> Name </th>
+                <th> Quantity </th>
+                <th> Price/Unit </th>
+                <th> Description </th>
+                <th> purchasing_ID?? </th>
                 <th>Delete</th>
             </tr>
         </thead>
