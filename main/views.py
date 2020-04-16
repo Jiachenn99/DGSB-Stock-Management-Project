@@ -96,7 +96,7 @@ def order(request):
 
 def supplier(request):
     
-    results = get_supplier()
+    results, headers= get_all_results(Supplier)
     cat_list = ['Supplier']
 
     context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}

@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for dicts in results.results_Supplier %}
+        {% for dicts in results %}
         <tr>
             {% for value in dicts.values %}
                 <td>
@@ -46,5 +46,4 @@
     {% endfor %}
     </tbody>
 </table>
-
 {% endblock content %}
