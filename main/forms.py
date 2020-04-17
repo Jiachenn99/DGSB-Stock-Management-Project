@@ -82,3 +82,9 @@ class PesticideForm(forms.ModelForm):
 #     Quantity = forms.IntegerField(min_value=1)
 #     Description = forms.CharField()
 
+class OrderForm(forms.Form):
+    #from_email = forms.ModelChoiceField(queryset=Supplier.objects.values_list('email',flat = True).distinct())
+    from_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
+

@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from main.forms import *
 from main.models import *
@@ -86,10 +87,25 @@ def vehicle(request, table):
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
     return render(request, 'main/tables_base.html',context)
 
-def order(request):
-    context = {"order": "active"}
-    # form = OrderForm(),{'form': form}
-    return render(request, 'main/order.html')
+def orderView(request):
+    if request.method == 'GET':
+        form = OrderForm()
+    else:
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['jacksonlzc14@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('main:success')
+    return render(request, 'main/order.html',{'form': form})
+
+def successView(request):
+    
+    return HttpResponse('Success! Thank you for your message.')
 
 def supplier(request):
     

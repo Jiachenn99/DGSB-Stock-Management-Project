@@ -4,6 +4,8 @@ from django.utils import timezone
 # Create your models here.
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
+    phone_number = models.CharField(max_length = 20, blank = True)
+    email = models.EmailField(max_length = 254, blank = True)
     description = models.CharField(max_length = 80)
     class Meta:
         db_table = "Supplier"
