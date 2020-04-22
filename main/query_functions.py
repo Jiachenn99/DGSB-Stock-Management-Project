@@ -1,8 +1,9 @@
 from main.models import *
 from main.forms import *
-from django.db.models import Q, Subquery
-from django.apps import apps
 from functools import reduce
+from django.apps import apps
+from django.db.models import Q, Subquery,F
+
 import operator
 
 # Focusing on CRUD
@@ -47,14 +48,6 @@ def delete_from_table(table, condition, count=None):
 
     return query
 
-def delete_multiple_from_table(table, condition):
-    '''
-    Args:
-    condition: list of dicts
-
-    '''
-    return 0
-
 def purchasing_query(query_results, query):
     if query:
         query_results = query_results.filter(
@@ -66,6 +59,18 @@ def purchasing_query(query_results, query):
             Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return query_results
+
 def model_subclasses(mclass):
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
+
+# def update_value(field):
+
+
+#     return
+
+def get_category_subcat(parent_class):
+
+    categories_list = [i._meta.model.__name__ for i in model_subclasses(parent_class)]
+
+    return categories_list

@@ -45,7 +45,7 @@
                     </a>
                     <div class="dropdown-menu">
                         {% for category in cat_list %}
-                            <a class="dropdown-item" href="/{{label}}/{{category}}">{{category}}</a>
+                            <a class="dropdown-item" href="/{{label|lower}}/{{category}}">{{category}}</a>
                         {% endfor %}
                     </div>
                   </li>

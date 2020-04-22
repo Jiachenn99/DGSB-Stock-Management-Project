@@ -8,6 +8,7 @@ from main.models import *
 from main.query_functions import *
 from main.get_data import *
 import MySQLdb
+from django.http import HttpResponseNotFound
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
@@ -67,15 +68,17 @@ def purchases(request):
 def irrigation(request, table):
 
     results, headers = get_all_results(findTable(table))
-    cat_list = ['Irrigation']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "irrigation", 'table' : table}
+    cat_list = get_category_subcat(Irrigation_Tables)
+
+    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "Irrigation", 'table' : table}
 
     return render(request, 'main/tables_base.html', context)
 
 def plantation(request, table):
     
     results, headers = get_all_results(findTable(table))
-    cat_list = ['Tools', 'Consumables', 'Fungicide']
+    cat_list = get_category_subcat(Plantation_Tables)
+    
     context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
 
     return render(request, 'main/tables_base.html',context)
@@ -113,26 +116,47 @@ def addItem(request, form_name):
         form = form_object(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('main:{}'.format(form_name.lower()))
-    
+            return redirect(f'/{form_name.lower()}/{form_name}')
+
     context = {'form': form, 'form_name': form_name}
     return render(request, 'main/addItem.html', context)
 
+def addItem2(request, subcategory, category):
+    # Create and update database
+    print(subcategory)
+    child_classes_names = [i._meta.model.__name__ for i in model_subclasses(category)]
+
+    if subcategory in child_classes_names:
+        if request.method != 'POST':
+            
+            form_object = findForm(subcategory)  # find the specific form according to the string value passed
+            # No data submitted; create a blank form
+            form = form_object()
+        else:
+            form_object = findForm(subcategory)  # find the specific form according to the string value passed
+            # POST data submitted; process data
+            form = form_object(data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(f'/{category.lower()}/{subcategory}')
+    else:
+        return HttpResponseNotFound
+
 def findForm(form_type):
     switch={
-        'Supplier' : SupplierForm,
-        'Purchasing' : PurchasingForm,
-        'Tools' : ToolsForm,
-        'Irrigation' : IrrigationForm,
-        'Spareparts' : SparepartsForm,
-        'Vehicle' : VehicleForm,
-        'Stationery' : StationeryForm,
-        'Consumables' : ConsumablesForm,
-        'Fungicide' : FungicideForm,
-        'Fertilizer' : FertilizerForm,
-        'Surfacetant' : SurfacetantForm,
-        'Herbicide' : HerbicideForm,
-        'Pesticide' : PesticideForm,
+        'Supplier' :SupplierForm,
+        'Purchasing' :PurchasingForm,
+        'Tools' :ToolsForm,
+        'Irrigation' :IrrigationForm,
+        'Spareparts' :SparepartsForm,
+        'Vehicle' :VehicleForm,
+        'Stationery' :StationeryForm,
+        'Consumables' :ConsumablesForm,
+        'Fungicide' :FungicideForm,
+        'Fertilizer' :FertilizerForm,
+        'Surfacetant' :SurfacetantForm,
+        'Herbicide' :HerbicideForm,
+        'Pesticide' :PesticideForm,
     }
     return switch.get(form_type)
 
