@@ -18,7 +18,16 @@ def dashboard(request):
     return render(request, 'main/dashboard.html',context)
 
 def index(request):
-    context = {"index": "active"}
+
+    iri_cat_list = get_category_subcat(Irrigation_Tables)
+    plant_cat_list = get_category_subcat(Plantation_Tables)
+    # vehicle_cat_list  = get_category_subcat(Vehicle)
+
+    iri_table = iri_cat_list[0]
+    plant_table = plant_cat_list[0]
+    # vehicle = vehicle_cat_list[0]
+
+    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
  
 # def register(request):
@@ -65,28 +74,34 @@ def purchases(request):
         }
     return render(request, 'main/purchases.html',context)
   
-def irrigation(request, table):
+def irrigation(request, subcategory):
 
-    results, headers = get_all_results(findTable(table))
+    category = 'Irrigation_Tables'
+
     cat_list = get_category_subcat(Irrigation_Tables)
+    results = get_all_results(findTable(subcategory))   
+    results = get_supplier_name(subcategory, results)
 
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "Irrigation", 'table' : table}
+    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html', context)
 
-def plantation(request, table):
+def plantation(request, subcategory):
     
-    results, headers = get_all_results(findTable(table))
+    category = 'Plantation_Tables'
+
     cat_list = get_category_subcat(Plantation_Tables)
-    
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
+    results= get_all_results(findTable(subcategory))
+    results = get_supplier_name(subcategory, results)
+
+    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category':category}
 
     return render(request, 'main/tables_base.html',context)
 
-def vehicle(request, table):
-    results, headers = get_all_results(findTable(table))
+def vehicle(request, subcategory):
+    results= get_all_results(findTable(subcategory))
     cat_list = ['Vehicle', 'Spareparts']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
+    context = {'results': results, 'cat_list': cat_list, 'subcategory' : subcategory}
     return render(request, 'main/tables_base.html',context)
 
 def order(request):
@@ -96,51 +111,29 @@ def order(request):
 
 def supplier(request):
     
-    results, headers= get_all_results(Supplier)
+    results= get_all_results(Supplier)
     cat_list = ['Supplier']
 
     context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}
     return render(request, 'main/supplier.html', context)
 
-def addItem(request, form_name):
+def addItem(request, category, subcategory):
     # Create and update database
-    print(form_name)
 
     if request.method != 'POST':
-        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # No data submitted; create a blank form
         form = form_object()
     else:
-        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # POST data submitted; process data
-        form = form_object(data=request.POST)
+        form = form_object(data=request.POST)   
         if form.is_valid():
             form.save()
-            return redirect(f'/{form_name.lower()}/{form_name}')
+            return redirect(f'/{category}/{subcategory}')
 
-    context = {'form': form, 'form_name': form_name}
+    context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
-
-def addItem2(request, subcategory, category):
-    # Create and update database
-    print(subcategory)
-    child_classes_names = [i._meta.model.__name__ for i in model_subclasses(category)]
-
-    if subcategory in child_classes_names:
-        if request.method != 'POST':
-            
-            form_object = findForm(subcategory)  # find the specific form according to the string value passed
-            # No data submitted; create a blank form
-            form = form_object()
-        else:
-            form_object = findForm(subcategory)  # find the specific form according to the string value passed
-            # POST data submitted; process data
-            form = form_object(data=request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect(f'/{category.lower()}/{subcategory}')
-    else:
-        return HttpResponseNotFound
 
 def findForm(form_type):
     switch={
@@ -164,25 +157,8 @@ def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
     
-def findTable(table):
-    switch={
-        'Supplier' : Supplier,
-        'Purchasing' : Purchasing,
-        'Tools' : Tools,
-        'Irrigation' : Irrigation,
-        'Spareparts' : Spareparts,
-        'Vehicle' : Vehicle,
-        'Stationery' : Stationery,
-        'Consumables' : Consumables,
-        'Fungicide' : Fungicide,
-        'Fertilizer' : Fertilizer,
-        'Surfacetant' : Surfacetant,
-        'Herbicide' : Herbicide,
-        'Pesticide' : Pesticide,
-    }
-    return switch.get(table)
 
-def delete_entry(request, pk=None, object=None, label=None):
+def delete_entry(request, pk=None, subcategory=None, category=None):
     switch={
         'Supplier' : Supplier,
         'Purchasing' : Purchasing,
@@ -199,9 +175,9 @@ def delete_entry(request, pk=None, object=None, label=None):
         'Pesticide' : Pesticide,
     }
 
-    if request.method=="POST" and "delete_this" in request.POST:
+    if request.method== "POST" and "delete_this" in request.POST:
         for key in switch: 
-            if label == key:
+            if subcategory == key:
                 table_to_del = switch[key]
             else:
                 redirect('/index/')
@@ -210,7 +186,8 @@ def delete_entry(request, pk=None, object=None, label=None):
         objects = table_to_del.objects.get(pk=pk)
         print(f'The soon to be deleted object is: {objects.pk}\n')
         objects.delete()
-        return redirect('/irrigation/')
+        return redirect(f'/{category}/{subcategory}')
+
     else:
         print("Big sad")
     

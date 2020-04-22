@@ -6,7 +6,6 @@ class SupplierForm(forms.ModelForm):
         model = Supplier 
         fields = "__all__"
 
-
 class PurchasingForm(forms.ModelForm):
     class Meta:
         model = Purchasing
