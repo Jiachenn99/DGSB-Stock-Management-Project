@@ -1,6 +1,7 @@
 from main.models import *
 from main.query_functions import *
 
+
 def get_irrigation():
     results_Irrigation, headers_Irrigation = get_all_results(Irrigation)
     context = {"irrigation": "active", 'results_Irrigation': results_Irrigation, 'headers_Irrigation': headers_Irrigation}

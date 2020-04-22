@@ -8,7 +8,9 @@ from main.forms import *
 from main.models import *
 from main.query_functions import *
 from main.get_data import *
+from durianGarden.settings import EMAIL_HOST_USER
 import MySQLdb
+import datetime
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
@@ -25,7 +27,7 @@ def index(request):
 #     context = {"register": "active"}
 #     return render(request, 'registration/register.html',context)
 
-def purchases(request):
+def purchasing(request):
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
@@ -54,16 +56,22 @@ def purchases(request):
     start_index = index - 5 if index >= 5 else 0
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
-     
+    
+    results, headers= get_all_results(Purchasing)
+    cat_list = ['Purchasing']
+
     context = {
         'query_results': query_results,
         'query_count': query_count,
          'items': items,
          'a': a,
-         'pag_template': "main/pagination.html"
+         'pag_template': "main/pagination.html",
+         'results': results,
+         'cat_list': cat_list, 
+         'label':"Purchasing"
          
         }
-    return render(request, 'main/purchases.html',context)
+    return render(request, 'main/purchasing.html',context)
   
 def irrigation(request, table):
 
@@ -93,11 +101,11 @@ def orderView(request):
     else:
         form = OrderForm(request.POST)
         if form.is_valid():
-            subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
+            subject = "DurianGarden order on " + str(datetime.date.today())
+            email = form.cleaned_data['email']
             message = form.cleaned_data['message']
             try:
-                send_mail(subject, message, from_email, ['jacksonlzc14@gmail.com'])
+                send_mail(subject, message, EMAIL_HOST_USER , [email], fail_silently = False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('main:success')
@@ -105,7 +113,7 @@ def orderView(request):
 
 def successView(request):
     
-    return HttpResponse('Success! Thank you for your message.')
+    return HttpResponse('Success! Thank you for your order.')
 
 def supplier(request):
     

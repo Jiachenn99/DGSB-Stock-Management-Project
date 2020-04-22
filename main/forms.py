@@ -1,5 +1,6 @@
 from django import forms
 from main.models import *
+from django.forms import ModelChoiceField
 
 class SupplierForm(forms.ModelForm):
     class Meta:
@@ -82,9 +83,21 @@ class PesticideForm(forms.ModelForm):
 #     Quantity = forms.IntegerField(min_value=1)
 #     Description = forms.CharField()
 
-class OrderForm(forms.Form):
-    #from_email = forms.ModelChoiceField(queryset=Supplier.objects.values_list('email',flat = True).distinct())
-    from_email = forms.EmailField(required=True)
-    subject = forms.CharField(required=True)
-    message = forms.CharField(widget=forms.Textarea, required=True)
 
+# class EmailModelChoiceField(forms.ModelChoiceField):
+#     def label_from_instance(self, obj):
+#         return "%s" % (obj.email)
+
+class OrderForm(forms.Form):
+    #email = forms.EmailField(required=True)
+
+    #email = EmailModelChoiceField(queryset=Supplier.objects.all())
+    email = forms.ModelChoiceField(queryset=Supplier.objects.values_list('email',flat = True).distinct(),to_field_name='email')
+    # def __init__(self, *args, **kwargs):
+    #     super(OrderForm, self).__init__(*args, **kwargs)
+    #     self.fields['email'].queryset = Supplier.objects.all()
+    #     self.fields['email'].label_from_instance = lambda obj: "%s" % (obj.supplier_name)
+    
+    subject = ''
+    message = forms.CharField(widget=forms.Textarea, required=True)
+    
