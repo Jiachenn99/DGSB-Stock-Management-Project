@@ -17,7 +17,26 @@ results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
     
 def dashboard(request):
-    context = {"dashboard": "active"}
+    total_items = 0
+
+    count1= Spareparts.objects.all().count()
+    count2= Tools.objects.all().count()
+    count3= Stationery.objects.all().count()
+    count4= Consumables.objects.all().count()
+    count5= Fungicide.objects.all().count()
+    count6= Fertilizer.objects.all().count()
+    count7= Surfacetant.objects.all().count()
+    count8= Herbicide.objects.all().count()
+    count9= Pesticide.objects.all().count()
+    count10= Irrigation.objects.all().count()
+    
+    total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
+
+    context = {
+        "dashboard": "active",
+        'total_items': total_items
+    
+    }
     return render(request, 'main/dashboard.html',context)
 
 def index(request):
