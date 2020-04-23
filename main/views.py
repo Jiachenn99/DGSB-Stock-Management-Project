@@ -38,6 +38,8 @@ def index(request):
 #     return render(request, 'registration/register.html',context)
 
 def purchasing(request):
+    category = 'purchasing'
+    subcategory = 'Purchasing'
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
@@ -67,7 +69,7 @@ def purchasing(request):
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
     
-    results, headers= get_all_results(Purchasing)
+    results = get_all_results(Purchasing)
     cat_list = ['Purchasing']
 
     context = {
@@ -79,6 +81,7 @@ def purchasing(request):
          'results': results,
          'cat_list': cat_list, 
          'label':"Purchasing"
+         , 'subcategory' : subcategory, 'category': category
          
         }
     return render(request, 'main/purchasing.html',context)
@@ -134,16 +137,16 @@ def successView(request):
     return HttpResponse('Success! Thank you for your order.')
 
 def supplier(request):
-    
+    category = 'supplier'
+    subcategory = 'Supplier'
     results= get_all_results(Supplier)
     cat_list = ['Supplier']
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}
+    context = {'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
     return render(request, 'main/supplier.html', context)
 
 def addItem(request, category, subcategory):
     # Create and update database
-
     print('dsadsaads') 
 
     if request.method != 'POST':
@@ -156,7 +159,10 @@ def addItem(request, category, subcategory):
         form = form_object(data=request.POST)   
         if form.is_valid():
             form.save()
-            return redirect(f'/{category}/{subcategory}')
+            if subcategory == 'Purchasing' or subcategory == 'Supplier':
+                return redirect(f'/{category}/')
+            else:
+                return redirect(f'/{category}/{subcategory}')
 
     context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)

@@ -30,8 +30,8 @@ $(document).ready(function(){
 <body>
     <div class="container">
         <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
+            <div class="table-title d-flex flex-column">
+                <div class="row p-2">
                     <div class="col-sm-4">
                       <div class="show-entries">
                         
@@ -69,16 +69,18 @@ $(document).ready(function(){
                         </div>
                       </div>
                     </div>
-                  <div class="p-2">
-                  <a href="{% url 'main:addItem' form_name='Purchasing' %}" class="btn btn-primary" role="button" id="add1">Add record</a>
-                  </div>
+                  
               </div>
             </div>
-            
-            <table class="table table-bordered">
+            <div class = "d-flex flex-row-reverse">
+              <div class="p-2">
+                    <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
+              </div>
+            </div>
+            <table class="table table-bordered p-2">
                 <thead>
                     <tr>
-                        <th><i class="fas fa-cog justify-content-center"></i></th> 
+                        <th><i class="fas fa-cog"></i></th> 
                         <th>#</th>
                         <th>PV No.</th>
                         <th>Invoice No.</th>
