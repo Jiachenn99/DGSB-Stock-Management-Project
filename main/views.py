@@ -120,6 +120,8 @@ def supplier(request):
 def addItem(request, category, subcategory):
     # Create and update database
 
+    print('dsadsaads') 
+
     if request.method != 'POST':
         form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # No data submitted; create a blank form
@@ -190,4 +192,9 @@ def delete_entry(request, pk=None, subcategory=None, category=None):
 
     else:
         print("Big sad")
-    
+
+def update_entry(request, subcategory = None):
+
+
+
+    return redirect(f'/{category}/{subcategory}')
