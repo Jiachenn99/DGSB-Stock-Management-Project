@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from django.db.models import F
 from main.forms import *
 from main.models import *
 from main.query_functions import *
@@ -32,10 +33,21 @@ def dashboard(request):
     
     total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
 
+    item_lowStock = 0
+    low1 = Tools.objects.all().filter(quantity__lte=F('threshold')).count()
+    low2 = Consumables.objects.all().filter(quantity__lte=F('threshold')).count()
+    low3 = Fungicide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low4 = Fertilizer.objects.all().filter(quantity__lte=F('threshold')).count()
+    low5 = Surfacetant.objects.all().filter(quantity__lte=F('threshold')).count()
+    low6 = Herbicide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
+
+    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
     context = {
         "dashboard": "active",
-        'total_items': total_items
-    
+        'total_items': total_items,
+        'item_lowStock': item_lowStock
     }
     return render(request, 'main/dashboard.html',context)
 
