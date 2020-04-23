@@ -54,6 +54,7 @@ class Irrigation_Tables(models.Model):
     quantity = models.PositiveIntegerField(default = 0, validators=[MinValueValidator(0)])
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
+    threshold = models.PositiveIntegerField(default = 0)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         abstract = True
@@ -63,6 +64,7 @@ class Plantation_Tables(models.Model):
     quantity = models.PositiveIntegerField(default = 0, validators=[MinValueValidator(0)])
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
+    threshold = models.PositiveIntegerField(default = 0)    
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         abstract = True
