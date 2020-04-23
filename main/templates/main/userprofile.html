@@ -10,39 +10,32 @@
 
 <body>
 <div class="content-wrapper ">
-    <div class="container-fluid justify-content-center"><!-- Container Begins-->
-        <p style="text-align:justify;"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp User Profile</p> 
+    <div class="container-fluid d-flex justify-content-center flex-column align-items-center"><!-- Container Begins-->
+        <div>
+        <h1 style="text-align:justify;">User Profile</h1><br>
+        </div>
         <!--Header-->
         <!--  cp Content Begins-->
-        <div title="Change Password">
-            <img src= "https://www.jing.fm/clipimg/full/115-1153324_computer-icons-user-profile-clip-art-avatar-font.png" alt="This is a test image" height="200" width="200"> <br/>
-            <br/><b>Username</b><br/> {{request.User.username}} <br/>    
-            <b>E-mail</b><br/> {{request.User.email}} <br/>
-            
-            <form method="POST" class="form-group">
-                <div><b>Change Password</b></div>
-                <div>
-                    <b>Old Password</b>
-                    <input id="password1" name="password1" type="password" />
-                </div>
-
-                <div>
-                    <b>New Password</b>
-                    <input id="password2" name="password2" type="password" />
-                </div>
-
-                <div>
-                    <b>Confirm Password</b>
-                    <input id="cfrmPass" name="cfrmPass" type="password" />
-                </div>
-
-                <div class="clear">&nbsp;</div>
-                <div class="clear">&nbsp;</div>
-
-                <div>
-                    <input class="btn btn-info" type="button" name="submit" value="Submit" onclick="location.href=''"/>           
-                </div>
-            </form>
+        <div class = "d-flex flex-column">
+            <div class = "p-2">
+            <img src= "https://www.jing.fm/clipimg/full/115-1153324_computer-icons-user-profile-clip-art-avatar-font.png" alt="This is the default userprofile picture" height="200" width="200">
+            </div>
+            <div class = "p-2">
+            <p><b>Username: </b></p> {{request.user.username}}  
+            </div>
+            <div class = "p-2">
+            <p><b>E-mail: </b></p> {{request.user.email}}
+            </div>
+        
+            <div class = "p-2">
+        
+                <form method="POST" class="form-group">
+                    <p><b>Change Password</b></p>
+                    <div class = " d-flex justify-content-center">
+                        <input class="btn btn-info" type="button" name="submit" value="Change your password" onclick="location.href='/password_change/'"/>           
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>    
