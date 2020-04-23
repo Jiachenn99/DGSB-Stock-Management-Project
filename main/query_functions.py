@@ -106,11 +106,20 @@ def findTable(table):
     }
     return switch.get(table)
 
-def update_value(subcategory):
-    
-    subcategory = findTable(subcategory)
-
-
-    subcategory.update(field = condition)
-
-    return 0 
+def findForm(form_type):
+    switch={
+        'Supplier' :SupplierForm,
+        'Purchasing' :PurchasingForm,
+        'Tools' :ToolsForm,
+        'Irrigation' :IrrigationForm,
+        'Spareparts' :SparepartsForm,
+        'Vehicle' :VehicleForm,
+        'Stationery' :StationeryForm,
+        'Consumables' :ConsumablesForm,
+        'Fungicide' :FungicideForm,
+        'Fertilizer' :FertilizerForm,
+        'Surfacetant' :SurfacetantForm,
+        'Herbicide' :HerbicideForm,
+        'Pesticide' :PesticideForm,
+    }
+    return switch.get(form_type)

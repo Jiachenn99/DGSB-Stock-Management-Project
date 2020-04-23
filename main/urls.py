@@ -6,6 +6,7 @@ app_name = 'main'
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('delete/<str:category>/<str:subcategory>/item_<pk>', views.delete_entry, name='deletion'),
+    path('update/<str:category>/<str:subcategory>/item_<pk>', views.update_entry, name='update'),
     path('vehicle/<str:subcategory>', views.vehicle, name='vehicle'),
     path('Plantation_Tables/<str:subcategory>', views.plantation, name='plantation'),
     path('Irrigation_Tables/<str:subcategory>', views.irrigation, name='irrigation'),

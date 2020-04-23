@@ -21,11 +21,9 @@ def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
     plant_cat_list = get_category_subcat(Plantation_Tables)
-    # vehicle_cat_list  = get_category_subcat(Vehicle)
 
     iri_table = iri_cat_list[0]
     plant_table = plant_cat_list[0]
-    # vehicle = vehicle_cat_list[0]
 
     context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
@@ -137,64 +135,43 @@ def addItem(request, category, subcategory):
     context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
 
-def findForm(form_type):
-    switch={
-        'Supplier' :SupplierForm,
-        'Purchasing' :PurchasingForm,
-        'Tools' :ToolsForm,
-        'Irrigation' :IrrigationForm,
-        'Spareparts' :SparepartsForm,
-        'Vehicle' :VehicleForm,
-        'Stationery' :StationeryForm,
-        'Consumables' :ConsumablesForm,
-        'Fungicide' :FungicideForm,
-        'Fertilizer' :FertilizerForm,
-        'Surfacetant' :SurfacetantForm,
-        'Herbicide' :HerbicideForm,
-        'Pesticide' :PesticideForm,
-    }
-    return switch.get(form_type)
-
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
     
 
 def delete_entry(request, pk=None, subcategory=None, category=None):
-    switch={
-        'Supplier' : Supplier,
-        'Purchasing' : Purchasing,
-        'Tools' : Tools,
-        'Irrigation' : Irrigation,
-        'Spareparts' : Spareparts,
-        'Vehicle' : Vehicle,
-        'Stationery' : Stationery,
-        'Consumables' : Consumables,
-        'Fungicide' : Fungicide,
-        'Fertilizer' : Fertilizer,
-        'Surfacetant' : Surfacetant,
-        'Herbicide' : Herbicide,
-        'Pesticide' : Pesticide,
-    }
-
     if request.method== "POST" and "delete_this" in request.POST:
-        for key in switch: 
-            if subcategory == key:
-                table_to_del = switch[key]
-            else:
-                redirect('/index/')
-                # Should redirect with an error message back to the page specified by label
+        table_to_del = findTable(subcategory)
+        # for key in switch: 
+        #     if subcategory == key:
+        #         table_to_del = switch[key]
+        #     else:
+        #         redirect('/index/')
+        #         # Should redirect with an error message back to the page specified by label
 
         objects = table_to_del.objects.get(pk=pk)
-        print(f'The soon to be deleted object is: {objects.pk}\n')
         objects.delete()
         return redirect(f'/{category}/{subcategory}')
 
-    else:
-        print("Big sad")
 
-def update_entry(request, subcategory = None):
+def update_entry(request, category=None, subcategory=None, pk=None):
+    if request.method == "POST" and "update_this" in request.POST:
+        form_to_update = findForm(subcategory)
+        model_object = findTable(subcategory)
 
+        # Create a form instance from POST data.
+        f = form_to_update(request.POST)
+
+        # Save a new object from the form's data.
+        updated_object = f.save()
+
+        # Create a form to edit an existing Article, but use
+        # POST data to populate the form.
+        a = model_object.objects.get(pk=pk)
+        f = form_to_update(request.POST, instance=a)
+        f.save()
 
 
     return redirect(f'/{category}/{subcategory}')
+    
