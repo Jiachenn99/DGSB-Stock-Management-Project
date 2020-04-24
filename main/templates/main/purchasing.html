@@ -30,12 +30,12 @@ $(document).ready(function(){
 <body>
     <div class="container">
         <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
+            <div class="table-title d-flex flex-column">
+                <div class="row p-2">
                     <div class="col-sm-4">
                       <div class="show-entries">
                         
-                        <form action="{% url 'main:purchases' %}" method = "POST">
+                        <form action="{% url 'main:purchasing' %}" method = "POST">
                         {% csrf_token %}
                         <span>Show</span>
                         <select name = "drop1">
@@ -58,7 +58,7 @@ $(document).ready(function(){
                       <div class="search-box">
                         <div class="input-group">
                             
-                            <form method="GET" action="{% url 'main:purchases' %}">
+                            <form method="GET" action="{% url 'main:purchasing' %}">
                             {% csrf_token %}
                             <div class="input-group-addon">
                             <input type="submit" class="fas fa-search">
@@ -68,15 +68,20 @@ $(document).ready(function(){
                             
                         </div>
                       </div>
-                  </div>
+                    </div>
+                  
               </div>
             </div>
-            
-            <table class="table table-bordered">
+            <div class = "d-flex flex-row-reverse">
+              <div class="p-2">
+                    <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
+              </div>
+            </div>
+            <table class="table table-bordered p-2">
                 <thead>
                     <tr>
-                        <th><i class="fas fa-cog justify-content-center"></i></th> 
-                        <th>Purchasing ID</th>
+                        <th><i class="fas fa-cog"></i></th> 
+                        <th>#</th>
                         <th>PV No.</th>
                         <th>Invoice No.</th>
                         <th>Purchasing Date</th>
@@ -105,31 +110,7 @@ $(document).ready(function(){
             </table>
         
             {% include pag_template %}
-            {% comment %} {% if items.has_other_pages %}
-            <div class="clearfix">
-              <div class = "hint-text">Showing <b> {{ items }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
-            
-              <ul class="pagination">
-                {% if items.has_previous %}
-                  <li class = "page-item "><a class="page-link" href="?page={{ items.previous_page_number }}&q={{ request.GET.q }}">Previous</a></li>
-                {% else %}
-                  <li class="page-item disabled "><a class="page-link" href=""><span>Previous</span></a></li>
-                {% endif %}
-                {% for i in items.paginator.page_range %}
-                  {% if items.number == i %}
-                    <li class="page-item active "><a class="page-link" href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
-                  {% else %}
-                    <li class = "page-item " ><a class="" href="?page={{ i }}">{{ i }}</a></li>
-                  {% endif %}
-                {% endfor %}
-                {% if items.has_next %}
-                  <li class = "page-item "><a class="page-link" href="?page={{ items.next_page_number }}&q={{ request.GET.q }}">Next</a></li>
-                {% else %}
-                  <li class="page-item disabled "><a class="page-link" href=""><span>Next</span></a></li>
-                {% endif %}
-              </ul>
-            </div>    
-            {% endif %} {% endcomment %}
+      
       </div> 
     </div>
 </body>

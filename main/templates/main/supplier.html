@@ -20,7 +20,7 @@
 
     <!-- add item button -->
     <div class="p-2">
-        <a href="{% url 'main:addItem' form_name='Supplier' %}" class="btn btn-primary" role="button">Add Supplier</a>
+        <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button">Add Supplier</a>
     </div>
 
 </div>
@@ -29,8 +29,10 @@
 <table class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
     <thead>
         <tr>
-            <th>Supplier ID</th>
+            <th>#</th>
             <th>Supplier Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
             <th>Description</th>
         </tr>
     </thead>

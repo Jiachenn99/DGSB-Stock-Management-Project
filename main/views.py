@@ -1,30 +1,76 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from django.db.models import F
 from main.forms import *
 from main.models import *
 from main.query_functions import *
 from main.get_data import *
+from durianGarden.settings import EMAIL_HOST_USER
 import MySQLdb
+from django.http import HttpResponseNotFound
+import datetime
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
     
 def dashboard(request):
-    context = {"dashboard": "active"}
+    total_items = 0
+
+    count1= Spareparts.objects.all().count()
+    count2= Tools.objects.all().count()
+    count3= Stationery.objects.all().count()
+    count4= Consumables.objects.all().count()
+    count5= Fungicide.objects.all().count()
+    count6= Fertilizer.objects.all().count()
+    count7= Surfacetant.objects.all().count()
+    count8= Herbicide.objects.all().count()
+    count9= Pesticide.objects.all().count()
+    count10= Irrigation.objects.all().count()
+    
+    total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
+
+    item_lowStock = 0
+    low1 = Tools.objects.all().filter(quantity__lte=F('threshold')).count()
+    low2 = Consumables.objects.all().filter(quantity__lte=F('threshold')).count()
+    low3 = Fungicide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low4 = Fertilizer.objects.all().filter(quantity__lte=F('threshold')).count()
+    low5 = Surfacetant.objects.all().filter(quantity__lte=F('threshold')).count()
+    low6 = Herbicide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
+    low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
+
+    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
+    context = {
+        "dashboard": "active",
+        'total_items': total_items,
+        'item_lowStock': item_lowStock
+    }
     return render(request, 'main/dashboard.html',context)
 
 def index(request):
-    context = {"index": "active"}
+
+    iri_cat_list = get_category_subcat(Irrigation_Tables)
+    plant_cat_list = get_category_subcat(Plantation_Tables)
+    # vehicle_cat_list  = get_category_subcat(Vehicle)
+
+    iri_table = iri_cat_list[0]
+    plant_table = plant_cat_list[0]
+    # vehicle = vehicle_cat_list[0]
+
+    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
  
 # def register(request):
 #     context = {"register": "active"}
 #     return render(request, 'registration/register.html',context)
 
-def purchases(request):
+def purchasing(request):
+    category = 'purchasing'
+    subcategory = 'Purchasing'
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
@@ -53,86 +99,120 @@ def purchases(request):
     start_index = index - 5 if index >= 5 else 0
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
-     
+    
+    results = get_all_results(Purchasing)
+    cat_list = ['Purchasing']
+
     context = {
         'query_results': query_results,
         'query_count': query_count,
          'items': items,
          'a': a,
-         'pag_template': "main/pagination.html"
+         'pag_template': "main/pagination.html",
+         'results': results,
+         'cat_list': cat_list, 
+         'label':"Purchasing"
+         , 'subcategory' : subcategory, 'category': category
          
         }
-    return render(request, 'main/purchases.html',context)
+    return render(request, 'main/purchasing.html',context)
   
-def irrigation(request, table):
+def irrigation(request, subcategory):
 
-    results, headers = get_all_results(findTable(table))
-    cat_list = ['Irrigation']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "irrigation", 'table' : table}
+    category = 'Irrigation_Tables'
+
+    cat_list = get_category_subcat(Irrigation_Tables)
+    results = get_all_results(findTable(subcategory))   
+    results = get_supplier_name(subcategory, results)
+
+    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html', context)
 
-def plantation(request, table):
+def plantation(request, subcategory):
     
-    results, headers = get_all_results(findTable(table))
-    cat_list = ['Tools', 'Consumables', 'Fungicide']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "plantation", 'table' : table}
+    category = 'Plantation_Tables'
+
+    cat_list = get_category_subcat(Plantation_Tables)
+    results= get_all_results(findTable(subcategory))
+    results = get_supplier_name(subcategory, results)
+
+    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category':category}
 
     return render(request, 'main/tables_base.html',context)
 
-def vehicle(request, table):
-    results, headers = get_all_results(findTable(table))
+def vehicle(request, subcategory):
+    results= get_all_results(findTable(subcategory))
     cat_list = ['Vehicle', 'Spareparts']
-    context = {'results': results, 'headers': headers, 'cat_list': cat_list, 'label': "vehicle", 'table' : table}
+    context = {'results': results, 'cat_list': cat_list, 'subcategory' : subcategory}
     return render(request, 'main/tables_base.html',context)
 
-def order(request):
-    context = {"order": "active"}
-    # form = OrderForm(),{'form': form}
-    return render(request, 'main/order.html')
+def orderView(request):
+    if request.method == 'GET':
+        form = OrderForm()
+    else:
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            subject = "DurianGarden order on " + str(datetime.date.today())
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, EMAIL_HOST_USER , [email], fail_silently = False)
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('main:success')
+    return render(request, 'main/order.html',{'form': form})
+
+def successView(request):
+    
+    return HttpResponse('Success! Thank you for your order.')
 
 def supplier(request):
-    
-    results, headers= get_all_results(Supplier)
+    category = 'supplier'
+    subcategory = 'Supplier'
+    results= get_all_results(Supplier)
     cat_list = ['Supplier']
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Supplier"}
+    context = {'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
     return render(request, 'main/supplier.html', context)
 
-def addItem(request, form_name):
+def addItem(request, category, subcategory):
     # Create and update database
-    print(form_name)
+    print('dsadsaads') 
 
     if request.method != 'POST':
-        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # No data submitted; create a blank form
         form = form_object()
     else:
-        form_object = findForm(form_name)  # find the specific form according to the string value passed
+        form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # POST data submitted; process data
-        form = form_object(data=request.POST)
+        form = form_object(data=request.POST)   
         if form.is_valid():
             form.save()
-            return redirect('main:{}'.format(form_name.lower()))
-    
-    context = {'form': form, 'form_name': form_name}
+            if subcategory == 'Purchasing' or subcategory == 'Supplier':
+                return redirect(f'/{category}/')
+            else:
+                return redirect(f'/{category}/{subcategory}')
+
+    context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
 
 def findForm(form_type):
     switch={
-        'Supplier' : SupplierForm,
-        'Purchasing' : PurchasingForm,
-        'Tools' : ToolsForm,
-        'Irrigation' : IrrigationForm,
-        'Spareparts' : SparepartsForm,
-        'Vehicle' : VehicleForm,
-        'Stationery' : StationeryForm,
-        'Consumables' : ConsumablesForm,
-        'Fungicide' : FungicideForm,
-        'Fertilizer' : FertilizerForm,
-        'Surfacetant' : SurfacetantForm,
-        'Herbicide' : HerbicideForm,
-        'Pesticide' : PesticideForm,
+        'Supplier' :SupplierForm,
+        'Purchasing' :PurchasingForm,
+        'Tools' :ToolsForm,
+        'Irrigation' :IrrigationForm,
+        'Spareparts' :SparepartsForm,
+        'Vehicle' :VehicleForm,
+        'Stationery' :StationeryForm,
+        'Consumables' :ConsumablesForm,
+        'Fungicide' :FungicideForm,
+        'Fertilizer' :FertilizerForm,
+        'Surfacetant' :SurfacetantForm,
+        'Herbicide' :HerbicideForm,
+        'Pesticide' :PesticideForm,
     }
     return switch.get(form_type)
 
@@ -140,25 +220,8 @@ def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
     
-def findTable(table):
-    switch={
-        'Supplier' : Supplier,
-        'Purchasing' : Purchasing,
-        'Tools' : Tools,
-        'Irrigation' : Irrigation,
-        'Spareparts' : Spareparts,
-        'Vehicle' : Vehicle,
-        'Stationery' : Stationery,
-        'Consumables' : Consumables,
-        'Fungicide' : Fungicide,
-        'Fertilizer' : Fertilizer,
-        'Surfacetant' : Surfacetant,
-        'Herbicide' : Herbicide,
-        'Pesticide' : Pesticide,
-    }
-    return switch.get(table)
 
-def delete_entry(request, pk=None, object=None, label=None):
+def delete_entry(request, pk=None, subcategory=None, category=None):
     switch={
         'Supplier' : Supplier,
         'Purchasing' : Purchasing,
@@ -175,9 +238,9 @@ def delete_entry(request, pk=None, object=None, label=None):
         'Pesticide' : Pesticide,
     }
 
-    if request.method=="POST" and "delete_this" in request.POST:
+    if request.method== "POST" and "delete_this" in request.POST:
         for key in switch: 
-            if label == key:
+            if subcategory == key:
                 table_to_del = switch[key]
             else:
                 redirect('/index/')
@@ -186,7 +249,13 @@ def delete_entry(request, pk=None, object=None, label=None):
         objects = table_to_del.objects.get(pk=pk)
         print(f'The soon to be deleted object is: {objects.pk}\n')
         objects.delete()
-        return redirect('/irrigation/')
+        return redirect(f'/{category}/{subcategory}')
+
     else:
         print("Big sad")
-    
+
+def update_entry(request, subcategory = None):
+
+
+
+    return redirect(f'/{category}/{subcategory}')
