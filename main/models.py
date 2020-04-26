@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
-# Create your models here.
+
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
     phone_number = models.CharField(max_length = 20, blank = True)

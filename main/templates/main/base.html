@@ -1,5 +1,5 @@
 {% load bootstrap4 %}
-{% load staticfiles %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -161,10 +161,11 @@
                         <!-- Top-right Nav bar items -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto ">
+                                {% if request.user.is_staff %}
                                 <li class ="nav-item">
                                     <a class="nav-link" href="{% url 'admin:index'%}">Manage User</a>
                                 </li>
-
+                                {% endif %}
                                 <li class="dropdown nav-item">
                                     <a href="#" class="button nav-link" data-toggle="dropdown">
                                         <span class="fas fa-user"></span> 

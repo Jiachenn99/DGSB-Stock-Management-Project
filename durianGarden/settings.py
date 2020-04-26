@@ -135,15 +135,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_URL = '/static/'
-STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL ='/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login"
 CRISPY_TEMPLATE_PACK =  'bootstrap4'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

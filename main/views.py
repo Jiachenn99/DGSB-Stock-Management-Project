@@ -6,20 +6,27 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.db.models import F
 from main.forms import *
+from account.forms import *
 from main.models import *
 from main.query_functions import *
 from main.get_data import *
+from account.models import *
 from durianGarden.settings import EMAIL_HOST_USER
 import MySQLdb
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.http import HttpResponseNotFound
 import datetime
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
-    
-def dashboard(request):
-    total_items = 0
 
+@login_required(login_url='login')    
+def dashboard(request):
+    #CARD 1
+    total_items = 0
     count1= Spareparts.objects.all().count()
     count2= Tools.objects.all().count()
     count3= Stationery.objects.all().count()
@@ -32,7 +39,16 @@ def dashboard(request):
     count10= Irrigation.objects.all().count()
     
     total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
+    
+    #CARD 2
+    
 
+    #CARD 3
+    totalPurchases = 0
+    countP = Purchasing.objects.all().count()
+    totalPurchases = countP
+
+    #CARD 4
     item_lowStock = 0
     low1 = Tools.objects.all().filter(quantity__lte=F('threshold')).count()
     low2 = Consumables.objects.all().filter(quantity__lte=F('threshold')).count()
@@ -44,13 +60,16 @@ def dashboard(request):
     low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
 
     item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
+
     context = {
         "dashboard": "active",
         'total_items': total_items,
-        'item_lowStock': item_lowStock
+        'item_lowStock': item_lowStock,
+        'totalPurchases': totalPurchases
     }
     return render(request, 'main/dashboard.html',context)
 
+@login_required(login_url='login') 
 def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
@@ -63,11 +82,8 @@ def index(request):
 
     context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
- 
-# def register(request):
-#     context = {"register": "active"}
-#     return render(request, 'registration/register.html',context)
 
+@login_required(login_url='login') 
 def purchasing(request):
     category = 'purchasing'
     subcategory = 'Purchasing'
@@ -116,7 +132,8 @@ def purchasing(request):
          
         }
     return render(request, 'main/purchasing.html',context)
-  
+
+@login_required(login_url='login')  
 def irrigation(request, subcategory):
 
     category = 'Irrigation_Tables'
@@ -129,6 +146,7 @@ def irrigation(request, subcategory):
 
     return render(request, 'main/tables_base.html', context)
 
+@login_required(login_url='login') 
 def plantation(request, subcategory):
     
     category = 'Plantation_Tables'
@@ -141,12 +159,14 @@ def plantation(request, subcategory):
 
     return render(request, 'main/tables_base.html',context)
 
+@login_required(login_url='login') 
 def vehicle(request, subcategory):
     results= get_all_results(findTable(subcategory))
     cat_list = ['Vehicle', 'Spareparts']
     context = {'results': results, 'cat_list': cat_list, 'subcategory' : subcategory}
     return render(request, 'main/tables_base.html',context)
 
+@login_required(login_url='login') 
 def orderView(request):
     if request.method == 'GET':
         form = OrderForm()
@@ -163,10 +183,12 @@ def orderView(request):
             return redirect('main:success')
     return render(request, 'main/order.html',{'form': form})
 
+@login_required(login_url='login') 
 def successView(request):
     
     return HttpResponse('Success! Thank you for your order.')
 
+@login_required(login_url='login') 
 def supplier(request):
     category = 'supplier'
     subcategory = 'Supplier'
@@ -176,6 +198,7 @@ def supplier(request):
     context = {"supplier": "active",'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
     return render(request, 'main/supplier.html', context)
 
+@login_required(login_url='login') 
 def addItem(request, category, subcategory):
     # Create and update database
     print('dsadsaads') 
@@ -198,6 +221,7 @@ def addItem(request, category, subcategory):
     context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
 
+@login_required(login_url='login') 
 def findForm(form_type):
     switch={
         'Supplier' :SupplierForm,
@@ -216,11 +240,24 @@ def findForm(form_type):
     }
     return switch.get(form_type)
 
+@login_required(login_url='login') 
 def userprofile(request):
-    context = {"userprofile": "active"}
+    staff = request.user.staff
+    form = StaffForm(instance=staff)
+
+    if request.method =='POST':
+        form = StaffForm(request.POST, request.FILES, instance = staff)
+        if form.is_valid:
+            form.save()
+
+    context = {
+        "userprofile": "active",
+        'form': form,
+        
+        }
     return render(request, 'main/userprofile.html',context)
     
-
+@login_required(login_url='login') 
 def delete_entry(request, pk=None, subcategory=None, category=None):
     switch={
         'Supplier' : Supplier,
@@ -254,8 +291,7 @@ def delete_entry(request, pk=None, subcategory=None, category=None):
     else:
         print("Big sad")
 
+@login_required(login_url='login') 
 def update_entry(request, subcategory = None):
-
-
 
     return redirect(f'/{category}/{subcategory}')
