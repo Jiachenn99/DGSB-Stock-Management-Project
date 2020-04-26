@@ -2,9 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
-from django.db.models import F
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.db.models import Q,F
 from main.forms import *
 from account.forms import *
 from main.models import *
@@ -74,11 +73,9 @@ def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
     plant_cat_list = get_category_subcat(Plantation_Tables)
-    # vehicle_cat_list  = get_category_subcat(Vehicle)
 
     iri_table = iri_cat_list[0]
     plant_table = plant_cat_list[0]
-    # vehicle = vehicle_cat_list[0]
 
     context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
@@ -201,7 +198,6 @@ def supplier(request):
 @login_required(login_url='login') 
 def addItem(request, category, subcategory):
     # Create and update database
-    print('dsadsaads') 
 
     if request.method != 'POST':
         form_object = findForm(subcategory)  # find the specific form according to the string value passed
@@ -222,25 +218,6 @@ def addItem(request, category, subcategory):
     return render(request, 'main/addItem.html', context)
 
 @login_required(login_url='login') 
-def findForm(form_type):
-    switch={
-        'Supplier' :SupplierForm,
-        'Purchasing' :PurchasingForm,
-        'Tools' :ToolsForm,
-        'Irrigation' :IrrigationForm,
-        'Spareparts' :SparepartsForm,
-        'Vehicle' :VehicleForm,
-        'Stationery' :StationeryForm,
-        'Consumables' :ConsumablesForm,
-        'Fungicide' :FungicideForm,
-        'Fertilizer' :FertilizerForm,
-        'Surfacetant' :SurfacetantForm,
-        'Herbicide' :HerbicideForm,
-        'Pesticide' :PesticideForm,
-    }
-    return switch.get(form_type)
-
-@login_required(login_url='login') 
 def userprofile(request):
     staff = request.user.staff
     form = StaffForm(instance=staff)
@@ -259,39 +236,38 @@ def userprofile(request):
     
 @login_required(login_url='login') 
 def delete_entry(request, pk=None, subcategory=None, category=None):
-    switch={
-        'Supplier' : Supplier,
-        'Purchasing' : Purchasing,
-        'Tools' : Tools,
-        'Irrigation' : Irrigation,
-        'Spareparts' : Spareparts,
-        'Vehicle' : Vehicle,
-        'Stationery' : Stationery,
-        'Consumables' : Consumables,
-        'Fungicide' : Fungicide,
-        'Fertilizer' : Fertilizer,
-        'Surfacetant' : Surfacetant,
-        'Herbicide' : Herbicide,
-        'Pesticide' : Pesticide,
-    }
-
     if request.method== "POST" and "delete_this" in request.POST:
-        for key in switch: 
-            if subcategory == key:
-                table_to_del = switch[key]
-            else:
-                redirect('/index/')
-                # Should redirect with an error message back to the page specified by label
+        table_to_del = findTable(subcategory)
 
         objects = table_to_del.objects.get(pk=pk)
-        print(f'The soon to be deleted object is: {objects.pk}\n')
         objects.delete()
         return redirect(f'/{category}/{subcategory}')
 
-    else:
-        print("Big sad")
+def update_entry(request, category=None, subcategory=None, pk=None):
+    form_to_update = findForm(subcategory)
+    model_object = findTable(subcategory)
+    instance_lol = get_object_or_404(model_object, pk=pk)
+    print(f'Instance is {instance_lol}')
 
 @login_required(login_url='login') 
-def update_entry(request, subcategory = None):
+def update_entry(request, category=None, subcategory=None, pk=None):
+    form_to_update = findForm(subcategory)
+    model_object = findTable(subcategory)
+    instance_lol = get_object_or_404(model_object, pk=pk)
+    print(f'Instance is {instance_lol}')
+    
+    if request.method == "POST":
+        some_form = form_to_update(request.POST or None ,instance = instance_lol)
+        if some_form.is_valid():
+            some_form.save()
 
-    return redirect(f'/{category}/{subcategory}')
+            if subcategory == 'Purchasing' or subcategory == 'Supplier':
+                return redirect(f'/{category}/')
+            else:
+                return redirect(f'/{category}/{subcategory}')
+    else:
+        some_form = form_to_update(instance = instance_lol)
+        
+    context = {'form': some_form, 'form_name':subcategory}
+
+    return render(request, 'main/updateItem.html', context)

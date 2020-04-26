@@ -62,6 +62,7 @@ def model_subclasses(mclass):
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
 
+
 def get_category_subcat(parent_class):
 
     categories_list = [i._meta.model.__name__ for i in model_subclasses(parent_class)]
@@ -106,11 +107,20 @@ def findTable(table):
     }
     return switch.get(table)
 
-def update_value(subcategory):
-    
-    subcategory = findTable(subcategory)
-
-
-    subcategory.update(field = condition)
-
-    return 0 
+def findForm(form_type):
+    switch={
+        'Supplier' :SupplierForm,
+        'Purchasing' :PurchasingForm,
+        'Tools' :ToolsForm,
+        'Irrigation' :IrrigationForm,
+        'Spareparts' :SparepartsForm,
+        'Vehicle' :VehicleForm,
+        'Stationery' :StationeryForm,
+        'Consumables' :ConsumablesForm,
+        'Fungicide' :FungicideForm,
+        'Fertilizer' :FertilizerForm,
+        'Surfacetant' :SurfacetantForm,
+        'Herbicide' :HerbicideForm,
+        'Pesticide' :PesticideForm,
+    }
+    return switch.get(form_type)

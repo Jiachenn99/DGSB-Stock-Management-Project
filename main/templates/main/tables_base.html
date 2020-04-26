@@ -1,5 +1,4 @@
 {% extends "main/base.html" %}
-
 {% block content %}
 
     <style> 
@@ -43,14 +42,15 @@
         <!-- headers -->
         <thead>
             <tr>
-                <th> ID </th>
+                <th> # </th>
                 <th> Name </th>
                 <th> Quantity </th>
                 <th> Threshold </th>
                 <th> Price/Unit </th>
                 <th> Description </th>
                 <th> Supplier </th>
-                <th>Delete</th>
+                <th> Delete </th>
+                <th> Update </th>
             </tr>
         </thead>    
 
@@ -59,9 +59,15 @@
             {% for dicts in results %}
             <tr>
                 {% for value in dicts.values %}
+                    {% if forloop.counter == 1 %}
+                    <td>
+                        {{ forloop.parentloop.counter }}
+                    </td>
+                    {% else %}
                     <td>
                         {{ value }}
                     </td>
+                    {% endif %}
                 {% endfor %}    
             
                 <td>
@@ -69,9 +75,19 @@
                         {% csrf_token %}
                         <input name='pk' value="{{ dicts.id }}" hidden>
                         <input name='object' value="{{ subcategory }}" hidden>
-                        <button id="Deletion" class="btn btn-danger active" type='submit' name='delete_this'>Delete</button>
+                        <button id="Deletion" class="btn btn-danger" type='submit' name='delete_this'>Delete</button>
                     </form>
                 </td>
+
+                <td>
+                    <form action="{% url 'main:update' subcategory=subcategory pk=dicts.id category=category%}" method="GET">
+                        {% csrf_token %}
+                        <!-- <input name='pk' value="{{ dicts.id }}" hidden>
+                        <input name='object' value="{{ subcategory }}" hidden> -->
+                        <button id="Update" class="btn btn-warning" type='submit' name='update_this'>Update</button>
+                    </form>
+                </td>
+
             </tr>
             {% endfor %}
         </tbody>
