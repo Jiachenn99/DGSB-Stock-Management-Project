@@ -2,16 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
-from django.db.models import F
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.db.models import Q,F
 from main.forms import *
 from main.models import *
 from main.query_functions import *
 from main.get_data import *
 from durianGarden.settings import EMAIL_HOST_USER
 import MySQLdb
-from django.http import HttpResponseNotFound
 import datetime
 
 results_list = []
@@ -176,7 +174,6 @@ def supplier(request):
 
 def addItem(request, category, subcategory):
     # Create and update database
-    print('dsadsaads') 
 
     if request.method != 'POST':
         form_object = findForm(subcategory)  # find the specific form according to the string value passed
@@ -204,35 +201,29 @@ def userprofile(request):
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
         table_to_del = findTable(subcategory)
-        # for key in switch: 
-        #     if subcategory == key:
-        #         table_to_del = switch[key]
-        #     else:
-        #         redirect('/index/')
-        #         # Should redirect with an error message back to the page specified by label
 
         objects = table_to_del.objects.get(pk=pk)
         objects.delete()
         return redirect(f'/{category}/{subcategory}')
 
-
 def update_entry(request, category=None, subcategory=None, pk=None):
-    if request.method == "POST" and "update_this" in request.POST:
-        form_to_update = findForm(subcategory)
-        model_object = findTable(subcategory)
+    form_to_update = findForm(subcategory)
+    model_object = findTable(subcategory)
+    instance_lol = get_object_or_404(model_object, pk=pk)
+    print(f'Instance is {instance_lol}')
 
-        # Create a form instance from POST data.
-        f = form_to_update(request.POST)
+    if request.method == "POST":
+        some_form = form_to_update(request.POST or None ,instance = instance_lol)
+        if some_form.is_valid():
+            some_form.save()
 
-        # Save a new object from the form's data.
-        updated_object = f.save()
+            if subcategory == 'Purchasing' or subcategory == 'Supplier':
+                return redirect(f'/{category}/')
+            else:
+                return redirect(f'/{category}/{subcategory}')
+    else:
+        some_form = form_to_update(instance = instance_lol)
+        
+    context = {'form': some_form, 'form_name':subcategory}
 
-        # Create a form to edit an existing Article, but use
-        # POST data to populate the form.
-        a = model_object.objects.get(pk=pk)
-        f = form_to_update(request.POST, instance=a)
-        f.save()
-
-
-    return redirect(f'/{category}/{subcategory}')
-    
+    return render(request, 'main/updateItem.html', context)

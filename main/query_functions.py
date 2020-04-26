@@ -62,6 +62,7 @@ def model_subclasses(mclass):
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
 
+
 def get_category_subcat(parent_class):
 
     categories_list = [i._meta.model.__name__ for i in model_subclasses(parent_class)]
