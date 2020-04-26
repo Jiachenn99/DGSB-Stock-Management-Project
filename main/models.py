@@ -4,6 +4,8 @@ from django.utils import timezone
 # Create your models here.
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
+    phone_number = models.CharField(max_length = 20, blank = True)
+    email = models.EmailField(max_length = 254, blank = True)
     description = models.CharField(max_length = 80)
     class Meta:
         db_table = "Supplier"
@@ -27,6 +29,7 @@ class Spareparts(models.Model):
     vehicle_assigned = models.ForeignKey('Vehicle', on_delete=models.CASCADE)
     spare_parts_unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)])
     spare_parts_quantity = models.PositiveIntegerField(default = 0)
+    threshold = models.PositiveIntegerField(default = 0)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
     class Meta:
         db_table = "spare_parts"
@@ -50,6 +53,7 @@ class Vehicle(models.Model):
 class Irrigation_Tables(models.Model):
     name = models.CharField(max_length = 50)
     quantity = models.PositiveIntegerField(default = 0, validators=[MinValueValidator(0)])
+    threshold = models.PositiveIntegerField(default = 0)
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
@@ -59,6 +63,7 @@ class Irrigation_Tables(models.Model):
 class Plantation_Tables(models.Model):
     name = models.CharField(max_length = 50)
     quantity = models.PositiveIntegerField(default = 0, validators=[MinValueValidator(0)])
+    threshold = models.PositiveIntegerField(default = 0)    
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)

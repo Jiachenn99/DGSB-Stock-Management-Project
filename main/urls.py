@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
 
 app_name = 'main'
 
@@ -12,9 +13,10 @@ urlpatterns = [
     path('Irrigation_Tables/<str:subcategory>', views.irrigation, name='irrigation'),
     path('supplier/', views.supplier, name='supplier'),
     path(r'index/', views.index ,name='index'),
-    path(r'purchases/', views.purchases, name='purchases'),
-    path(r'order/', views.order, name='order'),
     path(r'addItem/<str:category>/<str:subcategory>', views.addItem, name='addItem'),
+    path(r'purchasing/', views.purchasing, name='purchasing'),
     path(r'userprofile/', views.userprofile, name='userprofile'),
-    
+    path('order/', views.orderView, name='order'),
+    path('success/', views.successView, name='success'),
+
 ]
