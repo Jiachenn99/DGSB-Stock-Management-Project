@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from main.decorators import unauthenticated_user, allowed_users, admin_only
 
-@unauthenticated_user
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
