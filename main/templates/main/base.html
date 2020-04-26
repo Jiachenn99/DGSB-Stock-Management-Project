@@ -39,6 +39,42 @@
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 
+<style>
+/* ---------------------------------------------------
+    RIGHT NAV BAR STYLE
+----------------------------------------------------- */
+.navbar-default{background:#3285D1;border-color: #3285D1;}
+/*.navbar-default .navbar-nav > li > a{color:gray;}
+.nav > li > a{top:15px; font-size: 17px; color:#FFF;}*/
+.nav .open > a, .nav .open > a:hover, 
+.nav .open > a:focus,
+.nav > li > a:hover, .nav > li > a:focus{background-color:transparent !important;}
+
+.navbar-toggle{margin-top:20px !important;}
+.dropdown-menu{
+    position: relative;
+    right: 0; left: auto;
+    background:#fff !important;}
+.navbar-login
+{
+    width: 350px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+</style>
+
 <body>
     <div class="wrapper">
 
@@ -103,21 +139,14 @@
                             <a href="{% url 'main:purchasing'%}">Purchases</a>
                         </li>
                 </ul>
-
-                <li>
-                    <a href="/logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Sign Out
-                    </a>
-                </li>
             </ul>
 
         </nav>
-        <!-- children content -->
         <!-- Page Content  -->
         <main role="main" class="main_container" id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default nav-menu">
+                
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
@@ -128,19 +157,61 @@
                         <i class="fas fa-align-justify"></i>
                     </button>
 
-                    {% comment %} <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item {{ login }}">
-                                <a class="nav-link" href="{% url 'main:login'%}">Login</a>
-                            </li>
-                            <li class="nav-item {{register}}">
-                                <a class="nav-link" href="{% url 'main:register'%}">Register</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div> {% endcomment %}
-            </nav>
+                    <div class = "collapse navbar-collapse button-menu">
+                        <!-- Top-right Nav bar items -->
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto ">
+                                <li class ="nav-item">
+                                    <a class="nav-link" href="{% url 'admin:index'%}">Manage User</a>
+                                </li>
 
+                                <li class="dropdown nav-item">
+                                    <a href="#" class="button nav-link" data-toggle="dropdown">
+                                        <span class="fas fa-user"></span> 
+                                        <strong> {{request.user.username}}</strong>
+                                        <span class="fas fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <p class="text-center">
+                                                        <span class="fas fa-user fa-6x"></span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <p class="text-left"><strong>{{request.user.username}}</strong></p>
+                                                        <p class="text-left small">{{request.user.email}}</p>
+                                                        <p class="text-left">
+                                                            <a href="{% url 'account:logout' %}" class="btn btn-primary btn-block btn-sm">Logout</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <div class="navbar-login navbar-login-session">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <p>
+                                                            <a href="{% url 'main:userprofile' %}" class="btn btn-primary btn-block">My Profile</a>
+                                                            <a href="{% url 'account:password_change' %}" class="btn btn-danger btn-block">Change Password</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Main Content -->
+            
             {% block content %}
 
             {% endblock content %} 

@@ -74,7 +74,7 @@ def purchasing(request):
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
-    
+
     #No of Queries
     a = 5
     if request.method == 'POST':
@@ -173,7 +173,7 @@ def supplier(request):
     results= get_all_results(Supplier)
     cat_list = ['Supplier']
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
+    context = {"supplier": "active",'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
     return render(request, 'main/supplier.html', context)
 
 def addItem(request, category, subcategory):

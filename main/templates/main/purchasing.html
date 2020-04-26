@@ -28,7 +28,6 @@ $(document).ready(function(){
 </script>
 
 <body>
-    <div class="container">
         <div class="table-wrapper">
             <div class="table-title d-flex flex-column">
                 <div class="row p-2">
@@ -70,14 +69,14 @@ $(document).ready(function(){
                       </div>
                     </div>
                   
-              </div>
+                </div>
             </div>
             <div class = "d-flex flex-row-reverse">
               <div class="p-2">
                     <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
               </div>
             </div>
-            <table class="table table-bordered p-2">
+            <table class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
                 <thead>
                     <tr>
                         <th><i class="fas fa-cog"></i></th> 
@@ -108,10 +107,7 @@ $(document).ready(function(){
 
                 </tbody>
             </table>
-        
             {% include pag_template %}
-      
-      </div> 
-    </div>
+      </div>
 </body>
 {% endblock content %}
