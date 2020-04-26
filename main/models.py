@@ -42,7 +42,6 @@ class Vehicle(models.Model):
     vehicle_name = models.CharField(max_length = 50)
     vehicle_number_plate = models.CharField(max_length = 10)
     vehicle_owner = models.CharField(max_length = 30)
-    spare_parts_assigned = models.ForeignKey(Spareparts, on_delete=models.CASCADE)
     class Meta:
         db_table = "vehicle"
 
