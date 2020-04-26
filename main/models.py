@@ -24,31 +24,6 @@ class Purchasing(models.Model):
     def __str__(self):
         return str(self.supplier.supplier_name)
 
-class Spareparts(models.Model):
-    spare_parts_name = models.CharField(max_length = 30)
-    vehicle_assigned = models.ForeignKey('Vehicle', on_delete=models.CASCADE)
-    spare_parts_unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)])
-    spare_parts_quantity = models.PositiveIntegerField(default = 0)
-    threshold = models.PositiveIntegerField(default = 0)
-    purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
-    class Meta:
-        db_table = "spare_parts"
-
-    def __str__(self):
-        return self.spare_parts_name
-
-class Vehicle(models.Model):
-    vehicle_type = models.CharField(max_length = 30)
-    vehicle_name = models.CharField(max_length = 50)
-    vehicle_number_plate = models.CharField(max_length = 10)
-    vehicle_owner = models.CharField(max_length = 30)
-    spare_parts_assigned = models.ForeignKey(Spareparts, on_delete=models.CASCADE)
-    class Meta:
-        db_table = "vehicle"
-
-    def __str__(self):
-        return self.vehicle_name
-
 # Abstract class to inherit from 
 class Irrigation_Tables(models.Model):
     name = models.CharField(max_length = 50)
@@ -67,6 +42,11 @@ class Plantation_Tables(models.Model):
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    class Meta:
+        abstract = True
+
+class Vehicle_Tables(models.Model):
+    
     class Meta:
         abstract = True
 
@@ -130,3 +110,25 @@ class Irrigation(Irrigation_Tables):
         db_table = "irrigation"
     def __str__(self):
         return self.name
+
+class Vehicle(Vehicle_Tables):
+    vehicle_type = models.CharField(max_length = 30)
+    vehicle_name = models.CharField(max_length = 50)
+    vehicle_number_plate = models.CharField(max_length = 10)
+    vehicle_owner = models.CharField(max_length = 30)
+    class Meta:
+        db_table = "vehicle"
+    def __str__(self):
+        return self.vehicle_name
+
+class Spareparts(Vehicle_Tables):
+    spare_parts_name = models.CharField(max_length = 30)
+    vehicle_assigned = models.ForeignKey('Vehicle', on_delete=models.CASCADE)
+    spare_parts_unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)])
+    spare_parts_quantity = models.PositiveIntegerField(default = 0)
+    threshold = models.PositiveIntegerField(default = 0)
+    purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    class Meta:
+        db_table = "spareparts"
+    def __str__(self):
+        return self.spare_parts_name
