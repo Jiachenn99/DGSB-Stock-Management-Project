@@ -43,14 +43,32 @@
         <!-- headers -->
         <thead>
             <tr>
+                {% if subcategory == 'Vehicle' %}
+                    <th> ID </th>
+                    <th> Type </th>
+                    <th> Name </th>
+                    <th> Number Plate </th>
+                    <th> Owner </th>
+                    <th>Delete</th>
+                {% elif subcategory == 'Spareparts' %}
                 <th> ID </th>
-                <th> Name </th>
-                <th> Quantity </th>
-                <th> Threshold </th>
-                <th> Price/Unit </th>
-                <th> Description </th>
-                <th> Supplier </th>
-                <th>Delete</th>
+                    <th> Name </th>
+                    <th> Vehicle ID assigned </th>
+                    <th> Unit Price </th>
+                    <th> Quantity </th>
+                    <th> threshold </th>
+                    <th> Supplier </th>
+                    <th>Delete</th>
+                {% else %}
+                    <th> ID </th>
+                    <th> Name </th>
+                    <th> Quantity </th>
+                    <th> Threshold </th>
+                    <th> Price/Unit </th>
+                    <th> Description </th>
+                    <th> Supplier </th>
+                    <th>Delete</th>
+                {% endif %}
             </tr>
         </thead>    
 

@@ -55,13 +55,13 @@ def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
     plant_cat_list = get_category_subcat(Plantation_Tables)
-    # vehicle_cat_list  = get_category_subcat(Vehicle)
+    vehicle_cat_list  = get_category_subcat(Vehicle_Tables)
 
     iri_table = iri_cat_list[0]
     plant_table = plant_cat_list[0]
-    # vehicle = vehicle_cat_list[0]
+    vehicle_table = vehicle_cat_list[0]
 
-    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
+    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table, 'vehicle_table_label': vehicle_table}
     return render(request, 'main/index.html',context)
  
 # def register(request):
@@ -125,7 +125,7 @@ def irrigation(request, subcategory):
     results = get_all_results(findTable(subcategory))   
     results = get_supplier_name(subcategory, results)
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category': category}
+    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html', context)
 
@@ -134,17 +134,23 @@ def plantation(request, subcategory):
     category = 'Plantation_Tables'
 
     cat_list = get_category_subcat(Plantation_Tables)
-    results= get_all_results(findTable(subcategory))
+    results = get_all_results(findTable(subcategory))
     results = get_supplier_name(subcategory, results)
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category':category}
+    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html',context)
 
 def vehicle(request, subcategory):
-    results= get_all_results(findTable(subcategory))
-    cat_list = ['Vehicle', 'Spareparts']
-    context = {'results': results, 'cat_list': cat_list, 'subcategory' : subcategory}
+
+    category = 'Vehicle_Tables'
+
+    cat_list = get_category_subcat(Vehicle_Tables)
+    results = get_all_results(findTable(subcategory))
+    if subcategory == 'Spareparts':
+        results = get_supplier_name(subcategory, results)
+    
+    context = {'results': results, 'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
     return render(request, 'main/tables_base.html',context)
 
 def orderView(request):
