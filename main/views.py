@@ -89,6 +89,7 @@ def index(request):
 def purchasing(request):
     category = 'purchasing'
     subcategory = 'Purchasing'
+    
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
@@ -129,8 +130,9 @@ def purchasing(request):
          'pag_template': "main/pagination.html",
          'results': results,
          'cat_list': cat_list, 
-         'label':"Purchasing"
-         , 'subcategory' : subcategory, 'category': category
+         'label':"Purchasing", 
+         'subcategory' : subcategory, 
+         'category': category,
          
         }
     return render(request, 'main/purchasing.html',context)
@@ -230,20 +232,18 @@ def addItem(request, category, subcategory):
 
 @login_required(login_url='login') 
 def userprofile(request):
-    staff = request.user.staff
-    form = StaffForm(instance=staff)
+    if request.user.is_superuser == False:
+        staff = request.user.staff
+        form = StaffForm(instance=staff)
 
     if request.method =='POST':
         form = StaffForm(request.POST, request.FILES, instance = staff)
         if form.is_valid:
             form.save()
 
-    context = {
-        "userprofile": "active",
-        'form': form,
-        
-        }
-    return render(request, 'main/userprofile.html',context)
+    if request.user.is_superuser:
+        return render(request, 'main/userprofile.html', {"userprofile": "active"})
+    return render(request, 'main/userprofile.html',{"userprofile": "active",'form': form,})
     
 @login_required(login_url='login') 
 def delete_entry(request, pk=None, subcategory=None, category=None):
@@ -252,13 +252,10 @@ def delete_entry(request, pk=None, subcategory=None, category=None):
 
         objects = table_to_del.objects.get(pk=pk)
         objects.delete()
-        return redirect(f'/{category}/{subcategory}')
-
-def update_entry(request, category=None, subcategory=None, pk=None):
-    form_to_update = findForm(subcategory)
-    model_object = findTable(subcategory)
-    instance_lol = get_object_or_404(model_object, pk=pk)
-    print(f'Instance is {instance_lol}')
+        if subcategory == 'Purchasing' or subcategory == 'Supplier':
+            return redirect(f'/{category}/')
+        else:
+            return redirect(f'/{category}/{subcategory}')
 
 @login_required(login_url='login') 
 def update_entry(request, category=None, subcategory=None, pk=None):

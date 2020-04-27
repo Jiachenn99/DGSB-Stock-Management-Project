@@ -34,16 +34,39 @@
             <th>Phone Number</th>
             <th>Email</th>
             <th>Description</th>
+            <th> Delete </th>
+            <th> Update </th>
         </tr>
     </thead>
     <tbody>
         {% for dicts in results %}
         <tr>
             {% for value in dicts.values %}
-                <td>
-                    {{ value }}
-                </td>
+                {% if forloop.counter == 1 %}
+                    <td>
+                        {{ forloop.parentloop.counter }}
+                    </td>
+                    {% else %}
+                    <td>
+                        {{ value }}
+                    </td>
+                {% endif %}
             {% endfor %}    
+            <td>
+                <form action="{% url 'main:deletion' subcategory=subcategory pk=dicts.id category=category%}" method="POST">
+                        {% csrf_token %}
+                        <input name='pk' value="{{ dicts.id }}" hidden>
+                        <input name='object' value="{{ subcategory }}" hidden>
+                        <button id="Deletion" class="btn btn-danger" type='submit' name='delete_this'>Delete</button>
+                </form>
+            </td>
+
+            <td>
+                <form action="{% url 'main:update' subcategory=subcategory pk=dicts.id category=category%}" method="GET">
+                        {% csrf_token %}
+                        <button id="Update" class="btn btn-warning" type='submit' name='update_this'>Update</button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

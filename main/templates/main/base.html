@@ -161,7 +161,7 @@
                         <!-- Top-right Nav bar items -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto ">
-                                {% if request.user.is_staff %}
+                                {% if request.user.is_superuser %}
                                 <li class ="nav-item">
                                     <a class="nav-link" href="{% url 'admin:index'%}">Manage User</a>
                                 </li>
@@ -169,7 +169,11 @@
                                 <li class="dropdown nav-item">
                                     <a href="#" class="button nav-link" data-toggle="dropdown">
                                         <span class="fas fa-user"></span> 
+                                        {% if request.user.staff %}
+                                        <strong> {{request.user.staff.name}}</strong>
+                                        {% else %}
                                         <strong> {{request.user.username}}</strong>
+                                        {% endif %}
                                         <span class="fas fa-chevron-down"></span>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -182,8 +186,13 @@
                                                         </p>
                                                     </div>
                                                     <div class="col-lg-8">
+                                                        {% if request.user.staff %}
+                                                        <p class="text-left small">{{request.user.staff.name}}</p>
+                                                        <p class="text-left small">{{request.user.staff.email}}</p>
+                                                        {% else %}
                                                         <p class="text-left"><strong>{{request.user.username}}</strong></p>
                                                         <p class="text-left small">{{request.user.email}}</p>
+                                                        {% endif %}
                                                         <p class="text-left">
                                                             <a href="{% url 'account:logout' %}" class="btn btn-primary btn-block btn-sm"><em class="fas fa-sign-out-alt"></em> Logout</a>
                                                         </p>
