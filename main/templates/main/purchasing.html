@@ -28,7 +28,6 @@ $(document).ready(function(){
 </script>
 
 <body>
-    <div class="container">
         <div class="table-wrapper">
             <div class="table-title d-flex flex-column">
                 <div class="row p-2">
@@ -70,48 +69,42 @@ $(document).ready(function(){
                       </div>
                     </div>
                   
-              </div>
+                </div>
             </div>
             <div class = "d-flex flex-row-reverse">
               <div class="p-2">
                     <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
               </div>
             </div>
-            <table class="table table-bordered p-2">
+            <table class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
                 <thead>
                     <tr>
-                        <th><i class="fas fa-cog"></i></th> 
-                        <th>#</th>
-                        <th>PV No.</th>
-                        <th>Invoice No.</th>
-                        <th>Purchasing Date</th>
-                        <th>Supplier Name</th>
-                        <th>Description</th>
+                        <th> # </th>
+                        <th> PV No. </th>
+                        <th> Invoice No. </th>
+                        <th> Purchasing Date </th>
+                        <th> Supplier Name </th>
+                        <th> Description </th>
+                        {% comment %} <th> Delete </th>
+                        <th> Update </th> {% endcomment %}
                     </tr>
                 </thead>
                 <tbody>
                 
                   {% for item in items %}
                   <tr> 
-                      <td>
-                                <a class="btn btn-primary"><em class="fas fa-edit"></em></a>
-                                <a class="btn btn-danger"><em class="fas fa-trash-alt"></em></a>
-                      </td> 
-                      <td>{{ item.purchasing_id }}</td>
+                      <td>{{ forloop.counter }}</td>
                       <td>{{ item.pv_no }}</td>
                       <td>{{ item.invoice_no }}</td>
                       <td>{{ item.purchasing_date }}</td>
                       <td>{{ item.supplier }}</td>
-                      <td>{{ item.description }}</td>
+                      <td>{{ item.description }}</td>             
                   </tr>
                   {% endfor %}
 
                 </tbody>
             </table>
-        
             {% include pag_template %}
-      
-      </div> 
-    </div>
+      </div>
 </body>
 {% endblock content %}

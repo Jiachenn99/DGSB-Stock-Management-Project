@@ -15,6 +15,9 @@
 <p>Don't have an account? Create one <a href="/register">here</a></p>
 <button type="submit" class="btn btn-primary btn-block">Log in</button>
 </form>
+{% for message in messages %}
+	<p id="messages">{{message}}</p>
+{% endfor %}
 </div>
 </div>
 {% endblock %}

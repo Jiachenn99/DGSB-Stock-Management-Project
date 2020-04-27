@@ -82,12 +82,12 @@
           <div class="card-body">
 
             <!-- Title -->
-            <a href="{% url 'main:vehicle' subcategory='Vehicle' %}" class="text-decoration-none">Vehicle</a>
+            <a href="{% url 'main:vehicle' subcategory=vehicle_table_label %}" class="text-decoration-none">Vehicle</a>
             <!-- Text -->
             <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
               make up the bulk of the card's content.</p>
             <br>
-            <a href="{% url 'main:vehicle' subcategory='Vehicle' %}" class="btn btn-outline-secondary" role="button">Enter</a>
+            <a href="{% url 'main:vehicle' subcategory=vehicle_table_label %}" class="btn btn-outline-secondary" role="button">Enter</a>
 
           </div>
 
