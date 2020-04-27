@@ -93,7 +93,7 @@ $(document).ready(function(){
                 
                   {% for item in items %}
                   <tr> 
-                      <td>{{ item.purchasing_id }}</td>
+                      <td>{{ forloop.counter }}</td>
                       <td>{{ item.pv_no }}</td>
                       <td>{{ item.invoice_no }}</td>
                       <td>{{ item.purchasing_date }}</td>
