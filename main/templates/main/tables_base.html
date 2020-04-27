@@ -48,28 +48,28 @@
                     <th> Name </th>
                     <th> Number Plate </th>
                     <th> Owner </th>
-                    <th>Delete</th>
-                    <th>Update</th>
+                    <th> Delete </th>
+                    <th> Update </th>
                 {% elif subcategory == 'Spareparts' %}
                 <th> ID </th>
                     <th> Name </th>
                     <th> Vehicle ID assigned </th>
                     <th> Unit Price </th>
                     <th> Quantity </th>
-                    <th> threshold </th>
+                    <th> Threshold </th>
                     <th> Supplier </th>
-                    <th>Delete</th>
-                    <th>Update</th>
+                    <th> Delete </th>
+                    <th> Update </th>
                 {% else %}
-                    <th> ID </th>
+                    <th> # </th>
                     <th> Name </th>
                     <th> Quantity </th>
                     <th> Threshold </th>
                     <th> Price/Unit </th>
                     <th> Description </th>
                     <th> Supplier </th>
-                    <th>Delete</th>
-                    <th>Update</th>
+                    <th> Delete </th>
+                    <th> Update </th>
                 {% endif %}
             </tr>
         </thead>    
@@ -102,8 +102,6 @@
                 <td>
                     <form action="{% url 'main:update' subcategory=subcategory pk=dicts.id category=category%}" method="GET">
                         {% csrf_token %}
-                        <!-- <input name='pk' value="{{ dicts.id }}" hidden>
-                        <input name='object' value="{{ subcategory }}" hidden> -->
                         <button id="Update" class="btn btn-warning" type='submit' name='update_this'>Update</button>
                     </form>
                 </td>
