@@ -21,11 +21,12 @@ def register(request):
             Staff.objects.create(
                 user=user,
                 name = user.username,
+                email = user.email,
             )
             messages.success(request, 'Account was created for '+ username)
             return redirect("/login")
     else:
         form = RegisterForm()
     
-    return render(request,"register/register.html",{"form":form})
+    return render(request,"registration/register.html",{"form":form})
 

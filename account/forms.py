@@ -17,7 +17,6 @@ class StaffForm(ModelForm):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
-    #phone = forms.CharField(max_length= 13, help_text='Contact phone number')
     
     class Meta:
         model = User
