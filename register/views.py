@@ -15,7 +15,7 @@ def register(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             
-            group = Group.objects.get(name = 'staff')
+            group, created = Group.objects.get_or_create(name = 'staff')
             user.groups.add(group)
             Staff.objects.create(
                 user=user,
