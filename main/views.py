@@ -4,20 +4,23 @@ from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.db.models import Q,F
-from main.forms import *
-from account.forms import *
-from main.models import *
-from main.query_functions import *
-from main.get_data import *
-from account.models import *
-from durianGarden.settings import EMAIL_HOST_USER
-import MySQLdb
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from django.http import HttpResponseNotFound
-import datetime
+from durianGarden.settings import EMAIL_HOST_USER
+
+from main.forms import *
+from main.models import *
+from main.query_functions import *
+from main.get_data import *
+
+from account.models import *
+from account.forms import *
+
 from .decorators import unauthenticated_user, allowed_users, admin_only
+
+import MySQLdb
+import datetime
 
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
