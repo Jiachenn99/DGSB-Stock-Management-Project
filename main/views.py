@@ -13,8 +13,8 @@ import MySQLdb
 import datetime
 
 results_list = []
-db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
-    
+# db = MySQLdb.connect(host="Testing123CJC.mysql.pythonanywhere-services.com",user="Testing123CJC", passwd="initialize#",db="Testing123CJC$duriangarden")
+
 def dashboard(request):
     total_items = 0
 
@@ -28,7 +28,7 @@ def dashboard(request):
     count8= Herbicide.objects.all().count()
     count9= Pesticide.objects.all().count()
     count10= Irrigation.objects.all().count()
-    
+
     total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
 
     item_lowStock = 0
@@ -41,7 +41,7 @@ def dashboard(request):
     low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
     low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
 
-    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
+    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8
     context = {
         "dashboard": "active",
         'total_items': total_items,
@@ -59,7 +59,7 @@ def index(request):
 
     context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
     return render(request, 'main/index.html',context)
- 
+
 # def register(request):
 #     context = {"register": "active"}
 #     return render(request, 'registration/register.html',context)
@@ -70,7 +70,7 @@ def purchasing(request):
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
-    
+
     #No of Queries
     a = 5
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def purchasing(request):
     start_index = index - 5 if index >= 5 else 0
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
-    
+
     results = get_all_results(Purchasing)
     cat_list = ['Purchasing']
 
@@ -106,19 +106,19 @@ def purchasing(request):
          'a': a,
          'pag_template': "main/pagination.html",
          'results': results,
-         'cat_list': cat_list, 
+         'cat_list': cat_list,
          'label':"Purchasing"
          , 'subcategory' : subcategory, 'category': category
-         
+
         }
     return render(request, 'main/purchasing.html',context)
-  
+
 def irrigation(request, subcategory):
 
     category = 'Irrigation_Tables'
 
     cat_list = get_category_subcat(Irrigation_Tables)
-    results = get_all_results(findTable(subcategory))   
+    results = get_all_results(findTable(subcategory))
     results = get_supplier_name(subcategory, results)
 
     context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category': category}
@@ -126,7 +126,7 @@ def irrigation(request, subcategory):
     return render(request, 'main/tables_base.html', context)
 
 def plantation(request, subcategory):
-    
+
     category = 'Plantation_Tables'
 
     cat_list = get_category_subcat(Plantation_Tables)
@@ -160,7 +160,7 @@ def orderView(request):
     return render(request, 'main/order.html',{'form': form})
 
 def successView(request):
-    
+
     return HttpResponse('Success! Thank you for your order.')
 
 def supplier(request):
@@ -182,7 +182,7 @@ def addItem(request, category, subcategory):
     else:
         form_object = findForm(subcategory)  # find the specific form according to the string value passed
         # POST data submitted; process data
-        form = form_object(data=request.POST)   
+        form = form_object(data=request.POST)
         if form.is_valid():
             form.save()
             if subcategory == 'Purchasing' or subcategory == 'Supplier':
@@ -196,7 +196,7 @@ def addItem(request, category, subcategory):
 def userprofile(request):
     context = {"userprofile": "active"}
     return render(request, 'main/userprofile.html',context)
-    
+
 
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
@@ -223,7 +223,7 @@ def update_entry(request, category=None, subcategory=None, pk=None):
                 return redirect(f'/{category}/{subcategory}')
     else:
         some_form = form_to_update(instance = instance_lol)
-        
+
     context = {'form': some_form, 'form_name':subcategory}
 
     return render(request, 'main/updateItem.html', context)

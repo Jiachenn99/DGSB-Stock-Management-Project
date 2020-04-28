@@ -15,17 +15,17 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xy@ztiys(e2-ukofjlbs^jm071h(@#v135!#h)t1t#$ev&5p1i'
+#SECRET_KEY = 'xy@ztiys(e2-ukofjlbs^jm071h(@#v135!#h)t1t#$ev&5p1i'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["testing123cjc.pythonanywhere.com"]
 
 
 # Application definition
@@ -59,8 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    
+
+
 ]
 
 ROOT_URLCONF = 'durianGarden.urls'
@@ -75,8 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',   
-            ], 
+                'django.contrib.messages.context_processors.messages',
+            ],
         },
     },
 ]
@@ -90,11 +90,10 @@ WSGI_APPLICATION = 'durianGarden.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'duriangarden', 
-        'USER': 'root',                      
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',                 
-        'PORT': '3306',
+        'NAME': "Testing123CJC$duriangarden",
+        'USER': "Testing123CJC",
+        'PASSWORD': 'initialize#',
+        'HOST': 'Testing123CJC.mysql.pythonanywhere-services.com',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
@@ -139,7 +138,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
+# STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
+STATIC_ROOT ='/home/Testing123CJC/DGSB-Stock-Management-Project/main/static'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
