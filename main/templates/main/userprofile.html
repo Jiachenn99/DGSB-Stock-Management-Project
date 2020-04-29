@@ -33,9 +33,20 @@ img{
                 <div class = "p-2">
                 <p><b>E-mail: </b></p> {{request.user.email}}
                 </div>
-            {% elif request.user.staff %}
+            {% elif request.user.staff.profile_pic %}
             <div class = "p-2 d-flex justify-content-center">
             <img src= "{{ request.user.staff.profile_pic.url }}" alt="Default user profile picture" height="200" width="200">
+            </div>
+                <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                    <div class = " d-flex justify-content-center">
+                    <input class = "btn btn-primary" type ="submit" name="Update Information">
+                    </div>
+                </form>
+            {% else %}
+            <div class = "p-2 d-flex justify-content-center">
+            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture" height="200" width="200">
             </div>
                 <form method="POST" action="" enctype="multipart/form-data">
                 {% csrf_token %}
