@@ -15,15 +15,17 @@
 }
 </style>
 <body>
-<div class = "jumbotron vertical-center">
-  <div  class="container">
-    <div  class="row justify-content-center">
-      <div  class="col-4">
-      
-      {% block main %}
-      {% endblock %}
+<div class = "jumbotron vertical-center ">
+  <div  class="container my-5 py-5 z-depth-1">
+    <section class="px-md-5 mx-md-5 text-lg-left dark-grey-text">
+      <div  class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+        
+        {% block main %}
+        {% endblock %}
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>
 </body>
