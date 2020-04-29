@@ -2,7 +2,12 @@
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
-
+<style>
+img{
+    height: "200";
+    width: "200";
+}
+</style>
 <head>
     <title> User Profile </title>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
@@ -20,7 +25,7 @@
         <div class = "d-flex flex-column">
             {% if request.user.is_superuser%}
             <div class = "p-2 d-flex justify-content-center">
-            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture" height="200" width="200">
+            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture">
             </div>
                 <div class = "p-2">
                 <p><b>Username: </b></p> {{request.user.username}}  
