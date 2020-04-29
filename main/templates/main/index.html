@@ -1,14 +1,21 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
+<style>
+img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+</style>
 <div class="container mt-5">
 
-
   <!--Section: Content-->
-  <section class="">
+  <section class="content-wrapper">
 
     <!-- Section heading -->
-    <h3 class="text-center font-weight-bold mb-5">Categories</h3>
+    <h2 class="text-center font-weight-bold mb-5">Categories</h2>
 
     <!-- Grid row -->
     <div class="row">
@@ -16,27 +23,17 @@
       <!-- Grid column -->
       <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
 
-        <!-- Card -->
-        <div class="card hoverable">
-
-          <!-- Card image -->
-          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/58.jpg" alt="Card image cap">
-
-          <!-- Card content -->
-          <div class="card-body">
-
-            <!-- Title -->
-            <a href="{% url 'main:irrigation' subcategory=iri_table_label %}" class="text-decoration-none">Irrigation</a>
-            <!-- Text -->
-            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
-              make up the bulk of the card's content.</p>
-            <br>
-            <a href="{% url 'main:irrigation' subcategory=iri_table_label %}" class="btn btn-outline-secondary" role="button">Enter</a>
-
-          </div>
-
-        </div>
-        <!-- Card -->
+        
+          <article id = "cat" class="card" role="article">
+            <a href="{% url 'main:irrigation' subcategory=iri_table_label %}">
+              <div class="card-text">
+                
+                <h2 class="card-meta card-title">Irrigation</h2>
+              </div>
+              <img class="card-image" src="../static/images/irrigation.jpg" />
+            </a>
+          </article>
+        
 
       </div>
       <!-- Grid column -->
@@ -44,55 +41,35 @@
       <!-- Grid column -->
       <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
 
-        <!-- Card -->
-        <div class="card hoverable">
-
-          <!-- Card image -->
-          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/project4.jpg" alt="Card image cap">
-
-          <!-- Card content -->
-          <div class="card-body">
-
-            <!-- Title -->
-            <a href="{% url 'main:plantation' subcategory=plant_table_label %}" class="text-decoration-none">Plantation</a>
-            <!-- Text -->
-            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
-              make up the bulk of the card's content.</p>
-            <br>
-            <a href="{% url 'main:plantation' subcategory=plant_table_label %}" class="btn btn-outline-secondary" role="button">Enter</a>
-
-          </div>
-
-        </div>
-        <!-- Card -->
-
+        
+          <article id = "cat" class="card" role="article">
+            <a href="{% url 'main:plantation' subcategory=plant_table_label %}">
+              <div class="card-text">
+                
+                <h2 class="card-meta card-title">Plantation</h2>
+              </div>
+              <img class="card-image" src="../static/images/plantation.jpg" />
+            </a>
+          </article>
+        
+        
       </div>
       <!-- Grid column -->
 
       <!-- Grid column -->
       <div class="col-lg-4 col-md-6 mb-0">
 
-        <!-- Card -->
-        <div class="card hoverable">
-
-          <!-- Card image -->
-          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/88.jpg" alt="Card image cap">
-
-          <!-- Card content -->
-          <div class="card-body">
-
-            <!-- Title -->
-            <a href="{% url 'main:vehicle' subcategory=vehicle_table_label %}" class="text-decoration-none">Vehicle</a>
-            <!-- Text -->
-            <p class="card-title text-muted font-small mt-3 mb-2">Some quick example text to build on the card title and
-              make up the bulk of the card's content.</p>
-            <br>
-            <a href="{% url 'main:vehicle' subcategory=vehicle_table_label %}" class="btn btn-outline-secondary" role="button">Enter</a>
-
-          </div>
-
-        </div>
-        <!-- Card -->
+        
+          <article id = "cat" class="card" role="article">
+            <a href="{% url 'main:vehicle' subcategory=vehicle_table_label %}">
+              <div class="card-text">
+                
+                <h2 class=" card-meta card-title">Vehicles</h2>
+              </div>
+              <img class="card-image" src="../static/images/vehicle.jpg" />
+            </a>
+          </article>
+        
 
       </div>
       <!-- Grid column -->
