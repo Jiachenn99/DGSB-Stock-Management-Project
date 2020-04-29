@@ -145,7 +145,7 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
 
-MEDIA_URL ='/images/'
+MEDIA_URL ='/static/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'main/static/images/')
 
 STATIC_URL = '/static/'
