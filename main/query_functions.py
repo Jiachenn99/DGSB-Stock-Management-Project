@@ -124,3 +124,46 @@ def findForm(form_type):
         'Pesticide' :PesticideForm,
     }
     return switch.get(form_type)
+
+def get_low_stock_results():
+
+    # get all querysets that have quantity LTE threshold
+    Irrigation_low = Irrigation.objects.all().filter(quantity__lte=F('threshold'))
+    Tools_low = Tools.objects.all().filter(quantity__lte=F('threshold'))
+    Stationery_low = Stationery.objects.all().filter(quantity__lte=F('threshold'))
+    Consumables_low = Consumables.objects.all().filter(quantity__lte=F('threshold'))
+    Fungicide_low = Fungicide.objects.all().filter(quantity__lte=F('threshold'))
+    Fertilizer_low = Fertilizer.objects.all().filter(quantity__lte=F('threshold'))
+    Surfacetant_low = Surfacetant.objects.all().filter(quantity__lte=F('threshold'))
+    Herbicide_low = Herbicide.objects.all().filter(quantity__lte=F('threshold'))
+    Pesticide_low = Pesticide.objects.all().filter(quantity__lte=F('threshold'))
+    Spartparts_low = Spareparts.objects.all().filter(quantity__lte=F('threshold'))
+
+    Irrigation_low = get_supplier_name('Irrigation', Irrigation_low.values())
+    Tools_low = get_supplier_name('Irrigation', Tools_low.values())
+    Stationery_low = get_supplier_name('Irrigation', Stationery_low.values())
+    Consumables_low = get_supplier_name('Irrigation', Consumables_low.values())
+    Fungicide_low = get_supplier_name('Irrigation', Fungicide_low.values())
+    Fertilizer_low = get_supplier_name('Irrigation', Fertilizer_low.values())
+    Surfacetant_low = get_supplier_name('Irrigation', Surfacetant_low.values())
+    Herbicide_low = get_supplier_name('Irrigation', Herbicide_low.values())
+    Pesticide_low = get_supplier_name('Irrigation', Pesticide_low.values())
+    Spartparts_low = get_supplier_name('Irrigation', Spartparts_low.values())
+
+
+    if Irrigation_low.exists():
+        Irrigation_low_list = [Irrigation_low]
+    else:
+        Irrigation_low_list = []
+    
+    if Tools_low.exists() or Consumables_low.exists() or Stationery_low.exists() or Fungicide_low.exists() or Fertilizer_low.exists() or Surfacetant_low.exists() or Herbicide_low.exists() or Pesticide_low.exists():
+        Plantation_low_list = [Tools_low, Consumables_low, Stationery_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+    else:
+        Plantation_low_list = []
+
+    if Spartparts_low.exists():
+        Spartparts_low_list = [Spartparts_low]
+    else:
+        Spartparts_low_list = []
+
+    return Irrigation_low_list, Plantation_low_list, Spartparts_low_list
