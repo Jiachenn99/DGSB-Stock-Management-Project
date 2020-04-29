@@ -139,6 +139,18 @@ def get_low_stock_results():
     Pesticide_low = Pesticide.objects.all().filter(quantity__lte=F('threshold'))
     Spartparts_low = Spareparts.objects.all().filter(quantity__lte=F('threshold'))
 
+    Irrigation_low = get_supplier_name('Irrigation', Irrigation_low.values())
+    Tools_low = get_supplier_name('Irrigation', Tools_low.values())
+    Stationery_low = get_supplier_name('Irrigation', Stationery_low.values())
+    Consumables_low = get_supplier_name('Irrigation', Consumables_low.values())
+    Fungicide_low = get_supplier_name('Irrigation', Fungicide_low.values())
+    Fertilizer_low = get_supplier_name('Irrigation', Fertilizer_low.values())
+    Surfacetant_low = get_supplier_name('Irrigation', Surfacetant_low.values())
+    Herbicide_low = get_supplier_name('Irrigation', Herbicide_low.values())
+    Pesticide_low = get_supplier_name('Irrigation', Pesticide_low.values())
+    Spartparts_low = get_supplier_name('Irrigation', Spartparts_low.values())
+
+
     if Irrigation_low.exists():
         Irrigation_low_list = [Irrigation_low]
     else:

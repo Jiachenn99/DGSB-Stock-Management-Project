@@ -109,7 +109,7 @@
                 <!-- results -->
                 <tbody>
                     {% for queryset in irrigation_results %}
-                        {% for dict in queryset.values %}
+                        {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
                                 <td>{{ value }}</td>
@@ -145,7 +145,7 @@
                 <!-- results -->
                 <tbody>
                     {% for queryset in plantation_results %}
-                        {% for dict in queryset.values %}
+                        {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
                                 <td>{{ value }}</td>
@@ -181,7 +181,7 @@
                 <!-- results -->
                 <tbody>
                     {% for queryset in spareparts_results %}
-                        {% for dict in queryset.values %}
+                        {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
                                 <td>{{ value }}</td>
