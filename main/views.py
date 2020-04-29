@@ -63,11 +63,15 @@ def dashboard(request):
 
     item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
 
+    irrigation_lowStock, plantation_lowStock = get_low_stock_results()
+
     context = {
         "dashboard": "active",
         'total_items': total_items,
         'item_lowStock': item_lowStock,
-        'totalPurchases': totalPurchases
+        'totalPurchases': totalPurchases,
+        'irrigation_results': irrigation_lowStock,
+        'plantation_results': plantation_lowStock
     }
     return render(request, 'main/dashboard.html',context)
 

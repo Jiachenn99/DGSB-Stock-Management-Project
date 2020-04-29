@@ -124,3 +124,20 @@ def findForm(form_type):
         'Pesticide' :PesticideForm,
     }
     return switch.get(form_type)
+
+def get_low_stock_results():
+
+    # get all querysets that have quantity LTE threshold
+    Irrigation_low = Irrigation.objects.all().filter(quantity__lte=F('threshold'))
+    Tools_low = Tools.objects.all().filter(quantity__lte=F('threshold'))
+    Consumables_low = Consumables.objects.all().filter(quantity__lte=F('threshold'))
+    Fungicide_low = Fungicide.objects.all().filter(quantity__lte=F('threshold'))
+    Fertilizer_low = Fertilizer.objects.all().filter(quantity__lte=F('threshold'))
+    Surfacetant_low = Surfacetant.objects.all().filter(quantity__lte=F('threshold'))
+    Herbicide_low = Herbicide.objects.all().filter(quantity__lte=F('threshold'))
+    Pesticide_low = Pesticide.objects.all().filter(quantity__lte=F('threshold'))
+
+    Irrigation_low_list = [Irrigation_low]
+    Plantation_low_list = [Tools_low, Consumables_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+
+    return Irrigation_low_list, Plantation_low_list

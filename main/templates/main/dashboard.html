@@ -130,5 +130,71 @@
                 </div>
             </div>
     </div>
+
+    <h2>Irrigation</h2>
+    <!-- table -->
+    <table id="table1" class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+
+        <!-- headers -->
+        <thead>
+            <tr>
+                <th> # </th>
+                <th> Name </th>
+                <th> Quantity </th>
+                <th> Threshold </th>
+                <th> Price/Unit </th>
+                <th> Description </th>
+                <th> Supplier </th>
+            </tr>
+        </thead>    
+    
+        <!-- results -->
+        <tbody>
+            {% for queryset in irrigation_results %}
+                {% for dict in queryset.values %}
+                <tr>
+                    {% for value in dict.values %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}  
+            {% endfor %}
+        </tbody>
+    
+    </table>
+
+    <h2>Plantation</h2>
+    <!-- table -->
+    <table id="table1" class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+
+        <!-- headers -->
+        <thead>
+            <tr>
+                <th> # </th>
+                <th> Name </th>
+                <th> Quantity </th>
+                <th> Threshold </th>
+                <th> Price/Unit </th>
+                <th> Description </th>
+                <th> Supplier </th>
+            </tr>
+        </thead>    
+    
+        <!-- results -->
+        <tbody>
+            {% for queryset in plantation_results %}
+                {% for dict in queryset.values %}
+                <tr>
+                    {% for value in dict.values %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}   
+            {% endfor %}
+        </tbody>
+    
+    </table>
+
 </div>
+
 {% endblock content %}
