@@ -182,7 +182,13 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <p class="text-center">
-                                                    <span class="fas fa-user fa-6x"></span>
+                                                    {% if request.user.is_superuser%}
+                                                    <img src= "{% static 'images/userprofile.jpg' %}" alt="Default user profile picture" height="100" width="100">
+                                                    {% elif request.user.staff.profile_pic %}
+                                                    <img src= "{{ request.user.staff.profile_pic.url }}" alt="Default user profile picture" height="100" width="100">
+                                                    {% else %}
+                                                    <img src= "{% static 'images/userprofile.jpg' %}" alt="Default user profile picture" height="100" width="100">
+                                                    {% endif %}
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-8">
