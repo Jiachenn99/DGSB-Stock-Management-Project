@@ -33,8 +33,6 @@ ALLOWED_HOSTS = ["testing123cjc.pythonanywhere.com"]
 INSTALLED_APPS = [
     # my apps
     'main',
-    # 'accounts',
-    'register',
     'account',
 
     # third party apps
@@ -133,16 +131,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+MEDIA_URL ='/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main/static/images/')
 
 STATIC_URL = '/static/'
-# STATIC_ROOT ='/DGSB-Stock-Management-Project/main/static'
 STATIC_ROOT ='/home/Testing123CJC/DGSB-Stock-Management-Project/main/static'
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login"
 CRISPY_TEMPLATE_PACK =  'bootstrap4'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

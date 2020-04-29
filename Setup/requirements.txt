@@ -15,3 +15,4 @@ sqlparse==0.3.0
 urllib3==1.25.7
 django-crispy-forms==1.8.1
 python-dotenv
+Pillow==7.1.1

@@ -4,20 +4,30 @@ from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.db.models import Q,F
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from durianGarden.settings import EMAIL_HOST_USER
+
 from main.forms import *
 from main.models import *
 from main.query_functions import *
 from main.get_data import *
-from durianGarden.settings import EMAIL_HOST_USER
+
+from account.models import *
+from account.forms import *
+
+from .decorators import unauthenticated_user, allowed_users, admin_only
+
 import MySQLdb
 import datetime
 
 results_list = []
-# db = MySQLdb.connect(host="Testing123CJC.mysql.pythonanywhere-services.com",user="Testing123CJC", passwd="initialize#",db="Testing123CJC$duriangarden")
 
+@login_required(login_url='login')    
 def dashboard(request):
+    #CARD 1
     total_items = 0
-
     count1= Spareparts.objects.all().count()
     count2= Tools.objects.all().count()
     count3= Stationery.objects.all().count()
@@ -30,7 +40,16 @@ def dashboard(request):
     count10= Irrigation.objects.all().count()
 
     total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
+    
+    #CARD 2
+    
 
+    #CARD 3
+    totalPurchases = 0
+    countP = Purchasing.objects.all().count()
+    totalPurchases = countP
+
+    #CARD 4
     item_lowStock = 0
     low1 = Tools.objects.all().filter(quantity__lte=F('threshold')).count()
     low2 = Consumables.objects.all().filter(quantity__lte=F('threshold')).count()
@@ -41,32 +60,35 @@ def dashboard(request):
     low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
     low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
 
-    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8
+    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
+
     context = {
         "dashboard": "active",
         'total_items': total_items,
-        'item_lowStock': item_lowStock
+        'item_lowStock': item_lowStock,
+        'totalPurchases': totalPurchases
     }
     return render(request, 'main/dashboard.html',context)
 
+@login_required(login_url='login') 
 def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
     plant_cat_list = get_category_subcat(Plantation_Tables)
+    vehicle_cat_list  = get_category_subcat(Vehicle_Tables)
 
     iri_table = iri_cat_list[0]
     plant_table = plant_cat_list[0]
+    vehicle_table = vehicle_cat_list[0]
 
-    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table}
+    context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table, 'vehicle_table_label': vehicle_table}
     return render(request, 'main/index.html',context)
 
-# def register(request):
-#     context = {"register": "active"}
-#     return render(request, 'registration/register.html',context)
-
+@login_required(login_url='login') 
 def purchasing(request):
     category = 'purchasing'
     subcategory = 'Purchasing'
+    
     #Query variables
     query_results = Purchasing.objects.all()
     query_count = Purchasing.objects.all().count()
@@ -106,13 +128,15 @@ def purchasing(request):
          'a': a,
          'pag_template': "main/pagination.html",
          'results': results,
-         'cat_list': cat_list,
-         'label':"Purchasing"
-         , 'subcategory' : subcategory, 'category': category
-
+         'cat_list': cat_list, 
+         'label':"Purchasing", 
+         'subcategory' : subcategory, 
+         'category': category,
+         
         }
     return render(request, 'main/purchasing.html',context)
 
+@login_required(login_url='login')  
 def irrigation(request, subcategory):
 
     category = 'Irrigation_Tables'
@@ -121,28 +145,37 @@ def irrigation(request, subcategory):
     results = get_all_results(findTable(subcategory))
     results = get_supplier_name(subcategory, results)
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category': category}
+    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html', context)
 
+@login_required(login_url='login') 
 def plantation(request, subcategory):
 
     category = 'Plantation_Tables'
 
     cat_list = get_category_subcat(Plantation_Tables)
-    results= get_all_results(findTable(subcategory))
+    results = get_all_results(findTable(subcategory))
     results = get_supplier_name(subcategory, results)
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory' : subcategory, 'category':category}
+    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html',context)
 
+@login_required(login_url='login') 
 def vehicle(request, subcategory):
-    results= get_all_results(findTable(subcategory))
-    cat_list = ['Vehicle', 'Spareparts']
-    context = {'results': results, 'cat_list': cat_list, 'subcategory' : subcategory}
+
+    category = 'Vehicle_Tables'
+
+    cat_list = get_category_subcat(Vehicle_Tables)
+    results = get_all_results(findTable(subcategory))
+    if subcategory == 'Spareparts':
+        results = get_supplier_name(subcategory, results)
+    
+    context = {'results': results, 'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
     return render(request, 'main/tables_base.html',context)
 
+@login_required(login_url='login') 
 def orderView(request):
     if request.method == 'GET':
         form = OrderForm()
@@ -159,19 +192,22 @@ def orderView(request):
             return redirect('main:success')
     return render(request, 'main/order.html',{'form': form})
 
+@login_required(login_url='login') 
 def successView(request):
 
     return HttpResponse('Success! Thank you for your order.')
 
+@login_required(login_url='login') 
 def supplier(request):
     category = 'supplier'
     subcategory = 'Supplier'
     results= get_all_results(Supplier)
     cat_list = ['Supplier']
 
-    context = {'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
+    context = {"supplier": "active",'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
     return render(request, 'main/supplier.html', context)
 
+@login_required(login_url='login') 
 def addItem(request, category, subcategory):
     # Create and update database
 
@@ -193,25 +229,40 @@ def addItem(request, category, subcategory):
     context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
 
+@login_required(login_url='login') 
 def userprofile(request):
-    context = {"userprofile": "active"}
-    return render(request, 'main/userprofile.html',context)
+    if request.user.is_superuser == False:
+        staff = request.user.staff
+        form = StaffForm(instance=staff)
 
+    if request.method =='POST':
+        form = StaffForm(request.POST, request.FILES, instance = staff)
+        if form.is_valid:
+            form.save()
 
+    if request.user.is_superuser:
+        return render(request, 'main/userprofile.html', {"userprofile": "active"})
+    return render(request, 'main/userprofile.html',{"userprofile": "active",'form': form,})
+    
+@login_required(login_url='login') 
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
         table_to_del = findTable(subcategory)
 
         objects = table_to_del.objects.get(pk=pk)
         objects.delete()
-        return redirect(f'/{category}/{subcategory}')
+        if subcategory == 'Purchasing' or subcategory == 'Supplier':
+            return redirect(f'/{category}/')
+        else:
+            return redirect(f'/{category}/{subcategory}')
 
+@login_required(login_url='login') 
 def update_entry(request, category=None, subcategory=None, pk=None):
     form_to_update = findForm(subcategory)
     model_object = findTable(subcategory)
     instance_lol = get_object_or_404(model_object, pk=pk)
     print(f'Instance is {instance_lol}')
-
+    
     if request.method == "POST":
         some_form = form_to_update(request.POST or None ,instance = instance_lol)
         if some_form.is_valid():
