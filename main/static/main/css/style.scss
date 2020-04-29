@@ -1,9 +1,10 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-$accent: #ffb74d
-$text_color: #2f3640
-@function rem($px)
-	@return $px / 16px + 0rem
-	@return $px
+$accent: #ffb74d;
+$text_color: #2f3640;
+@function rem($px){
+	@return $px / 16px + 0rem;
+	@return $px;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -426,4 +427,195 @@ a.article:hover {
     line-height: 1.7em;
     color:#999;
     
+}
+
+/* ---------------------------------------------------
+    CATEGORIES
+----------------------------------------------------- */
+
+
+$card-size: 350px;
+$card-size-h: 500px;
+$p-m-default: 20px;
+
+$brand-blue: #2C3E50;
+$brand-green: #16A085;
+
+$black: #111;
+$white: #FFF;
+
+// Easing Properties
+$easeOutQuad: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+
+// PX to EM
+$browser-context: 16;
+
+@function em($pixels, $context: $browser-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1em;
+}
+
+// Transition Mixin
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+
+* {
+  box-sizing: border-box;
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+body,html {
+  min-height: 100%;
+}
+
+
+a {
+  @include transition(all 300ms $easeOutQuad);
+  &:hover {
+    @include transition(all 300ms $easeOutQuad);
+  }
+}
+
+
+#cat.card{
+  // background-color: $black;
+  background-image: linear-gradient(0deg, $brand-blue 0%, $brand-green 100%);  
+  width: $card-size;
+  height: $card-size-h;
+  margin: $p-m-default;
+  // border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  // backface-visibility: hidden;
+}
+
+.card-image {
+  height: $card-size-h;
+  object-fit: cover;
+  transform: translate(0,0);
+  @include transition(all 400ms $easeOutQuad);
+}
+
+.card-meta {
+  font-size: em(11);
+  
+  letter-spacing: 1px;
+  &:before {
+    content: '';
+    height: 1px;
+    width: 30px;
+    background-color: #fff;
+    position: relative;
+    display: block;
+    margin-bottom: 10px;
+    backface-visibility: hidden;
+    opacity: 0;
+    transform: translate(0,-10px);
+    @include transition(all 200ms $easeOutQuad);
+  }  
+}
+
+.card-text {
+  color: #FFF;
+  background-color: rgba($black, .65);
+  position: absolute;
+  padding: $p-m-default;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  @include transition(all 200ms $easeOutQuad);
+}
+
+.card-title {
+  margin: 8px 0;
+  font-weight: 300;
+  font-size: em(30);
+}
+
+.card a {
+  &:hover {
+    .card-text {
+      background-color: rgba($black, .86);
+      // color: $black;
+    }
+    .card-meta {
+      &:before {
+        transform: translate(0,0);
+        // background-color: $black;
+        opacity: 1;
+        @include transition(all 200ms $easeOutQuad);
+      }
+    }
+    
+    .card-image {
+      transform: translate(20px,0);
+      @include transition(all 400ms $easeOutQuad);
+    }    
+  }  
+}
+
+/* ---------------------------------------------------
+    Dashboard - Cards
+----------------------------------------------------- */
+
+.card-body-icon {
+    position: absolute;
+    z-index: 0;
+    top: -25px;
+    right: -25px;
+    font-size: 5rem;
+    -webkit-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    transform: rotate(15deg);
+}
+
+  
+@media (min-width: 576px) {
+    .card-columns {
+      column-count: 1;
+    }
+}
+  
+@media (min-width: 768px) {
+    .card-columns {
+      column-count: 2;
+    }
+}
+  
+@media (min-width: 1200px) {
+    .card-columns {
+      column-count: 2;
+    }
+}
+  
+
+.content-wrapper {
+    min-height: calc(100vh - 56px);
+    padding-top: 1rem;
+}
+
+.content-wrapper {
+    overflow-x: hidden;
+    background: white;
+}
+
+.o-hidden {
+    overflow: hidden !important;
 }
