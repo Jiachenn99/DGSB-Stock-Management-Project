@@ -1,9 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<style>
 
-</style>
 {% if item_lowStock > 0 %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Stock is low!</strong> {{ item_lowStock }} item(s) is/are low on stock!
