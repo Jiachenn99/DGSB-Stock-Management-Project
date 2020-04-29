@@ -60,14 +60,27 @@ def dashboard(request):
     low6 = Herbicide.objects.all().filter(quantity__lte=F('threshold')).count()
     low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
     low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
+    low9 = Spareparts.objects.all().filter(quantity__lte=F('threshold')).count()
+    low10 = Stationery.objects.all().filter(quantity__lte=F('threshold')).count()
 
-    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 
+    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 + low9 + low10
+
+    irrigation_lowStock, plantation_lowStock, spareparts_lowStock = get_low_stock_results()
+    isIrrigationLow = len(irrigation_lowStock) > 0
+    isPlantationLow = len(plantation_lowStock) > 0
+    isSparepartsLow = len(spareparts_lowStock) > 0
 
     context = {
         "dashboard": "active",
         'total_items': total_items,
         'item_lowStock': item_lowStock,
-        'totalPurchases': totalPurchases
+        'totalPurchases': totalPurchases,
+        'irrigation_results': irrigation_lowStock,
+        'plantation_results': plantation_lowStock,
+        'spareparts_results': spareparts_lowStock,
+        'isIrrigationLow': isIrrigationLow,
+        'isPlantationLow': isPlantationLow,
+        'isSparepartsLow': isSparepartsLow,
     }
     return render(request, 'main/dashboard.html',context)
 
