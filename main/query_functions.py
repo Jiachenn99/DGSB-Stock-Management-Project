@@ -65,6 +65,16 @@ def purchasing_query(results, query):
             ).distinct()
     return results
 
+def supplier_query(results, query):
+    if query:
+        results = results.filter(
+            Q(supplier_name__icontains=query) |
+            Q(phone_number__icontains=query) |
+            Q(email__icontains=query) |
+            Q(description__icontains=query) 
+            ).distinct()
+    return results
+
 def irrigation_query(results, query):
     if query:
         results = results.filter(

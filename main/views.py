@@ -306,7 +306,7 @@ def supplier(request):
     #Search query
     query = request.GET.get("q")
     if request.method == 'GET':
-        results = purchasing_query(results, query)
+        results = supplier_query(results, query)
 
     #Paginator
     page = request.GET.get('page', 1)
