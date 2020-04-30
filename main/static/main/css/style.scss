@@ -438,11 +438,11 @@ $card-size: 350px;
 $card-size-h: 500px;
 $p-m-default: 20px;
 
-$brand-blue: #2C3E50;
-$brand-green: #16A085;
+$brand-blue: #7386D5;
+$brand-green: #7386D5;
 
-$black: #111;
-$white: #FFF;
+$black: #7386D5;
+$white: #111;
 
 // Easing Properties
 $easeOutQuad: cubic-bezier(0.250, 0.460, 0.450, 0.940);
@@ -552,7 +552,7 @@ a {
 .card a {
   &:hover {
     .card-text {
-      background-color: rgba($black, .86);
+      background-color: rgba($black, .99);
       // color: $black;
     }
     .card-meta {
