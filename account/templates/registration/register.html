@@ -7,10 +7,9 @@
 
 <div class="container my-5 py-5 z-depth-1">
 
-
     <!--Section: Content-->
     <section class="px-md-5 mx-md-5 text-lg-left dark-grey-text">
- 
+        <button class="btn btn-outline-dark" onclick="goBack()">Go Back</button>
 
         <!--Grid row-->
         <div class="row d-flex justify-content-center">
@@ -29,4 +28,9 @@
         </div>
     </section>
 </div>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
 {% endblock %}
