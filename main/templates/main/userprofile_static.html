@@ -11,6 +11,14 @@ img{
 
 <body>
 <div class="content-wrapper ">
+    <div class = "d-flex flex-row-reverse">
+        <div class="p-2">
+                <form method = "GET" action="{% url 'main:userprofile' %}">
+                {% csrf_token %}
+                <input class = "btn btn-primary" type ="submit" name="Update Information" value="Edit"/>
+                </form>
+        </div>
+    </div>
     <div class="container-fluid d-flex flex-column align-items-center"><!-- Container Begins-->
         <div>
         <h1 style="text-align:justify;">User Profile</h1><br>
@@ -35,11 +43,13 @@ img{
             </div>
                 
                 <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset disabled>
                 {% csrf_token %}
                 {{form|crispy}}
                 <div class = " d-flex justify-content-center">
                 <input class = "btn btn-primary" type ="submit" name="Update Information">
                 </div>
+                </fieldset>
                 </form> 
             {% else %}
             <div class = "p-2 d-flex justify-content-center">
@@ -47,11 +57,13 @@ img{
             </div>
                 
                 <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset disabled>
                 {% csrf_token %}
                 {{form|crispy}}
                 <div class = " d-flex justify-content-center">
                 <input class = "btn btn-primary" type ="submit" name="Update Information">
                 </div>
+                </fieldset>
                 </form>
                 
             {% endif %}
