@@ -115,9 +115,10 @@ def purchasing(request):
        displayLimit = request.POST['drop1']
 
     #Search query
-    query = request.GET.get("q")
-    if request.method == 'GET':
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
         results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
 
     #Paginator
     page = request.GET.get('page', 1)
@@ -162,9 +163,10 @@ def irrigation(request, subcategory):
        displayLimit = request.POST['drop1']
 
     #Search query
-    query = request.GET.get("q")
-    if request.method == 'GET':
-        results = irrigation_query(results, query)
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
         
     #Paginator
     page = request.GET.get('page', 1)
@@ -201,10 +203,10 @@ def plantation(request, subcategory):
        displayLimit = request.POST['drop1']
 
     #Search query
-    
-    query = request.GET.get("q")
-    if request.method == 'GET':
-        results = plantation_query(results, query)
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
         
     #Paginator
     page = request.GET.get('page', 1)
@@ -241,14 +243,13 @@ def vehicle(request, subcategory):
     if request.method == 'POST':
        displayLimit = request.POST['drop1']
 
-    #Search query
-    query = request.GET.get("q")
-    if request.method == 'GET':
+        #Search query
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
         if subcategory == 'Spareparts':
             results = spareparts_query(results, query)
         else:
             results = vehicle_query(results, query)
-        
 
     #Paginator
     page = request.GET.get('page', 1)

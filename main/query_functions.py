@@ -97,7 +97,7 @@ def vehicle_query(results, query):
     if query:
         results = results.filter(
             Q(vehicle_type__icontains=query) |
-            Q(vehicle_name_icontains=query) |
+            Q(vehicle_name__icontains=query) |
             Q(vehicle_number_plate__icontains=query) |
             Q(vehicle_owner__icontains=query) 
             ).distinct()
