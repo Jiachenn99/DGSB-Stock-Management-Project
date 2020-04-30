@@ -11,20 +11,28 @@ img{
 
 <body>
 <div class="content-wrapper ">
+    <div class = "d-flex flex-row-reverse">
+        <div class="p-2">
+                <form method = "GET" action="{% url 'main:userprofile' %}">
+                {% csrf_token %}
+                <input class = "btn btn-primary" type ="submit" name="Update Information" value="Edit"/>
+                </form>
+        </div>
+    </div>
     <div class="container-fluid d-flex flex-column align-items-center"><!-- Container Begins-->
         <div>
         <h1 style="text-align:justify;">User Profile</h1><br>
         </div>
         <!--Header-->
         <!--  cp Content Begins-->
-
+        
         <div class = "d-flex flex-column">
             {% if request.user.is_superuser%}
             <div class = "p-2 d-flex justify-content-center">
-            <img src= "{% static 'images/userprofile.jpg' %}" alt="Default user profile picture" height="200" width="200">
+            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture">
             </div>
                 <div class = "p-2">
-                <p><b>Username: </b></p> {{request.user.username}}
+                <p><b>Username: </b></p> {{request.user.username}}  
                 </div>
                 <div class = "p-2">
                 <p><b>E-mail: </b></p> {{request.user.email}}
@@ -33,40 +41,44 @@ img{
             <div class = "p-2 d-flex justify-content-center">
             <img src= "{{ request.user.staff.profile_pic.url }}" alt="Default user profile picture" height="200" width="200">
             </div>
-
+                
                 <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset disabled>
                 {% csrf_token %}
                 {{form|crispy}}
                 <div class = " d-flex justify-content-center">
                 <input class = "btn btn-primary" type ="submit" name="Update Information">
                 </div>
-                </form>
+                </fieldset>
+                </form> 
             {% else %}
             <div class = "p-2 d-flex justify-content-center">
-            <img src= "{% static 'images/userprofile.jpg' %}" alt="Default user profile picture" height="200" width="200">
+            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture" height="200" width="200">
             </div>
-
+                
                 <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset disabled>
                 {% csrf_token %}
                 {{form|crispy}}
                 <div class = " d-flex justify-content-center">
                 <input class = "btn btn-primary" type ="submit" name="Update Information">
                 </div>
+                </fieldset>
                 </form>
-
+                
             {% endif %}
-
+            
             <div class = "p-2">
                 <form method="POST" class="form-group">
                     <p><b>Change Password</b></p>
                     <div class = " d-flex justify-content-center">
-                        <input class="btn btn-info" type="button" name="submit" value="Change your password" onclick="location.href='/password_change/'"/>
+                        <input class="btn btn-info" type="button" name="submit" value="Change your password" onclick="location.href='/password_change/'"/>           
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+</div>    
 <!--Subcontent Ends-->
 <!--Main Content Ends-->
 

@@ -16,6 +16,7 @@ urlpatterns = [
     path('addItem/<str:category>/<str:subcategory>', views.addItem, name='addItem'),
     path('purchasing/', views.purchasing, name='purchasing'),
     path('userprofile/', views.userprofile, name='userprofile'),
+    path('userprofile_s/', views.userprofile_static, name='userprofile_static'),
     path('order/', views.orderView, name='order'),
     path('success/', views.successView, name='success'),
 

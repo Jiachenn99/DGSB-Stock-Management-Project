@@ -244,6 +244,29 @@ def addItem(request, category, subcategory):
 
 @login_required(login_url='login') 
 def userprofile(request):
+
+    if request.user.is_superuser == False:
+        staff = request.user.staff
+        form = StaffForm(instance=staff)
+
+    if request.method =='POST':
+        form = StaffForm(request.POST, request.FILES, instance = staff)
+        if form.is_valid:
+            form.save()
+            return redirect('/userprofile_s')
+
+    context = {
+        "userprofile": "active",
+        'form': form,
+    }
+
+    if request.user.is_superuser:
+        return render(request, 'main/userprofile.html', {"userprofile": "active"})
+    return render(request, 'main/userprofile.html',context)
+
+@login_required(login_url='login') 
+def userprofile_static(request):
+
     if request.user.is_superuser == False:
         staff = request.user.staff
         form = StaffForm(instance=staff)
@@ -253,10 +276,16 @@ def userprofile(request):
         if form.is_valid:
             form.save()
 
+    context = {
+        "userprofile": "active",
+        'form': form,
+    }
+
     if request.user.is_superuser:
-        return render(request, 'main/userprofile.html', {"userprofile": "active"})
-    return render(request, 'main/userprofile.html',{"userprofile": "active",'form': form,})
-    
+        return render(request, 'main/userprofile_static.html', {"userprofile": "active"})
+    return render(request, 'main/userprofile_static.html',context)
+  
+
 @login_required(login_url='login') 
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
