@@ -105,6 +105,8 @@ def purchasing(request):
     
     #Query variables
     results= get_all_results(Purchasing)
+    results = get_supplier_name(subcategory, results)
+    
     cat_list = ['Purchasing']
     #No of Queries
     query_count = get_results_count(Purchasing)
@@ -142,8 +144,6 @@ def purchasing(request):
          'label':"Purchasing", 
          'subcategory' : subcategory, 
          'category': category,
-         
-         
         }
     return render(request, 'main/purchasing.html',context)
 
