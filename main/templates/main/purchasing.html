@@ -28,85 +28,125 @@ $(document).ready(function(){
 </script>
 
 <body>
-        <div class="table-wrapper">
-            <div class="table-title d-flex flex-column">
-                <div class="row p-2">
-                    <div class="col-sm-4">
-                      <div class="show-entries">
-                        
-                        <form action="{% url 'main:purchasing' %}" method = "POST">
-                        {% csrf_token %}
-                        <span>Show</span>
-                        <select name = "drop1">
-                          <option value = "5" {% if a == "5" %}selected{%endif%}>5</option>
-                          <option value = "10"{% if a == "10" %}selected{%endif%}>10</option>
-                          <option value = "15"{% if a == "15" %}selected{%endif%}>15</option>
-                          <option value = "20"{% if a == "20" %}selected{%endif%}>20</option>
-                        </select>
-                        <input type="submit" class="btn btn-outline-dark" value="Submit">
-                        </form>
-                        
-                        
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <h1 class="text-center">Purchases</h1>
-                    </div>
-          
-                    <div class="col-sm-4">
-                      <div class="search-box">
-                        <div class="input-group">
-                            
-                            <form method="GET" action="{% url 'main:purchasing' %}">
-                            {% csrf_token %}
-                            <div class="input-group-addon">
-                            <input type="submit" class="fas fa-search">
-                            </div>
-                            <input type="text" name="q" class="form-control" placeholder="Search . . ." value = "{{request.GET.q}}">                 
-                            </form>
-                            
-                        </div>
-                      </div>
-                    </div>
-                  
-                </div>
-            </div>
-            <div class = "d-flex flex-row-reverse">
-              <div class="p-2">
-                    <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
-              </div>
-            </div>
-            <div style="overflow-x:auto;">
-            <table class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
-                <thead>
-                    <tr>
-                        <th> # </th>
-                        <th> PV No. </th>
-                        <th> Invoice No. </th>
-                        <th> Purchasing Date </th>
-                        <th> Supplier Name </th>
-                        <th> Description </th>
-                        {% comment %} <th> Delete </th>
-                        <th> Update </th> {% endcomment %}
-                    </tr>
-                </thead>
-                <tbody>
-                
-                  {% for item in items %}
-                  <tr> 
-                      <td>{{ forloop.counter }}</td>
-                      <td>{{ item.pv_no }}</td>
-                      <td>{{ item.invoice_no }}</td>
-                      <td>{{ item.purchasing_date }}</td>
-                      <td>{{ item.supplier }}</td>
-                      <td>{{ item.description }}</td>             
-                  </tr>
-                  {% endfor %}
-
-                </tbody>
-            </table>
-            </div>
-            {% include pag_template %}
+  <div class="table-wrapper">
+    <div class="d-flex justify-content-between">
+      <div class = "p-2">
       </div>
+      <div class="p-2">
+          <h2>Purchasing</h2>
+      </div>
+      <div class = "p-2 flex-row-reverse">
+        <div class="p-2">
+              <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add record</a>
+        </div>
+      </div>
+    </div>
+    <div class="table-title d-flex justify-content-between">
+      <div class="col-sm-4 p-2">
+        <div class="show-entries">
+          
+          <form action="" method = "POST">
+          {% csrf_token %}
+          <span>Show</span>
+          <select name = "drop1">
+            <option value = "5" {% if displayLimit == "5" %}selected{%endif%}>5</option>
+            <option value = "10"{% if displayLimit == "10" %}selected{%endif%}>10</option>
+            <option value = "15"{% if displayLimit == "15" %}selected{%endif%}>15</option>
+            <option value = "20"{% if displayLimit == "20" %}selected{%endif%}>20</option>
+          </select>
+          <input type="submit" class="btn btn-outline-dark" value="Submit">
+          </form>
+        </div>
+      </div>
+      <div class = "p-2">
+      </div>
+      <div class="col-sm-4 p-2">
+        <div class="search-box">
+          <div class="input-group">
+              <form method="GET" action="">
+              {% csrf_token %}
+              <div class="input-group-addon">
+              <input type="submit" class="fas fa-search">
+              </div>
+              <input type="text" name="q" class="form-control" placeholder="Search . . ." value = "{{request.GET.q}}">                 
+              </form>
+          </div>
+        </div>
+      </div>     
+    </div>
+  
+    <div style="overflow-x:auto;">
+      <table class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
+          <thead>
+              <tr>
+                  <th> # </th>
+                  <th> PV No. </th>
+                  <th> Invoice No. </th>
+                  <th> Purchasing Date </th>
+                  <th> Description </th>
+                  <th> Supplier Name </th>
+                  <th> Delete </th>
+                  <th> Update </th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for dicts in results %}
+                <tr>
+                    {% for value in dicts.values %}
+                        {% if forloop.counter == 1 %}
+                            <td>
+                                {{ forloop.parentloop.counter }}
+                            </td>
+                            {% else %}
+                            <td>
+                                {{ value }}
+                            </td>
+                        {% endif %}
+                    {% endfor %}    
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        Delete
+                        </button>
+                    </td>
+
+                    <td>
+                        <form action="{% url 'main:update' subcategory=subcategory pk=dicts.purchasing_id category=category%}" method="GET">
+                                {% csrf_token %}
+                                <button id="Update" class="btn btn-warning" type='submit' name='update_this'>Update</button>
+                        </form>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete record?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to delete this record? </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form action="{% url 'main:deletion' subcategory=subcategory pk=dicts.purchasing_id category=category%}" method="POST">
+                            {% csrf_token %}
+                            <input name='pk' value="{{ dicts.id }}" hidden>
+                            <input name='object' value="{{ subcategory }}" hidden>
+                            <button id="Deletion" class="btn btn-danger" type='submit' name='delete_this'>Delete</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div> 
+                
+          {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    {% include pag_template %}         
+</div>
 </body>
 {% endblock content %}

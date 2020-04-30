@@ -26,6 +26,13 @@ def get_all_results(table):
     results_list = table.objects.all().values()
 
     return results_list
+
+def get_results_count(table):
+
+    results_count = table.objects.all().values().count()
+
+    return results_count
+
 # Delete
 def delete_from_table(table, condition, count=None):
     '''
@@ -46,18 +53,55 @@ def delete_from_table(table, condition, count=None):
 
     return query
 
-def purchasing_query(query_results, query):
+def purchasing_query(results, query):
     if query:
-        query_results = query_results.filter(
-            Q(purchasing_id__icontains=query) |
-            Q(pv_no__icontains=query) |
-            Q(invoice_no__icontains=query) |
+        results = results.filter(
+            Q(purchasing_id__iexact=query) |
+            Q(pv_no__iexact=query) |
+            Q(invoice_no__iexact=query) |
             Q(purchasing_date__icontains=query) |
             Q(description__icontains=query) |
             Q(supplier__supplier_name__icontains=query) 
             ).distinct()
-    return query_results
+    return results
 
+def irrigation_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+
+def plantation_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+
+def vehicle_query(results, query):
+    if query:
+        results = results.filter(
+            Q(vehicle_type__icontains=query) |
+            Q(vehicle_name_icontains=query) |
+            Q(vehicle_number_plate__icontains=query) |
+            Q(vehicle_owner__icontains=query) 
+            ).distinct()
+    return results
+
+def spareparts_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(vehicle_assigned__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+    
 def model_subclasses(mclass):
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
@@ -140,15 +184,15 @@ def get_low_stock_results():
     Spartparts_low = Spareparts.objects.all().filter(quantity__lte=F('threshold'))
 
     Irrigation_low = get_supplier_name('Irrigation', Irrigation_low.values())
-    Tools_low = get_supplier_name('Irrigation', Tools_low.values())
-    Stationery_low = get_supplier_name('Irrigation', Stationery_low.values())
-    Consumables_low = get_supplier_name('Irrigation', Consumables_low.values())
-    Fungicide_low = get_supplier_name('Irrigation', Fungicide_low.values())
-    Fertilizer_low = get_supplier_name('Irrigation', Fertilizer_low.values())
-    Surfacetant_low = get_supplier_name('Irrigation', Surfacetant_low.values())
-    Herbicide_low = get_supplier_name('Irrigation', Herbicide_low.values())
-    Pesticide_low = get_supplier_name('Irrigation', Pesticide_low.values())
-    Spartparts_low = get_supplier_name('Irrigation', Spartparts_low.values())
+    Tools_low = get_supplier_name('Tools', Tools_low.values())
+    Stationery_low = get_supplier_name('Stationary', Stationery_low.values())
+    Consumables_low = get_supplier_name('Consumables', Consumables_low.values())
+    Fungicide_low = get_supplier_name('Fungicide', Fungicide_low.values())
+    Fertilizer_low = get_supplier_name('Fertilizer', Fertilizer_low.values())
+    Surfacetant_low = get_supplier_name('Surfacetant', Surfacetant_low.values())
+    Herbicide_low = get_supplier_name('Herbicide', Herbicide_low.values())
+    Pesticide_low = get_supplier_name('Pesticide', Pesticide_low.values())
+    Spartparts_low = get_supplier_name('Spareparts', Spartparts_low.values())
 
 
     if Irrigation_low.exists():

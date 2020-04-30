@@ -1,26 +1,26 @@
-{% load staticfiles %}
-{% if items.has_other_pages %}
-            <div class="clearfix">
-              <div class = "hint-text">Showing <b> {{ items }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
-            
-              <ul class="pagination">
-                {% if items.has_previous %}
-                  <li class = "page-item "><a class="page-link" href="?page={{ items.previous_page_number }}&q={{ request.GET.q }}">Previous</a></li>
-                {% else %}
-                  <li class="page-item disabled "><a class="page-link" href=""><span>Previous</span></a></li>
-                {% endif %}
-                {% for i in items.paginator.page_range %}
-                  {% if items.number == i %}
-                    <li class="page-item active "><a class="page-link" href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
-                  {% else %}
-                    <li class = "page-item " ><a class="" href="?page={{ i }}">{{ i }}</a></li>
-                  {% endif %}
-                {% endfor %}
-                {% if items.has_next %}
-                  <li class = "page-item "><a class="page-link" href="?page={{ items.next_page_number }}&q={{ request.GET.q }}">Next</a></li>
-                {% else %}
-                  <li class="page-item disabled "><a class="page-link" href=""><span>Next</span></a></li>
-                {% endif %}
-              </ul>
-            </div>    
+{% load static %}
+{% if results.has_other_pages %}
+<div class="clearfix">
+  <div class = "hint-text">Showing <b> {{ results }} </b> with a total of <b> {{ query_count }} </b>  entries</div>
+
+  <ul class="pagination">
+    {% if results.has_previous %}
+      <li class = "page-item "><a class="page-link" href="?page={{ results.previous_page_number }}&q={{ request.GET.q }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled "><a class="page-link" href=""><span>Previous</span></a></li>
+    {% endif %}
+    {% for i in results.paginator.page_range %}
+      {% if results.number == i %}
+        <li class="page-item active "><a class="page-link" href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
+      {% else %}
+        <li class = "page-item " ><a class="" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if results.has_next %}
+      <li class = "page-item "><a class="page-link" href="?page={{ results.next_page_number }}&q={{ request.GET.q }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled "><a class="page-link" href=""><span>Next</span></a></li>
+    {% endif %}
+  </ul>
+</div>    
 {% endif %}
