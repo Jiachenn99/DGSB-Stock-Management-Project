@@ -290,7 +290,7 @@ def orderView(request):
 @login_required(login_url='login') 
 def successView(request):
     
-    return HttpResponse('Success! Thank you for your order.')
+    return HttpResponse('Success! Email sent.')
 
 @login_required(login_url='login') 
 def supplier(request):

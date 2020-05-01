@@ -22,7 +22,7 @@ class Purchasing(models.Model):
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
-        return str(self.supplier.supplier_name)
+        return self.pv_no
 
 # Abstract class to inherit from 
 class Irrigation_Tables(models.Model):
