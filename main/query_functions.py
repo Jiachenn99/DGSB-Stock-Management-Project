@@ -26,6 +26,13 @@ def get_all_results(table):
     results_list = table.objects.all().values()
 
     return results_list
+
+def get_results_count(table):
+
+    results_count = table.objects.all().values().count()
+
+    return results_count
+
 # Delete
 def delete_from_table(table, condition, count=None):
     '''
@@ -46,18 +53,65 @@ def delete_from_table(table, condition, count=None):
 
     return query
 
-def purchasing_query(query_results, query):
+def purchasing_query(results, query):
     if query:
-        query_results = query_results.filter(
-            Q(purchasing_id__icontains=query) |
-            Q(pv_no__icontains=query) |
-            Q(invoice_no__icontains=query) |
+        results = results.filter(
+            Q(purchasing_id__iexact=query) |
+            Q(pv_no__iexact=query) |
+            Q(invoice_no__iexact=query) |
             Q(purchasing_date__icontains=query) |
             Q(description__icontains=query) |
             Q(supplier__supplier_name__icontains=query) 
             ).distinct()
-    return query_results
+    return results
 
+def supplier_query(results, query):
+    if query:
+        results = results.filter(
+            Q(supplier_name__icontains=query) |
+            Q(phone_number__icontains=query) |
+            Q(email__icontains=query) |
+            Q(description__icontains=query) 
+            ).distinct()
+    return results
+
+def irrigation_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+
+def plantation_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+
+def vehicle_query(results, query):
+    if query:
+        results = results.filter(
+            Q(vehicle_type__icontains=query) |
+            Q(vehicle_name__icontains=query) |
+            Q(vehicle_number_plate__icontains=query) |
+            Q(vehicle_owner__icontains=query) 
+            ).distinct()
+    return results
+
+def spareparts_query(results, query):
+    if query:
+        results = results.filter(
+            Q(name__icontains=query) |
+            Q(vehicle_assigned__icontains=query) |
+            Q(purchasing__supplier__supplier_name__icontains=query) 
+            ).distinct()
+    return results
+    
 def model_subclasses(mclass):
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
@@ -82,10 +136,18 @@ def get_supplier_name(subcategory, some_queryset):
 
     else:
         for dicts in some_queryset:
-            model_object = subcategory.objects.get(pk = dicts['id'])
-            supplier_name = model_object.purchasing.supplier.supplier_name
-            del[dicts['purchasing_id']]
-            dicts['supplier_name'] = supplier_name
+            if 'pv_no' in dicts.keys():
+                model_object = subcategory.objects.get(pk = dicts['purchasing_id'])
+                supplier_name = model_object.supplier.supplier_name
+                dicts['supplier_id'] = supplier_name
+                
+ 
+            else:
+                model_object = subcategory.objects.get(pk = dicts['id'])
+                #supplier_name = model_object.purchasing.supplier.supplier_name
+                pv_no = model_object.purchasing.pv_no
+                dicts['purchasing_id'] = pv_no
+                
             
     return some_queryset        
 

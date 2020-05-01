@@ -1,12 +1,13 @@
 {% extends "main/base.html" %}
 {% block content %}
 
-    <style> 
-        .dropdown-toggle::after { 
-            content: none; 
-        } 
-    </style> 
+<style> 
+    .dropdown-toggle::after { 
+        content: none; 
+    } 
+</style> 
 
+<div class="table-wrapper">
     <div class="d-flex justify-content-between">
         <!-- new drop down menu with refresh to call view function-->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -24,7 +25,7 @@
                 </li>
             </ul>
         </nav>
-
+        
         <!--display current subcategory-->
         <div class="p-2">
             <h2 id ="current-table">{{ subcategory }}</h2>
@@ -34,12 +35,44 @@
         <div class="p-2">
             <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button">Add Item</a>
         </div>
-
+        
     </div>
+    <div class="table-title d-flex justify-content-between">
+        <div class="col-sm-4">
+            <div class="show-entries">
+                <form action="" method = "POST">
+                {% csrf_token %}
+                <span>Show</span>
+                <select name = "drop1">
+                    <option value = "5" {% if displayLimit == "5" %}selected{%endif%}>5</option>
+                    <option value = "10"{% if displayLimit == "10" %}selected{%endif%}>10</option>
+                    <option value = "15"{% if displayLimit == "15" %}selected{%endif%}>15</option>
+                    <option value = "20"{% if displayLimit == "20" %}selected{%endif%}>20</option>
+                </select>
+                <input type="submit" class="btn btn-outline-dark" value="Submit">
+                </form>
+            </div>
+        </div>
 
+        <div class="col-sm-4">
+            <div class="search-box">
+            <div class="input-group">
+                
+                <form method="GET" action="">
+                {% csrf_token %}
+                <div class="input-group-addon">
+                <input type="submit" class="fas fa-search">
+                </div>
+                <input type="text" name="q" class="form-control" placeholder="Search . . ." value = "{{request.GET.q}}">                 
+                </form>
+                
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- table -->
     <div style="overflow-x:auto;">
-    <table id="table1" class="table table-hover table-bordered mt-4 shadow p-2 mb-2 bg-white">
+    <table id="table1" class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
         <!-- headers -->
         <thead>
             <tr>
@@ -58,7 +91,7 @@
                     <th> Unit Price </th>
                     <th> Quantity </th>
                     <th> Threshold </th>
-                    <th> Supplier </th>
+                    <th> PV_NO </th>
                     <th> Delete </th>
                     <th> Update </th>
                 {% else %}
@@ -68,7 +101,7 @@
                     <th> Threshold </th>
                     <th> Price/Unit </th>
                     <th> Description </th>
-                    <th> Supplier </th>
+                    <th> PV_NO </th>
                     <th> Delete </th>
                     <th> Update </th>
                 {% endif %}
@@ -132,8 +165,9 @@
             </div> 
             {% endfor %}
         </tbody>
-
     </table>
     </div>
+{% include pag_template %} 
+</div>
 {% endblock content %}
 
