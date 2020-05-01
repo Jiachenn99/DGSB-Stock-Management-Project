@@ -205,7 +205,7 @@ def get_low_stock_results():
 
     Irrigation_low = get_supplier_name('Irrigation', Irrigation_low.values())
     Tools_low = get_supplier_name('Tools', Tools_low.values())
-    Stationery_low = get_supplier_name('Stationary', Stationery_low.values())
+    Stationery_low = get_supplier_name('Stationery', Stationery_low.values())
     Consumables_low = get_supplier_name('Consumables', Consumables_low.values())
     Fungicide_low = get_supplier_name('Fungicide', Fungicide_low.values())
     Fertilizer_low = get_supplier_name('Fertilizer', Fertilizer_low.values())
