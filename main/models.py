@@ -14,8 +14,8 @@ class Supplier(models.Model):
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
-    pv_no = models.CharField(max_length = 20, blank = True)
-    invoice_no = models.CharField(max_length = 20, blank=True)
+    pv_no = models.CharField(max_length = 200, blank = True)
+    invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
     description = models.CharField(max_length = 100)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
