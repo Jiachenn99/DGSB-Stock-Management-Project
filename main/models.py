@@ -131,4 +131,4 @@ class Spareparts(Vehicle_Tables):
     class Meta:
         db_table = "spareparts"
     def __str__(self):
-        return self.spare_parts_name
+        return self.name
