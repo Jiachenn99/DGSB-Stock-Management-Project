@@ -299,7 +299,7 @@ def supplier(request):
     results= get_all_results(Supplier)
     cat_list = ['Supplier']
     #No of Queries
-    query_count = get_results_count(Purchasing)
+    query_count = get_results_count(Supplier)
     displayLimit = 5
     if request.method == 'POST':
        displayLimit = request.POST['drop1']
