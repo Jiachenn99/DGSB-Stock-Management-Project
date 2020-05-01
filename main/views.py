@@ -18,7 +18,9 @@ from account.models import *
 from account.forms import *
 
 from .decorators import unauthenticated_user, allowed_users, admin_only
-
+from datetime import timezone, timedelta,datetime
+import csv
+import pytz
 import MySQLdb
 import datetime
 
@@ -435,3 +437,26 @@ def update_entry(request, category=None, subcategory=None, pk=None):
     context = {'form': some_form, 'form_name':subcategory}
 
     return render(request, 'main/updateItem.html', context)
+
+@login_required(login_url='login')
+def download_csv(request, subcategory=None):
+
+    subcategory_table=findTable(subcategory)
+    results=get_all_results(subcategory_table)
+    current_timezone = timezone(timedelta(hours=8))
+    current_time = datetime.datetime.now()
+    formatted_time = current_time.strftime("%Y-%b-%d-%H%M")
+
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="{}HRS_{}.csv"'.format(formatted_time, subcategory)
+    
+    column_names = [f.get_attname() for f in subcategory_table._meta.fields]
+    # Handling for empty queryset
+    writer = csv.DictWriter(f=response,fieldnames=column_names)
+    writer.writeheader()
+
+    for dicts in results:
+        writer.writerow(dicts)
+
+    return response

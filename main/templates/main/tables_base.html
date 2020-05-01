@@ -33,7 +33,7 @@
 
         <!-- add item button -->
         <div class="p-2">
-            <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button">Add Item</a>
+           
         </div>
         
     </div>
@@ -70,6 +70,17 @@
             </div>
         </div>
     </div>
+
+    <div class = "d-flex flex-row-reverse">
+        <div class="p-2">
+            <a href="{% url 'main:download_csv' subcategory=subcategory %}" class="btn btn-primary" role="button">Download CSV</a>
+        </div>
+        <div class="p-2">
+            <a href="{% url 'main:addItem' category=category subcategory=subcategory %}" class="btn btn-primary" role="button" id="add1">Add Item</a>
+        </div>
+    </div>
+
+
     <!-- table -->
     <div style="overflow-x:auto;">
     <table id="table1" class="table table-hover table-bordered mt-4 p-2 mb-2 bg-white">
