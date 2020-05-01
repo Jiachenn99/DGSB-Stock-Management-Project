@@ -11,7 +11,7 @@ class PurchasingForm(forms.ModelForm):
     class Meta:
         model = Purchasing
         fields = "__all__"
-        
+
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
 
@@ -70,27 +70,7 @@ class PesticideForm(forms.ModelForm):
         model = Pesticide
         fields = "__all__"
 
-
-# class OrderForm(forms.Form):
-#     class Meta: 
-#         model = Category
-#         fields = "__all__"
-#     Category = forms.ModelChoiceField(queryset=Category.objects.values_list('category_name',flat = True).distinct());
-#     Supplier = forms.ModelChoiceField(queryset=Supplier.objects.order_by('supplier_name').values_list('supplier_name', flat=True).distinct());
-#     # Item_Name = forms.ModelChoiceField(queryset=Tools.objects.order_by('tool_name').values_list('tool_name', flat=True).distinct());
-#     # Item_Name_Irrigation = forms.ModelChoiceField(queryset=Irrigation.objects.order_by('irrigation_item_name').values_list('irrigation_item_name', flat=True).distinct());
-#     Quantity = forms.IntegerField(min_value=1)
-#     Description = forms.CharField()
-
-
-# class EmailModelChoiceField(forms.ModelChoiceField):
-#     def label_from_instance(self, obj):
-#         return "%s" % (obj.email)
-
 class OrderForm(forms.Form):
-    #email = forms.EmailField(required=True)
-
-    #email = EmailModelChoiceField(queryset=Supplier.objects.all())
     email = forms.ModelChoiceField(queryset=Supplier.objects.values_list('email',flat = True).distinct(),to_field_name='email')
     # def __init__(self, *args, **kwargs):
     #     super(OrderForm, self).__init__(*args, **kwargs)

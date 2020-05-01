@@ -14,15 +14,15 @@ class Supplier(models.Model):
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
-    pv_no = models.CharField(max_length = 20, blank = True)
-    invoice_no = models.CharField(max_length = 20, blank=True)
+    pv_no = models.CharField(max_length = 200, blank = True)
+    invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
     description = models.CharField(max_length = 100)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
-        return str(self.supplier.supplier_name)
+        return self.pv_no
 
 # Abstract class to inherit from 
 class Irrigation_Tables(models.Model):
@@ -32,6 +32,7 @@ class Irrigation_Tables(models.Model):
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         abstract = True
 
@@ -42,6 +43,7 @@ class Plantation_Tables(models.Model):
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         abstract = True
 
@@ -128,7 +130,8 @@ class Spareparts(Vehicle_Tables):
     quantity = models.PositiveIntegerField(default = 0)
     threshold = models.PositiveIntegerField(default = 0)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         db_table = "spareparts"
     def __str__(self):
-        return self.spare_parts_name
+        return self.name

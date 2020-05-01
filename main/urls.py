@@ -19,5 +19,5 @@ urlpatterns = [
     path('userprofile_s/', views.userprofile_static, name='userprofile_static'),
     path('order/', views.orderView, name='order'),
     path('success/', views.successView, name='success'),
-
+    path('download_csv/<str:subcategory>', views.download_csv, name='download_csv'),
 ]

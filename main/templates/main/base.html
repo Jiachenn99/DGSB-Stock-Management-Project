@@ -129,18 +129,21 @@
                 </li>
 
                 <li>
-                <a href="#purchasesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                
+                
+                <li class="{{order}}">
+                    <a href="{% url 'main:order'%}">
+                    <i class="fas fa-envelope-open"></i>
+                    Order
+                    </a>
+                </li>
+                <li class="{{purchases}}">
+                    <a href="{% url 'main:purchasing'%}">
                     <i class="fas fa-shopping-cart"></i>
-                    Order/Purchases
-                </a>
-                <ul class="collapse list-unstyled" id="purchasesSubmenu">
-                        <li>
-                            <a href="{% url 'main:order'%}">Order</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'main:purchasing'%}">Purchases</a>
-                        </li>
-                </ul>
+                    Purchases
+                    </a>
+                </li>
+                
             </ul>
 
         </nav>
