@@ -104,49 +104,47 @@ def purchasing(request):
     subcategory = 'Purchasing'
     
     #Query variables
-    query_results = Purchasing.objects.all()
-    query_count = Purchasing.objects.all().count()
-
+    results= get_all_results(Purchasing)
+    results = get_supplier_name(subcategory, results)
+    
+    cat_list = ['Purchasing']
     #No of Queries
-    a = 5
+    query_count = get_results_count(Purchasing)
+    displayLimit = 5
     if request.method == 'POST':
-       a = request.POST['drop1']
+       displayLimit = request.POST['drop1']
 
     #Search query
-    query = request.GET.get("q")
-    if request.method == 'GET':
-        query_results = purchasing_query(query_results, query)
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
 
     #Paginator
     page = request.GET.get('page', 1)
-    paginator = Paginator(query_results, a)
+    paginator = Paginator(results, displayLimit)
     try:
-        items = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
-        items = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
-        items = paginator.page(paginator.num_pages)
-    index = items.number - 1
+        results = paginator.page(paginator.num_pages)
+    index = results.number - 1
     max_index = len(paginator.page_range)
     start_index = index - 5 if index >= 5 else 0
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
     
-    results = get_all_results(Purchasing)
-    cat_list = ['Purchasing']
-
+    
     context = {
-        'query_results': query_results,
-        'query_count': query_count,
-         'items': items,
-         'a': a,
+         'query_count': query_count,
+         'displayLimit': displayLimit,
          'pag_template': "main/pagination.html",
          'results': results,
          'cat_list': cat_list, 
          'label':"Purchasing", 
          'subcategory' : subcategory, 
          'category': category,
-         
         }
     return render(request, 'main/purchasing.html',context)
 
@@ -158,8 +156,35 @@ def irrigation(request, subcategory):
     cat_list = get_category_subcat(Irrigation_Tables)
     results = get_all_results(findTable(subcategory))   
     results = get_supplier_name(subcategory, results)
+    #No of Queries
+    query_count = get_results_count(findTable(subcategory))
+    displayLimit = 5
+    if request.method == 'POST':
+       displayLimit = request.POST['drop1']
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
+    #Search query
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
+        
+    #Paginator
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, displayLimit)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+    index = results.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 5 if index >= 5 else 0
+    end_index = index + 5 if index <= max_index -5 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+    context = {'query_count': query_count,
+         'displayLimit': displayLimit,
+         'pag_template': "main/pagination.html",'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html', context)
 
@@ -171,8 +196,35 @@ def plantation(request, subcategory):
     cat_list = get_category_subcat(Plantation_Tables)
     results = get_all_results(findTable(subcategory))
     results = get_supplier_name(subcategory, results)
+    #No of Queries
+    query_count = get_results_count(findTable(subcategory))
+    displayLimit = 5
+    if request.method == 'POST':
+       displayLimit = request.POST['drop1']
 
-    context = {'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
+    #Search query
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        results = purchasing_query(results, query)
+        results = get_supplier_name(subcategory, results)
+        
+    #Paginator
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, displayLimit)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+    index = results.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 5 if index >= 5 else 0
+    end_index = index + 5 if index <= max_index -5 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+    context = {'query_count': query_count,
+         'displayLimit': displayLimit,
+         'pag_template': "main/pagination.html",'results': results,'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
 
     return render(request, 'main/tables_base.html',context)
 
@@ -185,8 +237,37 @@ def vehicle(request, subcategory):
     results = get_all_results(findTable(subcategory))
     if subcategory == 'Spareparts':
         results = get_supplier_name(subcategory, results)
-    
-    context = {'results': results, 'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
+    #No of Queries
+    query_count = get_results_count(findTable(subcategory))
+    displayLimit = 5
+    if request.method == 'POST':
+       displayLimit = request.POST['drop1']
+
+        #Search query
+    if request.method == 'GET' and 'q' in request.GET:
+        query = request.GET.get("q")
+        if subcategory == 'Spareparts':
+            results = spareparts_query(results, query)
+        else:
+            results = vehicle_query(results, query)
+
+    #Paginator
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, displayLimit)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+    index = results.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 5 if index >= 5 else 0
+    end_index = index + 5 if index <= max_index -5 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+    context = {'query_count': query_count,
+         'displayLimit': displayLimit,
+         'pag_template': "main/pagination.html",'results': results, 'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
     return render(request, 'main/tables_base.html',context)
 
 @login_required(login_url='login') 
@@ -209,7 +290,7 @@ def orderView(request):
 @login_required(login_url='login') 
 def successView(request):
     
-    return HttpResponse('Success! Thank you for your order.')
+    return HttpResponse('Success! Email sent.')
 
 @login_required(login_url='login') 
 def supplier(request):
@@ -217,8 +298,41 @@ def supplier(request):
     subcategory = 'Supplier'
     results= get_all_results(Supplier)
     cat_list = ['Supplier']
+    #No of Queries
+    query_count = get_results_count(Supplier)
+    displayLimit = 5
+    if request.method == 'POST':
+       displayLimit = request.POST['drop1']
 
-    context = {"supplier": "active",'results': results,'cat_list': cat_list, 'label':"Supplier", 'subcategory' : subcategory, 'category': category}
+    #Search query
+    query = request.GET.get("q")
+    if request.method == 'GET':
+        results = supplier_query(results, query)
+
+    #Paginator
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, displayLimit)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+    index = results.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 5 if index >= 5 else 0
+    end_index = index + 5 if index <= max_index -5 else max_index
+    page_range = paginator.page_range[start_index:end_index]
+    context = {
+        'query_count': query_count,
+        'displayLimit': displayLimit,
+        'pag_template': "main/pagination.html",
+        "supplier": "active",
+        'results': results,
+        'cat_list': cat_list, 
+        'label':"Supplier", 
+        'subcategory' : subcategory, 
+        'category': category}
     return render(request, 'main/supplier.html', context)
 
 @login_required(login_url='login') 

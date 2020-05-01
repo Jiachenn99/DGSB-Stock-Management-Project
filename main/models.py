@@ -14,15 +14,15 @@ class Supplier(models.Model):
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
-    pv_no = models.CharField(max_length = 20, blank = True)
-    invoice_no = models.CharField(max_length = 20, blank=True)
+    pv_no = models.CharField(max_length = 200, blank = True)
+    invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
     description = models.CharField(max_length = 100)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
-        return str(self.supplier.supplier_name)
+        return self.pv_no
 
 # Abstract class to inherit from 
 class Irrigation_Tables(models.Model):
@@ -131,4 +131,4 @@ class Spareparts(Vehicle_Tables):
     class Meta:
         db_table = "spareparts"
     def __str__(self):
-        return self.spare_parts_name
+        return self.name
