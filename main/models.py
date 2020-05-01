@@ -32,6 +32,7 @@ class Irrigation_Tables(models.Model):
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         abstract = True
 
@@ -42,6 +43,7 @@ class Plantation_Tables(models.Model):
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         abstract = True
 
@@ -128,6 +130,7 @@ class Spareparts(Vehicle_Tables):
     quantity = models.PositiveIntegerField(default = 0)
     threshold = models.PositiveIntegerField(default = 0)
     purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
     class Meta:
         db_table = "spareparts"
     def __str__(self):

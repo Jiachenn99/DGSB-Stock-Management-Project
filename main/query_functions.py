@@ -146,7 +146,9 @@ def get_supplier_name(subcategory, some_queryset):
                 model_object = subcategory.objects.get(pk = dicts['id'])
                 #supplier_name = model_object.purchasing.supplier.supplier_name
                 pv_no = model_object.purchasing.pv_no
+                supplier_name = model_object.supplier.supplier_name
                 dicts['purchasing_id'] = pv_no
+                dicts['supplier_id'] = supplier_name
                 
             
     return some_queryset        
