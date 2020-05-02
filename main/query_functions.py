@@ -56,12 +56,11 @@ def delete_from_table(table, condition, count=None):
 def purchasing_query(results, query):
     if query:
         results = results.filter(
-            Q(purchasing_id__iexact=query) |
             Q(pv_no__iexact=query) |
             Q(invoice_no__iexact=query) |
             Q(purchasing_date__icontains=query) |
-            Q(description__icontains=query) |
-            Q(supplier__supplier_name__icontains=query) 
+            Q(description__icontains=query) 
+            
             ).distinct()
     return results
 
@@ -80,7 +79,7 @@ def irrigation_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
 
@@ -89,7 +88,7 @@ def plantation_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
 
@@ -108,7 +107,7 @@ def spareparts_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(vehicle_assigned__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
     

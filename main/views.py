@@ -167,7 +167,7 @@ def irrigation(request, subcategory):
     #Search query
     if request.method == 'GET' and 'q' in request.GET:
         query = request.GET.get("q")
-        results = purchasing_query(results, query)
+        results = irrigation_query(results, query)
         results = get_supplier_name(subcategory, results)
         
     #Paginator
@@ -207,7 +207,7 @@ def plantation(request, subcategory):
     #Search query
     if request.method == 'GET' and 'q' in request.GET:
         query = request.GET.get("q")
-        results = purchasing_query(results, query)
+        results = plantation_query(results, query)
         results = get_supplier_name(subcategory, results)
         
     #Paginator
