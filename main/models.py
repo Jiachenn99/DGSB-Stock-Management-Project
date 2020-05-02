@@ -30,7 +30,7 @@ class Irrigation_Tables(models.Model):
     threshold = models.PositiveIntegerField(default = 0)
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
-    purchasing = models.ForeignKey(Purchasing, on_delete=models.SET_NULL, null =True)
+    purchasing = models.ForeignKey(Purchasing, on_delete=models.SET_NULL, null =True, blank=True,)
     supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null =True, blank=True)
     class Meta:
         abstract = True
