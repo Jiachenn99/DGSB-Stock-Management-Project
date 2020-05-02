@@ -18,7 +18,6 @@ class Purchasing(models.Model):
     invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
     description = models.CharField(max_length = 100)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
