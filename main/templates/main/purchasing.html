@@ -83,7 +83,7 @@
                     {% for value in dicts.values %}
                         {% if forloop.counter == 1 %}
                             <td>
-                                {{ results.start_index|add:forloop.parentloop.counter0 }}
+                                {{ forloop.parentloop.counter }}
                             </td>
                             {% else %}
                             <td>
@@ -91,12 +91,39 @@
                             </td>
                         {% endif %}
                     {% endfor %}    
-                    <td>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                        Delete
-                        </button>
-                    </td>
-
+					<!-- Modal prompting user deletion -->
+					<td>
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal{{dicts.purchasing_id}}">
+							Delete
+						</button>
+						
+						<div class="modal fade" id="Modal{{dicts.purchasing_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Delete Record?</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								</div>
+								<div class="modal-body">
+									<p>Do you want to delete this record? </p>
+									<p>PV Number: {{ dicts.pv_no }}</p>
+									<p>Invoice Number: {{ dicts.invoice_no }}</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<form action="{% url 'main:deletion' subcategory=subcategory pk=dicts.purchasing_id category=category %}" method="POST">
+										{% csrf_token %}
+										<input name='pk' value="{{ dicts.purchasing_id }}" hidden>
+										<input name='object' value="{{ subcategory }}" hidden>
+										<button id="Deletion" class="btn btn-danger" type='submit' name='delete_this'>Delete</button>
+									</form>
+								</div>
+							</div>
+							</div>
+						</div>
+					</td>
                     <td>
                         <form action="{% url 'main:update' subcategory=subcategory pk=dicts.purchasing_id category=category%}" method="GET">
                                 {% csrf_token %}
@@ -104,32 +131,6 @@
                         </form>
                     </td>
                 </tr>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete record?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you want to delete this record? </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <form action="{% url 'main:deletion' subcategory=subcategory pk=dicts.purchasing_id category=category%}" method="POST">
-                            {% csrf_token %}
-                            <input name='pk' value="{{ dicts.id }}" hidden>
-                            <input name='object' value="{{ subcategory }}" hidden>
-                            <button id="Deletion" class="btn btn-danger" type='submit' name='delete_this'>Delete</button>
-                        </form>
-                    </div>
-                    </div>
-                </div>
-                </div> 
-
           {% endfor %}
           </tbody>
       </table>
