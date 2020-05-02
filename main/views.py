@@ -406,7 +406,6 @@ def userprofile_static(request):
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
         table_to_del = findTable(subcategory)
-
         objects = table_to_del.objects.get(pk=pk)
         objects.delete()
         if subcategory == 'Purchasing' or subcategory == 'Supplier':
