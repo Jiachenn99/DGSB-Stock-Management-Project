@@ -83,7 +83,7 @@
                     {% for value in dicts.values %}
                         {% if forloop.counter == 1 %}
                             <td>
-                                {{ forloop.parentloop.counter }}
+                                {{ results.start_index|add:forloop.parentloop.counter0 }}
                             </td>
                             {% else %}
                             <td>
