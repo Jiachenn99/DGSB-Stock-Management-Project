@@ -114,7 +114,11 @@
                         {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
-                                <td>{{ value }}</td>
+                                {% if forloop.counter == 1 %}
+                                    <td> {{forloop.parentloop.counter}}</td>
+                                {% else %}
+                                    <td>{{ value }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}  
@@ -153,7 +157,11 @@
                         {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
-                                <td>{{ value }}</td>
+                                {% if forloop.counter == 1 %}
+                                    <td> {{forloop.parentloop.counter}}</td>
+                                {% else %}
+                                    <td>{{ value }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}   
@@ -192,7 +200,11 @@
                         {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
-                                <td>{{ value }}</td>
+                                {% if forloop.counter == 1 %}
+                                    <td> {{forloop.parentloop.counter}}</td>
+                                {% else %}
+                                     <td>{{ value }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}   
