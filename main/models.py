@@ -6,7 +6,7 @@ class Supplier(models.Model):
     supplier_name = models.CharField(max_length = 50)
     phone_number = models.CharField(max_length = 20, blank = True)
     email = models.EmailField(max_length = 254, blank = True)
-    description = models.CharField(max_length = 80)
+    description = models.CharField(max_length = 80, blank=True)
     class Meta:
         db_table = "Supplier"
     def __str__(self):
@@ -17,7 +17,7 @@ class Purchasing(models.Model):
     pv_no = models.CharField(max_length = 200, blank = True)
     invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
-    description = models.CharField(max_length = 100)
+    description = models.CharField(max_length = 100, blank=True)
     class Meta:
         db_table = "Purchasing"
     def __str__(self):
@@ -30,8 +30,8 @@ class Irrigation_Tables(models.Model):
     threshold = models.PositiveIntegerField(default = 0)
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
-    purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
+    purchasing = models.ForeignKey(Purchasing, on_delete=models.SET_NULL, null =True)
+    supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null =True, blank=True)
     class Meta:
         abstract = True
 
@@ -41,8 +41,8 @@ class Plantation_Tables(models.Model):
     threshold = models.PositiveIntegerField(default = 0)    
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)], blank=True)
     description = models.CharField(max_length = 100)
-    purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
+    purchasing = models.ForeignKey(Purchasing, on_delete=models.SET_NULL, blank=True, null =True)
+    supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null =True, blank=True)
     class Meta:
         abstract = True
 
@@ -113,10 +113,10 @@ class Irrigation(Irrigation_Tables):
         return self.name
 
 class Vehicle(Vehicle_Tables):
-    vehicle_type = models.CharField(max_length = 30)
-    vehicle_name = models.CharField(max_length = 50)
-    vehicle_number_plate = models.CharField(max_length = 10)
-    vehicle_owner = models.CharField(max_length = 30)
+    vehicle_type = models.CharField(max_length = 30, blank=True)
+    vehicle_name = models.CharField(max_length = 50, blank=True)
+    vehicle_number_plate = models.CharField(max_length = 10, blank=True)
+    vehicle_owner = models.CharField(max_length = 30, blank=True)
     class Meta:
         db_table = "vehicle"
     def __str__(self):
@@ -124,12 +124,12 @@ class Vehicle(Vehicle_Tables):
 
 class Spareparts(Vehicle_Tables):
     name = models.CharField(max_length = 30)
-    vehicle_assigned = models.ForeignKey('Vehicle', on_delete=models.CASCADE)
+    vehicle_assigned = models.ForeignKey('Vehicle', on_delete=models.SET_NULL, blank=True, null =True)
     unit_price = models.DecimalField(max_digits = 10, decimal_places= 2, default = 0.00, validators=[MinValueValidator(0.00)])
     quantity = models.PositiveIntegerField(default = 0)
     threshold = models.PositiveIntegerField(default = 0)
-    purchasing = models.ForeignKey(Purchasing, on_delete=models.CASCADE)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null =True)
+    purchasing = models.ForeignKey(Purchasing, on_delete=models.SET_NULL, blank=True, null =True)
+    supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null =True)
     class Meta:
         db_table = "spareparts"
     def __str__(self):

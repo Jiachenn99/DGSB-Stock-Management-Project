@@ -136,20 +136,14 @@ def get_supplier_name(subcategory, some_queryset):
 
     else:
         for dicts in some_queryset:
-            if 'pv_no' in dicts.keys():
-                model_object = subcategory.objects.get(pk = dicts['purchasing_id'])
-                supplier_name = model_object.supplier.supplier_name
-                dicts['supplier_id'] = supplier_name
-                
- 
-            else:
+            if 'id' in dicts.keys():
                 model_object = subcategory.objects.get(pk = dicts['id'])
                 #supplier_name = model_object.purchasing.supplier.supplier_name
-                pv_no = model_object.purchasing.pv_no
                 supplier_name = model_object.supplier.supplier_name
-                dicts['purchasing_id'] = pv_no
                 dicts['supplier_id'] = supplier_name
-                
+                if 'pv_no' in dicts.keys():
+                    pv_no = model_object.purchasing.pv_no
+                    dicts['purchasing_id'] = pv_no
             
     return some_queryset        
 
