@@ -14,7 +14,7 @@ class Supplier(models.Model):
 
 class Purchasing(models.Model):
     purchasing_id = models.AutoField(primary_key=True)
-    pv_no = models.CharField(max_length = 200, blank = True)
+    pv_no = models.CharField(max_length = 200)
     invoice_no = models.CharField(max_length = 200, blank=True)
     purchasing_date = models.DateField(default=timezone.now, blank=True)
     description = models.CharField(max_length = 100, blank=True)
@@ -113,8 +113,8 @@ class Irrigation(Irrigation_Tables):
         return self.name
 
 class Vehicle(Vehicle_Tables):
-    vehicle_type = models.CharField(max_length = 30, blank=True)
-    vehicle_name = models.CharField(max_length = 50, blank=True)
+    vehicle_type = models.CharField(max_length = 30)
+    vehicle_name = models.CharField(max_length = 50)
     vehicle_number_plate = models.CharField(max_length = 10, blank=True)
     vehicle_owner = models.CharField(max_length = 30, blank=True)
     class Meta:
