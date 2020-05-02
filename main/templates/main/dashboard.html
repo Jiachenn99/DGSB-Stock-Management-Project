@@ -150,21 +150,19 @@
                         <th> Supplier </th>
                     </tr>
                 </thead>    
-            
-                <!-- results -->
-                <tbody>
-                    {% for queryset in plantation_results %}
-                        {% for dict in queryset %}
-                        <tr>
-                            {% for value in dict.values %}
-                                {% if forloop.counter == 1 %}
-                                    <td> {{forloop.parentloop.counter}}</td>
-                                {% else %}
-                                    <td>{{ value }}</td>
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}   
+
+                 <!-- results -->
+                 <tbody>
+                    {% for dict in plantation_results %}
+                    <tr>
+                        {% for value in dict.values %}
+                            {% if forloop.counter == 1 %}
+                                <td> {{forloop.parentloop.counter}}</td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr> 
                     {% endfor %}
                 </tbody>
             

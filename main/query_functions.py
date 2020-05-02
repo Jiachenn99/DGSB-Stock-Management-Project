@@ -183,7 +183,7 @@ def findForm(form_type):
     return switch.get(form_type)
 
 def get_low_stock_results():
-
+    Plantation_low_list = []
     # get all querysets that have quantity LTE threshold
     Irrigation_low = Irrigation.objects.all().filter(quantity__lte=F('threshold'))
     Tools_low = Tools.objects.all().filter(quantity__lte=F('threshold'))
@@ -214,7 +214,12 @@ def get_low_stock_results():
         Irrigation_low_list = []
     
     if Tools_low.exists() or Consumables_low.exists() or Stationery_low.exists() or Fungicide_low.exists() or Fertilizer_low.exists() or Surfacetant_low.exists() or Herbicide_low.exists() or Pesticide_low.exists():
-        Plantation_low_list = [Tools_low, Consumables_low, Stationery_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+        Plantation_low_list_2 = [Tools_low, Consumables_low, Stationery_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+
+        for queryset in Plantation_low_list_2:
+            for dicts in queryset:
+                Plantation_low_list.append(dicts)
+
     else:
         Plantation_low_list = []
 
