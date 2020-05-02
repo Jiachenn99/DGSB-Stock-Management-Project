@@ -56,12 +56,11 @@ def delete_from_table(table, condition, count=None):
 def purchasing_query(results, query):
     if query:
         results = results.filter(
-            Q(purchasing_id__iexact=query) |
             Q(pv_no__iexact=query) |
             Q(invoice_no__iexact=query) |
             Q(purchasing_date__icontains=query) |
-            Q(description__icontains=query) |
-            Q(supplier__supplier_name__icontains=query) 
+            Q(description__icontains=query) 
+            
             ).distinct()
     return results
 
@@ -80,7 +79,7 @@ def irrigation_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
 
@@ -89,7 +88,7 @@ def plantation_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
 
@@ -108,7 +107,7 @@ def spareparts_query(results, query):
         results = results.filter(
             Q(name__icontains=query) |
             Q(vehicle_assigned__icontains=query) |
-            Q(purchasing__supplier__supplier_name__icontains=query) 
+            Q(supplier__supplier_name__icontains=query) 
             ).distinct()
     return results
     
@@ -136,20 +135,14 @@ def get_supplier_name(subcategory, some_queryset):
 
     else:
         for dicts in some_queryset:
-            if 'pv_no' in dicts.keys():
-                model_object = subcategory.objects.get(pk = dicts['purchasing_id'])
-                supplier_name = model_object.supplier.supplier_name
-                dicts['supplier_id'] = supplier_name
-                
- 
-            else:
+            if 'id' in dicts.keys():
                 model_object = subcategory.objects.get(pk = dicts['id'])
-                #supplier_name = model_object.purchasing.supplier.supplier_name
-                pv_no = model_object.purchasing.pv_no
-                supplier_name = model_object.supplier.supplier_name
-                dicts['purchasing_id'] = pv_no
-                dicts['supplier_id'] = supplier_name
-                
+                if 'supplier_id' in dicts.keys():
+                    supplier_name = model_object.supplier
+                    dicts['supplier_id'] = supplier_name
+                if 'purchasing_id' in dicts.keys():
+                    pv_no = model_object.purchasing
+                    dicts['purchasing_id'] = pv_no
             
     return some_queryset        
 
@@ -190,7 +183,7 @@ def findForm(form_type):
     return switch.get(form_type)
 
 def get_low_stock_results():
-
+    Plantation_low_list = []
     # get all querysets that have quantity LTE threshold
     Irrigation_low = Irrigation.objects.all().filter(quantity__lte=F('threshold'))
     Tools_low = Tools.objects.all().filter(quantity__lte=F('threshold'))
@@ -221,7 +214,12 @@ def get_low_stock_results():
         Irrigation_low_list = []
     
     if Tools_low.exists() or Consumables_low.exists() or Stationery_low.exists() or Fungicide_low.exists() or Fertilizer_low.exists() or Surfacetant_low.exists() or Herbicide_low.exists() or Pesticide_low.exists():
-        Plantation_low_list = [Tools_low, Consumables_low, Stationery_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+        Plantation_low_list_2 = [Tools_low, Consumables_low, Stationery_low, Fungicide_low, Fertilizer_low, Surfacetant_low, Herbicide_low, Pesticide_low]
+
+        for queryset in Plantation_low_list_2:
+            for dicts in queryset:
+                Plantation_low_list.append(dicts)
+
     else:
         Plantation_low_list = []
 

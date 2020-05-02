@@ -114,7 +114,11 @@
                         {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
-                                <td>{{ value }}</td>
+                                {% if forloop.counter == 1 %}
+                                    <td> {{forloop.parentloop.counter}}</td>
+                                {% else %}
+                                    <td>{{ value }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}  
@@ -146,17 +150,19 @@
                         <th> Supplier </th>
                     </tr>
                 </thead>    
-            
-                <!-- results -->
-                <tbody>
-                    {% for queryset in plantation_results %}
-                        {% for dict in queryset %}
-                        <tr>
-                            {% for value in dict.values %}
+
+                 <!-- results -->
+                 <tbody>
+                    {% for dict in plantation_results %}
+                    <tr>
+                        {% for value in dict.values %}
+                            {% if forloop.counter == 1 %}
+                                <td> {{forloop.parentloop.counter}}</td>
+                            {% else %}
                                 <td>{{ value }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}   
+                            {% endif %}
+                        {% endfor %}
+                    </tr> 
                     {% endfor %}
                 </tbody>
             
@@ -192,7 +198,11 @@
                         {% for dict in queryset %}
                         <tr>
                             {% for value in dict.values %}
-                                <td>{{ value }}</td>
+                                {% if forloop.counter == 1 %}
+                                    <td> {{forloop.parentloop.counter}}</td>
+                                {% else %}
+                                     <td>{{ value }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}   

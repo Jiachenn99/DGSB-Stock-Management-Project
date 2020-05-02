@@ -88,7 +88,7 @@
         <thead>
             <tr>
                 {% if subcategory == 'Vehicle' %}
-                    <th> ID </th>
+                    <th> # </th>
                     <th> Type </th>
                     <th> Name </th>
                     <th> Number Plate </th>
@@ -96,7 +96,7 @@
                     <th> Delete </th>
                     <th> Update </th>
                 {% elif subcategory == 'Spareparts' %}
-                <th> ID </th>
+                    <th> # </th>
                     <th> Name </th>
                     <th> Vehicle ID assigned </th>
                     <th> Unit Price </th>
@@ -128,7 +128,7 @@
                 {% for value in dicts.values %}
                     {% if forloop.counter == 1 %}
                     <td>
-                        {{ forloop.parentloop.counter }}
+                        {{ results.start_index|add:forloop.parentloop.counter0 }}
                     </td>
                     {% else %}
                     <td>

@@ -167,7 +167,7 @@ def irrigation(request, subcategory):
     #Search query
     if request.method == 'GET' and 'q' in request.GET:
         query = request.GET.get("q")
-        results = purchasing_query(results, query)
+        results = irrigation_query(results, query)
         results = get_supplier_name(subcategory, results)
         
     #Paginator
@@ -207,7 +207,7 @@ def plantation(request, subcategory):
     #Search query
     if request.method == 'GET' and 'q' in request.GET:
         query = request.GET.get("q")
-        results = purchasing_query(results, query)
+        results = plantation_query(results, query)
         results = get_supplier_name(subcategory, results)
         
     #Paginator
@@ -443,6 +443,8 @@ def download_csv(request, subcategory=None):
 
     subcategory_table=findTable(subcategory)
     results=get_all_results(subcategory_table)
+    results=get_supplier_name(subcategory, results)
+
     current_timezone = timezone(timedelta(hours=8))
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime("%Y-%b-%d-%H%M")
@@ -450,8 +452,23 @@ def download_csv(request, subcategory=None):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{}HRS_{}.csv"'.format(formatted_time, subcategory)
-    
-    column_names = [f.get_attname() for f in subcategory_table._meta.fields]
+
+    for dicts in results:
+        if 'purchasing_id' in dicts.keys():
+            dicts['PV_No'] = dicts.pop('purchasing_id')
+        if 'supplier_id' in dicts.keys():
+            dicts['Supplier'] = dicts.pop('supplier_id')
+
+    if not results:
+        column_names = [f.get_attname() for f in subcategory_table._meta.fields]
+        for i, j in enumerate(column_names):
+            if j == 'purchasing_id':
+                column_names[i] = 'PV_No'
+            if j == 'supplier_id':
+                column_names[i] = 'Supplier'
+    else:
+        column_names = [i for i in results[0].keys()]
+
     # Handling for empty queryset
     writer = csv.DictWriter(f=response,fieldnames=column_names)
     writer.writeheader()

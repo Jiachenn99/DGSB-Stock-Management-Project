@@ -73,7 +73,6 @@
                   <th> Invoice No. </th>
                   <th> Purchasing Date </th>
                   <th> Description </th>
-                  <th> Supplier </th>
                   <th> Delete </th>
                   <th> Update </th>
               </tr>
@@ -84,7 +83,7 @@
                     {% for value in dicts.values %}
                         {% if forloop.counter == 1 %}
                             <td>
-                                {{ forloop.parentloop.counter }}
+                                {{ results.start_index|add:forloop.parentloop.counter0 }}
                             </td>
                             {% else %}
                             <td>
