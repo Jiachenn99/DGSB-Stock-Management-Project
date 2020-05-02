@@ -27,7 +27,7 @@ import datetime
 results_list = []
 db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 3306)
 
-@login_required(login_url='login')    
+@login_required(login_url='login')
 def dashboard(request):
     #CARD 1
     total_items = 0
@@ -43,9 +43,9 @@ def dashboard(request):
     count10= Irrigation.objects.all().count()
     
     total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
-    
+
     #CARD 2
-    
+
 
     #CARD 3
     totalPurchases = 0
@@ -86,7 +86,7 @@ def dashboard(request):
     }
     return render(request, 'main/dashboard.html',context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def index(request):
 
     iri_cat_list = get_category_subcat(Irrigation_Tables)
@@ -100,15 +100,15 @@ def index(request):
     context = {"index": "active", 'iri_table_label': iri_table, 'plant_table_label': plant_table, 'vehicle_table_label': vehicle_table}
     return render(request, 'main/index.html',context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def purchasing(request):
     category = 'purchasing'
     subcategory = 'Purchasing'
-    
+
     #Query variables
     results= get_all_results(Purchasing)
     results = get_supplier_name(subcategory, results)
-    
+
     cat_list = ['Purchasing']
     #No of Queries
     query_count = get_results_count(Purchasing)
@@ -136,21 +136,21 @@ def purchasing(request):
     start_index = index - 5 if index >= 5 else 0
     end_index = index + 5 if index <= max_index -5 else max_index
     page_range = paginator.page_range[start_index:end_index]
-    
-    
+
+
     context = {
          'query_count': query_count,
          'displayLimit': displayLimit,
          'pag_template': "main/pagination.html",
          'results': results,
-         'cat_list': cat_list, 
-         'label':"Purchasing", 
-         'subcategory' : subcategory, 
+         'cat_list': cat_list,
+         'label':"Purchasing",
+         'subcategory' : subcategory,
          'category': category,
         }
     return render(request, 'main/purchasing.html',context)
 
-@login_required(login_url='login')  
+@login_required(login_url='login')
 def irrigation(request, subcategory):
 
     category = 'Irrigation_Tables'
@@ -169,7 +169,7 @@ def irrigation(request, subcategory):
         query = request.GET.get("q")
         results = irrigation_query(results, query)
         results = get_supplier_name(subcategory, results)
-        
+
     #Paginator
     page = request.GET.get('page', 1)
     paginator = Paginator(results, displayLimit)
@@ -190,7 +190,7 @@ def irrigation(request, subcategory):
 
     return render(request, 'main/tables_base.html', context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def plantation(request, subcategory):
     
     category = 'Plantation_Tables'
@@ -209,7 +209,7 @@ def plantation(request, subcategory):
         query = request.GET.get("q")
         results = plantation_query(results, query)
         results = get_supplier_name(subcategory, results)
-        
+
     #Paginator
     page = request.GET.get('page', 1)
     paginator = Paginator(results, displayLimit)
@@ -230,7 +230,7 @@ def plantation(request, subcategory):
 
     return render(request, 'main/tables_base.html',context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def vehicle(request, subcategory):
 
     category = 'Vehicle_Tables'
@@ -272,7 +272,7 @@ def vehicle(request, subcategory):
          'pag_template': "main/pagination.html",'results': results, 'cat_list': cat_list, 'subcategory': subcategory, 'category': category}
     return render(request, 'main/tables_base.html',context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def orderView(request):
     if request.method == 'GET':
         form = OrderForm()
@@ -289,12 +289,12 @@ def orderView(request):
             return redirect('main:success')
     return render(request, 'main/order.html',{'form': form})
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def successView(request):
-    
+
     return HttpResponse('Success! Email sent.')
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def supplier(request):
     category = 'supplier'
     subcategory = 'Supplier'
@@ -331,13 +331,13 @@ def supplier(request):
         'pag_template': "main/pagination.html",
         "supplier": "active",
         'results': results,
-        'cat_list': cat_list, 
-        'label':"Supplier", 
-        'subcategory' : subcategory, 
+        'cat_list': cat_list,
+        'label':"Supplier",
+        'subcategory' : subcategory,
         'category': category}
     return render(request, 'main/supplier.html', context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def addItem(request, category, subcategory):
     # Create and update database
 
@@ -359,7 +359,7 @@ def addItem(request, category, subcategory):
     context = {'form': form, 'form_name': subcategory}
     return render(request, 'main/addItem.html', context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def userprofile(request):
 
     if request.user.is_superuser == False:
@@ -381,9 +381,10 @@ def userprofile(request):
         return render(request, 'main/userprofile.html', {"userprofile": "active"})
     return render(request, 'main/userprofile.html',context)
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def userprofile_static(request):
 
+    form=StaffForm()
     if request.user.is_superuser == False:
         staff = request.user.staff
         form = StaffForm(instance=staff)
@@ -401,9 +402,9 @@ def userprofile_static(request):
     if request.user.is_superuser:
         return render(request, 'main/userprofile_static.html', {"userprofile": "active"})
     return render(request, 'main/userprofile_static.html',context)
-  
 
-@login_required(login_url='login') 
+
+@login_required(login_url='login')
 def delete_entry(request, pk=None, subcategory=None, category=None):
     if request.method== "POST" and "delete_this" in request.POST:
         table_to_del = findTable(subcategory)
@@ -414,13 +415,13 @@ def delete_entry(request, pk=None, subcategory=None, category=None):
         else:
             return redirect(f'/{category}/{subcategory}')
 
-@login_required(login_url='login') 
+@login_required(login_url='login')
 def update_entry(request, category=None, subcategory=None, pk=None):
     form_to_update = findForm(subcategory)
     model_object = findTable(subcategory)
     instance_lol = get_object_or_404(model_object, pk=pk)
     print(f'Instance is {instance_lol}')
-    
+
     if request.method == "POST":
         some_form = form_to_update(request.POST or None ,instance = instance_lol)
         if some_form.is_valid():
