@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import *
 from main.decorators import unauthenticated_user, allowed_users, admin_only
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.utils.translation import ugettext as _
 
 def register(request):
     if request.method == "POST":
@@ -30,3 +34,18 @@ def register(request):
     
     return render(request,"registration/register.html",{"form":form})
 
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, _('Your password was successfully updated!'))
+            return redirect('/')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/password_change_form.html', {
+        'form': form
+    })

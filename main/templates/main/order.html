@@ -28,6 +28,9 @@
 
 </style>
 <body>
+{% for message in messages %}
+		<p id="messages">{{message}}</p>
+{% endfor %}
 <h3 class="text-center font-weight-bold mb-5">Order</h3>
 
 <form method="Post" action="" >
