@@ -21,7 +21,7 @@ img{
         <div class = "d-flex flex-column">
             {% if request.user.is_superuser%}
             <div class = "p-2 d-flex justify-content-center">
-            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture">
+            <img src= "../static/images/userprofile.jpg" alt="Default user profile picture" height="200" width="200">
             </div>
                 <div class = "p-2">
                 <p><b>Username: </b></p> {{request.user.username}}  
