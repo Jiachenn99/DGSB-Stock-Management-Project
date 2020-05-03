@@ -6,7 +6,8 @@ app_name = 'account'
 urlpatterns = [
     path('login/', LoginView.as_view(template_name="registration/login.html"), name='login'),
     path('logout/', LogoutView.as_view(template_name="registration/logged_out.html"), name='logout'),
-    path('password_change/', PasswordChangeView.as_view(template_name="registration/password_change_form.html"), name='password_change'),
+    
+    #path('password_change/', views.login_after_password_change, name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(template_name="registration/password_change_form.html"), name='password_change_done'),
     path('password_reset/', PasswordResetView.as_view(template_name="registration/password_reset_form.html"), name='password_reset'),
     path('password_reset/done/', PasswordResetDoneView.as_view(template_name="registration/password_reset_form.html"), name='password_reset_done'),
@@ -16,6 +17,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('register/', views.register, name = 'register_main')
-
+    path('register/', views.register, name = 'register_main'),
+    #path('password_change/', views.login_after_password_change, name='password_change'),
+    path('change_password/',  views.change_password, name='change_password'),
 ]
