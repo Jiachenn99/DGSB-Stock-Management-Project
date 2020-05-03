@@ -147,6 +147,7 @@ def purchasing(request):
          'label':"Purchasing",
          'subcategory' : subcategory,
          'category': category,
+         "purchases": "active",
         }
     return render(request, 'main/purchasing.html',context)
 
@@ -288,7 +289,7 @@ def orderView(request):
                 return HttpResponse('Invalid header found.')
             messages.success(request, 'Success! Email Sent. ')
             return redirect('main:order')
-    return render(request, 'main/order.html',{'form': form})
+    return render(request, 'main/order.html',{'form': form,"order": "active",})
 
 @login_required(login_url='login')
 def supplier(request):
