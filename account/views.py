@@ -42,8 +42,6 @@ def change_password(request):
             update_session_auth_hash(request, user)
             messages.success(request, _('Your password was successfully updated!'))
             return redirect('/')
-        else:
-            messages.error(request, _('Please correct the error below.'))
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'registration/password_change_form.html', {
