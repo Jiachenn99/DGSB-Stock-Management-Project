@@ -28,6 +28,15 @@ def get_all_results(table):
     return results_list
 
 def get_results_count(table):
+    '''
+    Returns the number of objects of a model
+
+    Args:
+    table: Django model object
+
+    Returns:
+    results_count: int, number of objects the model has
+    '''
 
     results_count = table.objects.all().values().count()
 
@@ -112,17 +121,50 @@ def spareparts_query(results, query):
     return results
     
 def model_subclasses(mclass):
+    '''
+    Returns child classes of an abstract parent model
+    e.g. model_subclasses(Irrigation_Tables) will return
+    a child model object Irrigation
+
+    Args:
+    mclass: Django model object, the abstract parent class in this case
+
+    Returns:
+        List, A list of child model objects of the parent class
+
+    '''
 
     return [m for m in apps.get_models() if issubclass(m, mclass)]
 
 
 def get_category_subcat(parent_class):
+    '''
+    Obtains the name of the child models from a parent class.
+    Builds upon model_subclasses
+
+    Args:
+    parent_class: Django model object, expecting abstract parent class
+
+    Returns:
+    categories_list = List, contains strings of children models names
+    '''
 
     categories_list = [i._meta.model.__name__ for i in model_subclasses(parent_class)]
 
     return categories_list
 
 def get_supplier_name(subcategory, some_queryset):
+    '''
+    Retrieves name of supplier from purchasing id field
+    
+    Args:
+    subcategory: string, subcategory or known as child category
+    some_queryset: Queryset object, from get_alL_results
+
+    Returns:
+    some_queryset: Queryset object, modified key values for supplier and purchasing id
+
+    '''
 
     temp_dict = {}
     temp_list = []
@@ -147,6 +189,16 @@ def get_supplier_name(subcategory, some_queryset):
     return some_queryset        
 
 def findTable(table):
+    '''
+    Checks for matching string to produce a model object
+
+    Args:
+    table: string, should be a child class
+
+    Returns:
+    switch.get(table): Django model object
+    '''
+
     switch={
         'Supplier' : Supplier,
         'Purchasing' : Purchasing,
@@ -165,6 +217,17 @@ def findTable(table):
     return switch.get(table)
 
 def findForm(form_type):
+
+    '''
+    Checks for matching string to produce a form object
+
+    Args:
+    form_type: string, should be a child class name
+
+    Returns:
+    switch.get(form_type): Django Form object
+    '''
+
     switch={
         'Supplier' :SupplierForm,
         'Purchasing' :PurchasingForm,
@@ -229,3 +292,30 @@ def get_low_stock_results():
         Spartparts_low_list = []
 
     return Irrigation_low_list, Plantation_low_list, Spartparts_low_list
+
+def get_low_stock_and_total_items():
+    ''' 
+    Calculates the number of items that are low on stock across all categories
+
+    Returns:
+    low_count: int, total number of items that are low on stock
+    total_items: int, number of items across all categories
+    '''
+    total_items = 0
+    low_count = 0
+    combined_list = []
+
+    plantation_tables = model_subclasses(Plantation_Tables)
+    irrigation_tables = model_subclasses(Irrigation_Tables)
+    vehicle_tables = model_subclasses(Vehicle_Tables)
+
+    combined_list = plantation_tables + irrigation_tables + vehicle_tables
+
+    for subcat in combined_list:
+        if subcat._meta.model.__name__ == 'Vehicle':
+            continue
+        else:
+            low_count += subcat.objects.all().filter(quantity__lte=F('threshold')).count()
+            total_items += subcat.objects.all().count()
+
+    return low_count, total_items
