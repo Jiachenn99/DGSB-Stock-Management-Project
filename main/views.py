@@ -16,9 +16,9 @@ from main.get_data import *
 
 from account.models import *
 from account.forms import *
-
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from datetime import timezone, timedelta,datetime
+
 import csv
 import pytz
 import MySQLdb
@@ -29,43 +29,17 @@ db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 330
 
 @login_required(login_url='login')
 def dashboard(request):
-    #CARD 1
+
+    item_lowStock = 0
     total_items = 0
-    count1= Spareparts.objects.all().count()
-    count2= Tools.objects.all().count()
-    count3= Stationery.objects.all().count()
-    count4= Consumables.objects.all().count()
-    count5= Fungicide.objects.all().count()
-    count6= Fertilizer.objects.all().count()
-    count7= Surfacetant.objects.all().count()
-    count8= Herbicide.objects.all().count()
-    count9= Pesticide.objects.all().count()
-    count10= Irrigation.objects.all().count()
     
-    total_items = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8 + count9 + count10
+    # CARD 1 & CARD 3 
+    item_lowStock, total_items = get_low_stock_and_total_items()
 
     #CARD 2
-
-
-    #CARD 3
     totalPurchases = 0
     countP = Purchasing.objects.all().count()
     totalPurchases = countP
-
-    #CARD 4
-    item_lowStock = 0
-    low1 = Tools.objects.all().filter(quantity__lte=F('threshold')).count()
-    low2 = Consumables.objects.all().filter(quantity__lte=F('threshold')).count()
-    low3 = Fungicide.objects.all().filter(quantity__lte=F('threshold')).count()
-    low4 = Fertilizer.objects.all().filter(quantity__lte=F('threshold')).count()
-    low5 = Surfacetant.objects.all().filter(quantity__lte=F('threshold')).count()
-    low6 = Herbicide.objects.all().filter(quantity__lte=F('threshold')).count()
-    low7 = Pesticide.objects.all().filter(quantity__lte=F('threshold')).count()
-    low8 = Irrigation.objects.all().filter(quantity__lte=F('threshold')).count()
-    low9 = Spareparts.objects.all().filter(quantity__lte=F('threshold')).count()
-    low10 = Stationery.objects.all().filter(quantity__lte=F('threshold')).count()
-
-    item_lowStock = low1 + low2 + low3 + low4 + low5 + low6 + low7 + low8 + low9 + low10
 
     irrigation_lowStock, plantation_lowStock, spareparts_lowStock = get_low_stock_results()
     isIrrigationLow = len(irrigation_lowStock) > 0
