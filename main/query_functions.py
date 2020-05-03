@@ -293,42 +293,18 @@ def get_low_stock_results():
 
     return Irrigation_low_list, Plantation_low_list, Spartparts_low_list
 
-def get_total_num_items():
-
-    '''
-    Calculates the total number of items across all categories
-
-    Returns:
-    total_items: int, number of items across all categories
-
-    '''
-
-    total_items = 0
-    combined_list = []
-    plantation_tables = model_subclasses(Plantation_Tables)
-    irrigation_tables = model_subclasses(Irrigation_Tables)
-    vehicle_tables = model_subclasses(Vehicle_Tables)
-
-    combined_list = plantation_tables + irrigation_tables + vehicle_tables
-
-    for subcat in combined_list:
-        if subcat._meta.model.__name__ == 'Vehicle':
-            continue
-        else:
-            total_items += subcat.objects.all().count()
-
-    return total_items
-
-def get_low_stock_count():
+def get_low_stock_and_total_items():
     ''' 
     Calculates the number of items that are low on stock across all categories
 
     Returns:
-    total_count: int, total number of items that are low on stock
+    low_count: int, total number of items that are low on stock
+    total_items: int, number of items across all categories
     '''
-
-    total_count = 0
+    total_items = 0
+    low_count = 0
     combined_list = []
+
     plantation_tables = model_subclasses(Plantation_Tables)
     irrigation_tables = model_subclasses(Irrigation_Tables)
     vehicle_tables = model_subclasses(Vehicle_Tables)
@@ -339,6 +315,7 @@ def get_low_stock_count():
         if subcat._meta.model.__name__ == 'Vehicle':
             continue
         else:
-            total_count += subcat.objects.all().filter(quantity__lte=F('threshold')).count()
+            low_count += subcat.objects.all().filter(quantity__lte=F('threshold')).count()
+            total_items += subcat.objects.all().count()
 
-    return total_count
+    return low_count, total_items

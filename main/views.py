@@ -16,9 +16,9 @@ from main.get_data import *
 
 from account.models import *
 from account.forms import *
-
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from datetime import timezone, timedelta,datetime
+
 import csv
 import pytz
 import MySQLdb
@@ -29,17 +29,17 @@ db = MySQLdb.connect(host="localhost",user="root", db="duriangarden", port = 330
 
 @login_required(login_url='login')
 def dashboard(request):
-    #CARD 1
-    total_items = get_total_num_items()
+
+    item_lowStock = 0
+    total_items = 0
+    
+    # CARD 1 & CARD 3 
+    item_lowStock, total_items = get_low_stock_and_total_items()
 
     #CARD 2
     totalPurchases = 0
     countP = Purchasing.objects.all().count()
     totalPurchases = countP
-
-    #CARD 3
-    item_lowStock = 0
-    item_lowStock = get_low_stock_count()
 
     irrigation_lowStock, plantation_lowStock, spareparts_lowStock = get_low_stock_results()
     isIrrigationLow = len(irrigation_lowStock) > 0
