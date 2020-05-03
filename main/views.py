@@ -285,13 +285,9 @@ def orderView(request):
                 send_mail(subject, message, EMAIL_HOST_USER , [email], fail_silently = False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
-            return redirect('main:success')
+            messages.success(request, 'Success! Email Sent. ')
+            return redirect('main:order')
     return render(request, 'main/order.html',{'form': form})
-
-@login_required(login_url='login')
-def successView(request):
-
-    return HttpResponse('Success! Email sent.')
 
 @login_required(login_url='login')
 def supplier(request):

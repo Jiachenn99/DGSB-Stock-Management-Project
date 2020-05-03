@@ -1,7 +1,9 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-
+{% for message in messages %}
+		<p id="messages">{{message}}</p>
+{% endfor %}
 {% if item_lowStock > 0 %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Stock is low!</strong> {{ item_lowStock }} item(s) is/are low on stock! Click on <a data-toggle="collapse" href="#multiCollapseExample1">View Details</a> for more information.
