@@ -356,6 +356,7 @@ def addItem(request, category, subcategory):
 
 @login_required(login_url='login')
 def userprofile(request):
+    form = StaffForm()
 
     if request.user.is_superuser == False:
         staff = request.user.staff
