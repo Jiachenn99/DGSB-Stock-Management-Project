@@ -390,11 +390,10 @@ def delete_entry(request, pk=None, subcategory=None, category=None):
 def update_entry(request, category=None, subcategory=None, pk=None):
     form_to_update = findForm(subcategory)
     model_object = findTable(subcategory)
-    instance_lol = get_object_or_404(model_object, pk=pk)
-    print(f'Instance is {instance_lol}')
+    instance_object = get_object_or_404(model_object, pk=pk)
 
     if request.method == "POST":
-        some_form = form_to_update(request.POST or None ,instance = instance_lol)
+        some_form = form_to_update(request.POST or None ,instance = instance_object)
         if some_form.is_valid():
             some_form.save()
 
@@ -403,7 +402,7 @@ def update_entry(request, category=None, subcategory=None, pk=None):
             else:
                 return redirect(f'/{category}/{subcategory}')
     else:
-        some_form = form_to_update(instance = instance_lol)
+        some_form = form_to_update(instance = instance_object)
         
     context = {'form': some_form, 'form_name':subcategory}
 
