@@ -12,7 +12,6 @@ from durianGarden.settings import EMAIL_HOST_USER
 from main.forms import *
 from main.models import *
 from main.query_functions import *
-from main.get_data import *
 
 from account.models import *
 from account.forms import *
