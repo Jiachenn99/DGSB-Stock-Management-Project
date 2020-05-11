@@ -49,8 +49,45 @@ https://www.python.org/downloads/source/
 
 All required packages and dependencies will be installed into a virtual_environment named `virtual_environment`
 
-#### Accessing our software
-1. Heading over to https://testing123cjc.pythonanywhere.com/ will take you to a login page
-2. After logging in, you may perform tasks of adding records to the database.
+#### Installing XAMPP
+To run locally, we are using XAMPP that provides us with the interface to host a simple mySQL server alongside the a Apache Web Server. To install XAMPP, simply head to: https://www.apachefriends.org/download.html to download the distribution that fits your operating system.
 
+# Running our Code Locally
+Ensure you are in the project's root directory (DGSB-Stock-Management-Project/)
+### Enter the virtual environment
+Using a command line interface, perform the commands below:
+#### On Command Prompt
+```
+> .\virtual_environment\Scripts\activate
+```
+#### On Bash/Powershell
+```
+$ source virtual_environment/Scripts/activate
+```
+For confirmation that you have entered the virtual_environment, the command line should display in brackets the virtual_environment name:
+```
+(virtual_environment) <path>\DGSB-Stock-Management-Project>
+```
 
+### Starting the web server and database server
+Ensure you have XAMPP Control Panel installed, run the application, and start two services:
+1. Apache
+2. mySQL
+
+### Creating a database
+Using XAMPP Control Panel, click the 'Admin' button on the mySQL service. Then, add a database named 'duriangarden' using phpMyAdmin.
+
+### Running migrations
+Since the database is newly created, it does not have the fields or tables that you will require, in that case, follow the steps below:
+1. Make sure you are in the virtual_environment, then, run `python manage.py migrate` to apply all migrations.
+2. The migrations should be applied, and you can check on phpMyAdmin whether the tables are created.
+
+### Starting the Django app
+Run this in the command line:
+```
+python manage.py runserver
+```
+The server should start, and you can access it in a web browser with:
+```
+localhost:8000
+```
