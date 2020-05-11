@@ -80,155 +80,154 @@
 <body>
     <div class="wrapper">
 
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <a href="{% url 'main:dashboard'%}">
-                    <h3>DurianGarden</h3>
-                    <strong>DG</strong>
-                </a>
-            </div>
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <a href="{% url 'main:dashboard'%}">
+            <h3>DurianGarden</h3>
+            <strong>DG</strong>
+        </a>
+    </div>
 
-            <ul class="list-unstyled components">
-                <li class="{{dashboard}}">
-                    <a href="{% url 'main:dashboard'%}">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
+    <ul class="list-unstyled components">
+        <li class="{{dashboard}}">
+            <a href="{% url 'main:dashboard'%}">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+        </li>
 
+        <li>
+            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="fas fa-users"></i>
+                User
+            </a>
+
+            <ul class="collapse list-unstyled" id="userSubmenu">
                 <li>
-                    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-users"></i>
-                        User
-                    </a>
-
-                    <ul class="collapse list-unstyled" id="userSubmenu">
-                        <li>
-                            <a href="{% url 'main:userprofile_static'%}">User Profile</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'account:register_main'%}">Add User</a>
-                        </li>
-
-                    </ul>
+                    <a href="{% url 'main:userprofile_static'%}">User Profile</a>
                 </li>
-
-                <li class="{{index}}">
-                    <a href="{% url 'main:index'%}">
-                        <i class="fas fa-warehouse"></i>
-                        Inventory
-                    </a>
-                </li>
-
-                <li class="{{supplier}}">
-                    <a href="{% url 'main:supplier'%}">
-                        <i class="fas fa-people-carry"></i>
-                        Supplier
-                    </a>
-                </li>
-
                 <li>
-                
-                
-                <li class="{{order}}">
-                    <a href="{% url 'main:order'%}">
-                    <i class="fas fa-envelope-open"></i>
-                    Order
-                    </a>
+                    <a href="{% url 'account:register_main'%}">Add User</a>
                 </li>
-                <li class="{{purchases}}">
-                    <a href="{% url 'main:purchasing'%}">
-                    <i class="fas fa-shopping-cart"></i>
-                    Purchases
-                    </a>
-                </li>
-                
+
             </ul>
+        </li>
 
-        </nav>
-        <!-- Page Content  -->
-        <main role="main" class="main_container" id="content">
+        <li class="{{index}}">
+            <a href="{% url 'main:index'%}">
+                <i class="fas fa-warehouse"></i>
+                Inventory
+            </a>
+        </li>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default nav-menu">
-                
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-                    <!-- Top-right Nav bar items -->
-                    <div class = "collapse navbar-collapse button-menu" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            {% if request.user.is_superuser %}
-                            <li class ="nav-item">
-                                <a class="nav-link" href="{% url 'admin:index'%}">Manage User</a>
-                            </li>
+        <li class="{{supplier}}">
+            <a href="{% url 'main:supplier'%}">
+                <i class="fas fa-people-carry"></i>
+                Supplier
+            </a>
+        </li>
+
+        <li>
+        
+        
+        <li class="{{order}}">
+            <a href="{% url 'main:order'%}">
+            <i class="fas fa-envelope-open"></i>
+            Order
+            </a>
+        </li>
+        <li class="{{purchases}}">
+            <a href="{% url 'main:purchasing'%}">
+            <i class="fas fa-shopping-cart"></i>
+            Purchases
+            </a>
+        </li>
+        
+    </ul>
+
+</nav>
+    <!-- Page Content  -->
+    <main role="main" class="main_container" id="content">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default nav-menu">
+        
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <i class="fas fa-align-left"></i>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-align-justify"></i>
+            </button>
+            <!-- Top-right Nav bar items -->
+            <div class = "collapse navbar-collapse button-menu" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ml-auto">
+                    {% if request.user.is_superuser %}
+                    <li class ="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index'%}">Manage User</a>
+                    </li>
+                    {% endif %}
+                    <li class="dropdown nav-item">
+                        <a href="#" class="button nav-link" data-toggle="dropdown">
+                            <span class="fas fa-user"></span> 
+                            {% if request.user.staff %}
+                            <strong> {{request.user.staff.name}}</strong>
+                            {% else %}
+                            <strong> {{request.user.username}}</strong>
                             {% endif %}
-                            <li class="dropdown nav-item">
-                                <a href="#" class="button nav-link" data-toggle="dropdown">
-                                    <span class="fas fa-user"></span> 
-                                    {% if request.user.staff %}
-                                    <strong> {{request.user.staff.name}}</strong>
-                                    {% else %}
-                                    <strong> {{request.user.username}}</strong>
-                                    {% endif %}
-                                    <span class="fas fa-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="navbar-login">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <p class="text-center">
-                                                    <span class="fas fa-user fa-6x"></span>
-                                                    </p>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    {% if request.user.staff %}
-                                                    <p class="text-left small">{{request.user.staff.name}}</p>
-                                                    <p class="text-left small">{{request.user.staff.email}}</p>
-                                                    {% else %}
-                                                    <p class="text-left"><strong>{{request.user.username}}</strong></p>
-                                                    <p class="text-left small">{{request.user.email}}</p>
-                                                    {% endif %}
-                                                    <p class="text-left">
-                                                        <a href="{% url 'account:logout' %}" class="btn btn-primary btn-block btn-sm"><em class="fas fa-sign-out-alt"></em> Logout</a>
-                                                    </p>
-                                                </div>
-                                            </div>
+                            <span class="fas fa-chevron-down"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-login">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p class="text-center">
+                                            <span class="fas fa-user fa-6x"></span>
+                                            </p>
                                         </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <div class="navbar-login navbar-login-session">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <p>
-                                                        <a href="{% url 'main:userprofile_static' %}" class="btn btn-primary btn-block">My Profile</a>
-                                                        <a href="{% url 'account:change_password' %}" class="btn btn-danger btn-block">Change Password</a>
-                                                    </p>
-                                                </div>
-                                            </div>
+                                        <div class="col-lg-8">
+                                            {% if request.user.staff %}
+                                            <p class="text-left small">{{request.user.staff.name}}</p>
+                                            <p class="text-left small">{{request.user.staff.email}}</p>
+                                            {% else %}
+                                            <p class="text-left"><strong>{{request.user.username}}</strong></p>
+                                            <p class="text-left small">{{request.user.email}}</p>
+                                            {% endif %}
+                                            <p class="text-left">
+                                                <a href="{% url 'account:logout' %}" class="btn btn-primary btn-block btn-sm"><em class="fas fa-sign-out-alt"></em> Logout</a>
+                                            </p>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                <a href="{% url 'main:userprofile_static' %}" class="btn btn-primary btn-block">My Profile</a>
+                                                <a href="{% url 'account:change_password' %}" class="btn btn-danger btn-block">Change Password</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Main Content -->
-            
-            {% block content %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-            {% endblock content %} 
-           
-    </main>
+    <!-- Main Inherited Content -->
+    {% block content %}
+    {% endblock content %} 
+    
+</main>
 </div>
 </body>
 
